@@ -2,26 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_list"
-        android:title="新增消費"
+        android:title="@string/list_fragment_title"
         android:icon="@drawable/outline_calendar_month_24"
          />
     <item
         android:id="@+id/nav_report"
-        android:title="詳細報告"
+        android:title="@string/visual_fragment_title"
         android:icon="@drawable/baseline_pie_chart_24"
         />
     <item
         android:id="@+id/nav_event"
-        android:title="項目管理"
+        android:title="@string/event_fragment_title"
         android:icon="@drawable/baseline_view_headline_24"/>
     <item
         android:id="@+id/nav_barcode"
-        android:title="條碼載具"
+        android:title="@string/barcode_fragment_title"
         android:icon="@drawable/baseline_document_scanner_24"
         />
     <item
         android:id="@+id/nav_budget"
-        android:title="額度管理"
+        android:title="@string/budget_fragment_title"
         android:icon="@drawable/baseline_attach_money_24"/>
 
 </menu>

@@ -35,5 +35,11 @@
     <string name="add_new_item">Add new item</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="list_fragment_title">新增消費</string>
+    <string name="visual_fragment_title">圖表報告</string>
+    <string name="event_fragment_title">項目管理</string>
+    <string name="barcode_fragment_title">條碼載具</string>
+    <string name="budget_fragment_title">額度管理</string>
+    <string name="event_detail_fragment_title">項目資訊</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
