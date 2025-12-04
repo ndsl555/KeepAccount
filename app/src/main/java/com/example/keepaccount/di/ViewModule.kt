@@ -8,7 +8,6 @@ import com.example.keepaccount.ViewModels.BarcodeViewModel
 import com.example.keepaccount.ViewModels.EventDetailViewModel
 import com.example.keepaccount.ViewModels.EventListViewModel
 import com.example.keepaccount.ViewModels.ItemListViewModel
-import com.example.keepaccount.ViewModels.MainActivityViewModel
 import com.example.keepaccount.ViewModels.StripViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
@@ -26,5 +25,4 @@ val viewModule: Module =
         viewModel { EventDetailViewModel(get(), get(), get(), get()) }
         viewModel { AddEventViewModel(get(), get(), get(), get(), get()) }
         viewModel { EventListViewModel(get()) }
-        viewModel { MainActivityViewModel(get(), get()) }
     }

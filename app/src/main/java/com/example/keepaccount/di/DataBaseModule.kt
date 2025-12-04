@@ -8,9 +8,7 @@ import com.example.keepaccount.DataSource.IBarDataSource
 import com.example.keepaccount.DataSource.IBudGetDataSource
 import com.example.keepaccount.DataSource.IEventDataSource
 import com.example.keepaccount.DataSource.ISpendItemDataSource
-import com.example.keepaccount.DataSource.ITutorialDataSource
 import com.example.keepaccount.DataSource.SpendItemDataSource
-import com.example.keepaccount.DataSource.TutorialDataSource
 import com.example.keepaccount.Transaction.DatabaseTransactionRunner
 import com.example.keepaccount.Transaction.RoomTransactionRunner
 import com.example.keepaccount.database.KeepAccountDatabase
@@ -31,6 +29,7 @@ val databaseModule =
                 .addMigrations(KeepAccountRoomDatabase.MIGRATION_1_2)
                 .addMigrations(KeepAccountRoomDatabase.MIGRATION_2_3)
                 .addMigrations(KeepAccountRoomDatabase.MIGRATION_3_4)
+                .addMigrations(KeepAccountRoomDatabase.MIGRATION_4_5)
                 .build()
         }
         single { get<KeepAccountRoomDatabase>() as KeepAccountDatabase }
@@ -41,7 +40,6 @@ val databaseModule =
         factory { get<KeepAccountRoomDatabase>().barCodeDao() }
         factory { get<KeepAccountRoomDatabase>().budGetDao() }
         factory { get<KeepAccountRoomDatabase>().eventDao() }
-        factory { get<KeepAccountRoomDatabase>().getTutorialShownStateDao() }
 
         // DataSource
 
@@ -49,5 +47,4 @@ val databaseModule =
         factory<IBarDataSource> { BarDataSource(get(), get(koinIO)) }
         factory<IBudGetDataSource> { BudGetDataSource(get(), get(koinIO)) }
         factory<IEventDataSource> { EventDataSource(get(), get(koinIO)) }
-        factory<ITutorialDataSource> { TutorialDataSource(get(), get(koinIO)) }
     }

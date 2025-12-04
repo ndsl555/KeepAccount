@@ -8,7 +8,6 @@ import com.example.keepaccount.Entity.BarEntity
 import com.example.keepaccount.Entity.BudGet
 import com.example.keepaccount.Entity.Event
 import com.example.keepaccount.Entity.Item
-import com.example.keepaccount.Entity.TutorialStatus
 
 @Database(
     entities = [ // Corrected from 'entitles'
@@ -16,9 +15,8 @@ import com.example.keepaccount.Entity.TutorialStatus
         Item::class,
         BudGet::class,
         Event::class,
-        TutorialStatus::class,
     ],
-    version = 4,
+    version = 5,
     exportSchema = true,
 )
 abstract class KeepAccountRoomDatabase : RoomDatabase(), KeepAccountDatabase {
@@ -83,6 +81,13 @@ abstract class KeepAccountRoomDatabase : RoomDatabase(), KeepAccountDatabase {
                         )
                         """.trimIndent(),
                     )
+                }
+            }
+
+        val MIGRATION_4_5 =
+            object : Migration(4, 5) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    db.execSQL("DROP TABLE IF EXISTS tutorialStatusTable")
                 }
             }
     }
