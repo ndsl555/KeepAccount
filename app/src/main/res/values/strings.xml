@@ -1,0 +1,39 @@
+
+<resources>
+    <string name="app_name">KeepAccount</string>
+    <string name="home_page">首頁</string>
+    <string name="sell">Sell</string>
+    <string name="quantity">色碼</string>
+    <string name="ymd_req">年/月/日<font color='#FF0000'>*</font></string>
+
+    <string name="quantity_req">色碼<font color='#FF0000'>*</font></string>
+    <string name="item_name_req">支出項目<font color='#FF0000'>*</font></string>
+    <string name="item_price_req">花費金額<font color='#FF0000'>*</font></string>
+    <string name="save_action">確定</string>
+    <string name="choose_date">選日</string>
+    <string name="choose_action">選項目</string>
+    <string name="item_detail_fragment_title">項目細節</string>
+    <string name="event_title">支出項目</string>
+    <string name="add_fragment_title">新增項目</string>
+    <string name="edit_fragment_title">編輯項目</string>
+    <string name="bar_fragment_title">載具設定</string>
+    <string name="limit_fragment_title">預算設定</string>
+    <string name="color_show">目前顏色</string>
+    <string name="color_price_show">金額/顏色</string>
+    <string name="pie">圓餅圖</string>
+    <string name="strip">長條圖</string>
+    <string name="price">花費金額</string>
+    <string name="Date">日期</string>
+    <string name="item">支出項目</string>
+    <string name="delete">刪除</string>
+    <string name="delete_question">確定要刪除此項目?</string>
+    <string name="no">取消</string>
+    <string name="yes">確定</string>
+    <string name="jump_to_nav_event_list_fragment">請至項目管理頁,新增或修改支出項目</string>
+    <string name="currency_symbol">$</string>
+    <string name="edit_item">Edit Item</string>
+    <string name="add_new_item">Add new item</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+</resources>

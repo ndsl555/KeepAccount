@@ -1,0 +1,89 @@
+package com.example.keepaccount.database
+
+import androidx.room.Database
+import androidx.room.RoomDatabase // Make sure RoomDatabase is imported
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.keepaccount.Entity.BarEntity
+import com.example.keepaccount.Entity.BudGet
+import com.example.keepaccount.Entity.Event
+import com.example.keepaccount.Entity.Item
+import com.example.keepaccount.Entity.TutorialStatus
+
+@Database(
+    entities = [ // Corrected from 'entitles'
+        BarEntity::class,
+        Item::class,
+        BudGet::class,
+        Event::class,
+        TutorialStatus::class,
+    ],
+    version = 4,
+    exportSchema = true,
+)
+abstract class KeepAccountRoomDatabase : RoomDatabase(), KeepAccountDatabase {
+    companion object {
+        const val DATABASE_NAME = "KeepAccount.db"
+        val MIGRATION_1_2: Migration =
+            object : Migration(1, 2) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    // 創建 Event table
+                    db.execSQL(
+                        """
+                        CREATE TABLE IF NOT EXISTS `Event` (
+                            `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            `name` TEXT NOT NULL,
+                            `colorcode` TEXT NOT NULL
+                        )
+                        """.trimIndent(),
+                    )
+                }
+            }
+        val MIGRATION_2_3 =
+            object : Migration(2, 3) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    // 1. 建立新表（新版 Item）
+                    db.execSQL(
+                        """
+            CREATE TABLE IF NOT EXISTS ItemTable (
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                name TEXT NOT NULL,
+                price REAL NOT NULL,
+                colorcode TEXT NOT NULL,
+                year TEXT NOT NULL,
+                month TEXT NOT NULL,
+                day TEXT NOT NULL
+            )
+        """,
+                    )
+
+                    // 2. 將舊資料複製過去
+                    db.execSQL(
+                        """
+            INSERT INTO ItemTable (id, name, price, colorcode, year, month, day)
+            SELECT id, name, price, colorcode, year, month, day
+            FROM Item
+        """,
+                    )
+
+                    // 3. 刪除舊表
+                    db.execSQL("DROP TABLE Item")
+                }
+            }
+        val MIGRATION_3_4 =
+            object : Migration(3, 4) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    //    創建 TutorialStatus table
+
+                    db.execSQL(
+                        """
+                        CREATE TABLE IF NOT EXISTS tutorialStatusTable (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            isShown INTEGER NOT NULL
+                        )
+                        """.trimIndent(),
+                    )
+                }
+            }
+    }
+}

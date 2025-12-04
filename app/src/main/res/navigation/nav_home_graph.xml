@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_home_graph"
+    app:startDestination="@id/navigationItemListFragment">
+
+    <!-- Item List -->
+    <fragment
+        android:id="@+id/navigationItemListFragment"
+        android:name="com.example.keepaccount.ItemListFragment"
+        tools:layout="@layout/item_list_fragment">
+        <action
+            android:id="@+id/action_navigationItemListFragment_to_navigationAddItemFragment"
+            app:destination="@id/navigationAddItemFragment" />
+    </fragment>
+
+
+    <!-- Add Item Fragment -->
+    <fragment
+        android:id="@+id/navigationAddItemFragment"
+        android:name="com.example.keepaccount.AddItemFragment"
+        tools:layout="@layout/fragment_add_item">
+
+        <argument
+            android:name="title"
+            app:argType="string" />
+
+        <!-- 新增年月日 argument -->
+        <argument
+            android:name="year"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="month"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="day"
+            app:argType="string"
+            android:defaultValue="" />
+
+        <action
+            android:id="@+id/action_navigationAddItemFragment_to_navigationItemListFragment"
+            app:destination="@id/navigationItemListFragment"
+            app:popUpTo="@id/navigationItemListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+
+
+
+    <!-- Item List -->
+    <fragment
+        android:id="@+id/navigationEventListFragment"
+        android:name="com.example.keepaccount.EventListFragment"
+        tools:layout="@layout/event_list_fragment">
+        <action
+            android:id="@+id/action_navigationEventListFragment_to_navigationEventDetailFragment"
+            app:destination="@id/navigationEventDetailFragment" />
+        <action
+            android:id="@+id/action_navigationEventListFragment_to_navigationAddEventFragment"
+            app:destination="@id/navigationAddEventFragment" />
+    </fragment>
+
+    <!-- Item Detail -->
+    <fragment
+        android:id="@+id/navigationEventDetailFragment"
+        android:name="com.example.keepaccount.EventDetailFragment"
+        tools:layout="@layout/fragment_event_detail">
+        <argument
+            android:name="item_id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_navigationEventDetailFragment_to_navigationAddEventFragment"
+            app:destination="@id/navigationAddEventFragment" />
+    </fragment>
+
+    <!-- Add Item Fragment -->
+    <fragment
+        android:id="@+id/navigationAddEventFragment"
+        android:name="com.example.keepaccount.AddEventFragment"
+        tools:layout="@layout/fragment_add_event">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="item_id"
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_navigationAddEventFragment_to_navigationEventListFragment"
+            app:destination="@id/navigationEventListFragment"
+            app:popUpTo="@id/navigationEventListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- (保留你原本的 Barcode / Budget Fragment) -->
+    <fragment
+        android:id="@+id/navigationBarcodeFragment"
+        android:name="com.example.keepaccount.BarCodeFragment"
+        tools:layout="@layout/fragment_barcode" />
+
+    <fragment
+        android:id="@+id/navigationStripFragment"
+        android:name="com.example.keepaccount.StripFragment"
+        tools:layout="@layout/fragment_strip" />
+
+    <fragment
+        android:id="@+id/navigationVisualFragment"
+        android:name="com.example.keepaccount.VisualFragment"
+        tools:layout="@layout/fragment_visual" />
+
+
+
+    <!-- Global actions 保留 -->
+    <action
+        android:id="@+id/action_global_to_navigationitemListFragment"
+        app:destination="@id/navigationItemListFragment" />
+
+    <action
+        android:id="@+id/action_global_to_navigationEventListFragment"
+        app:destination="@id/navigationEventListFragment" />
+
+    <action
+        android:id="@+id/action_global_to_navigationBarcodeFragment"
+        app:destination="@id/navigationBarcodeFragment" />
+
+    <action
+        android:id="@+id/action_global_to_navigationStripFragment"
+        app:destination="@id/navigationStripFragment" />
+
+    <action
+        android:id="@+id/action_global_to_navigationVisualFragment"
+        app:destination="@id/navigationVisualFragment"/>
+    
+
+
+</navigation>
