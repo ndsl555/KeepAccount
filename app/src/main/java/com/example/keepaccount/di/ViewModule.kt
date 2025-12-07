@@ -18,7 +18,7 @@ val viewModule: Module =
         includes(ioDispatcherModule, domainModule, moshiModule)
         viewModel { BarcodeViewModel(get(), get()) }
         viewModel { AddItemViewModel(get(), get()) }
-        viewModel { ItemListViewModel(get(), get()) }
+        viewModel { ItemListViewModel(get(), get(), get()) }
         viewModel { StripViewModel(get(), get(), get()) }
         viewModel { DayPieViewModel(get()) }
         viewModel { MonthPieViewModel(get()) }

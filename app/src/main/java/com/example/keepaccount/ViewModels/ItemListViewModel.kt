@@ -3,6 +3,7 @@ package com.example.keepaccount.ViewModels
 import androidx.lifecycle.*
 import com.example.keepaccount.UseCase.DeleteItemByDateAndNameUseCase
 import com.example.keepaccount.UseCase.GetItemsByDateUseCase
+import com.example.keepaccount.UseCase.GetUsedDaysInMonthUseCase
 import com.example.keepaccount.Utils.Result
 import com.example.keepaccount.Utils.invoke
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,13 +11,40 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlin.collections.groupBy
+import kotlin.map
 
 class ItemListViewModel(
     private val getItemsByDateUseCase: GetItemsByDateUseCase,
+    private val getUsedDaysInMonthUseCase: GetUsedDaysInMonthUseCase,
     private val deleteItemByDateAndNameUseCase: DeleteItemByDateAndNameUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<List<ShowItem>>(emptyList())
     val uiState: StateFlow<List<ShowItem>> = _uiState.asStateFlow()
+
+    private val _markedDays = MutableStateFlow<List<Int>>(emptyList())
+    val markedDays = _markedDays.asStateFlow()
+
+    fun getMarkedDays(
+        year: String,
+        month: String,
+    ) {
+        viewModelScope.launch {
+            when (val result = getUsedDaysInMonthUseCase(GetUsedDaysInMonthUseCase.Parameters(year, month))) {
+                is Result.Success -> {
+                    val days =
+                        result.data
+                            .map { it.toInt() }
+                            .distinct()
+
+                    _markedDays.value = days
+                }
+
+                is Result.Error -> {
+                    _markedDays.value = emptyList()
+                }
+            }
+        }
+    }
 
     fun getItemsByDate(
         year: String,

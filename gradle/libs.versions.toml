@@ -8,6 +8,7 @@ junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 lifecycleRuntimeKtx = "2.6.1"
 appcompat = "1.7.1"
+materialCalendarView = "1.9.2"
 mpandroidchart = "v3.1.0"
 navigationRuntimeKtx = "2.9.4"
 constraintlayout = "2.2.1"
@@ -29,6 +30,7 @@ lifecycleViewmodelKtx = "2.10.0"
 [libraries]
 
 colorpicker = { module = "com.github.QuadFlask:colorpicker", version.ref = "colorpicker" }
+material-calendar-view = { module = "com.applandeo:material-calendar-view", version.ref = "materialCalendarView" }
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }

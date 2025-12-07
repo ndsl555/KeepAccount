@@ -97,4 +97,17 @@ class SpendItemDataSource(
     ) = withContext(ioDispatcher) {
         dao.deleteByDateAndName(year, month, day, name)
     }
+
+    override suspend fun getUsedDaysInMonth(
+        year: String,
+        month: String,
+    ): Result<List<String>> =
+        withContext(ioDispatcher) {
+            return@withContext try {
+                val days = dao.getUsedDaysInMonth(year, month)
+                Success(days)
+            } catch (e: Exception) {
+                Error(e)
+            }
+        }
 }

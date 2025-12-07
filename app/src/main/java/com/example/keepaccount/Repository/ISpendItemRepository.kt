@@ -40,4 +40,9 @@ interface ISpendItemRepository {
         day: String,
         name: String,
     )
+
+    suspend fun getUsedDaysInMonth(
+        year: String,
+        month: String,
+    ): Result<List<String>>
 }

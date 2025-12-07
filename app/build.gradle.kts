@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ktlint)
-    alias(libs.plugins.androidx.navigation.safe.args) // ✅ Add this line
+    alias(libs.plugins.androidx.navigation.safe.args) //  Add this line
     id("com.google.devtools.ksp") version "2.2.0-2.0.2"
 }
 
@@ -47,6 +47,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.material.calendar.view)
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
     implementation(libs.zxing.core)
@@ -72,7 +73,7 @@ dependencies {
     implementation(libs.mpandroidchart)
     implementation(libs.colorpicker)
     implementation(libs.androidx.camera.core)
-    ksp(libs.moshi.kotlin.codegen) // ✅ 注意是 kapt，不是 implementation
+    ksp(libs.moshi.kotlin.codegen) //  注意是 kapt，不是 implementation
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

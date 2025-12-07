@@ -15,6 +15,7 @@ import com.example.keepaccount.UseCase.GetItemByIdUseCase
 import com.example.keepaccount.UseCase.GetItemsByDateUseCase
 import com.example.keepaccount.UseCase.GetItemsByMonthUseCase
 import com.example.keepaccount.UseCase.GetItemsUseCase
+import com.example.keepaccount.UseCase.GetUsedDaysInMonthUseCase
 import com.example.keepaccount.UseCase.LoadBarCodeUseCase
 import com.example.keepaccount.UseCase.UpdateEventColorByEventNameUseCase
 import com.example.keepaccount.UseCase.UpdateEventUseCase
@@ -43,4 +44,5 @@ val domainModule =
         factory { DeleteItemByDateAndNameUseCase(get(), get(koinIO)) }
         factory { GetItemsByDateUseCase(get(), get(koinIO)) }
         factory { GetItemsByMonthUseCase(get(), get(koinIO)) }
+        factory { GetUsedDaysInMonthUseCase(get(), get(koinIO)) }
     }

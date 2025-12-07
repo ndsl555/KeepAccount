@@ -75,4 +75,12 @@ class SpendItemRepository(
     ) = withContext(ioDispatcher) {
         dataSource.deleteByDateAndName(year, month, day, name)
     }
+
+    override suspend fun getUsedDaysInMonth(
+        year: String,
+        month: String,
+    ): Result<List<String>> =
+        withContext(ioDispatcher) {
+            return@withContext dataSource.getUsedDaysInMonth(year, month)
+        }
 }

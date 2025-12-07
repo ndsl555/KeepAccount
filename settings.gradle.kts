@@ -16,10 +16,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://jitpack.io") } // ✅ 加上 JitPack
-//        maven { url = uri("https:/uri/verve.jfrog.io/artifactory/verve-gradle-release")}
-
-
+        maven { url = uri("https://jitpack.io") } //  加上 JitPack
     }
 }
 

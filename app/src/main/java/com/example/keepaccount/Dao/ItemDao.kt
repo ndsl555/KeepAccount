@@ -71,4 +71,16 @@ interface ItemDao {
         day: String,
         name: String,
     )
+
+    @Query(
+        """
+    SELECT day FROM ItemTable
+    WHERE year = :year AND month = :month
+    GROUP BY day
+""",
+    )
+    suspend fun getUsedDaysInMonth(
+        year: String,
+        month: String,
+    ): List<String>
 }
