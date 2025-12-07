@@ -59,22 +59,22 @@ class BarCodeFragment : Fragment() {
 
     private fun showInputDialog() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("輸入字串")
+        builder.setTitle(getString(R.string.enter_string))
 
         val input = EditText(requireContext())
         builder.setView(input)
 
-        builder.setPositiveButton("確定") { _, _ ->
+        builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
             val text = input.text.toString()
             if (text.isNotBlank()) {
                 viewModel.saveBarcode(text)
-                Toast.makeText(requireContext(), "已保存", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.saved), Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "未輸入", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.not_entered), Toast.LENGTH_SHORT).show()
             }
         }
 
-        builder.setNegativeButton("取消") { dialog, _ -> dialog.dismiss() }
+        builder.setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
 
         builder.show()
     }

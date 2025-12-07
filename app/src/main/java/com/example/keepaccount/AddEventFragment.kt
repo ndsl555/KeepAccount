@@ -67,7 +67,7 @@ class AddEventFragment : Fragment() {
             chooseAction.setOnClickListener {
                 ColorPickerDialogBuilder
                     .with(context)
-                    .setTitle("Choose color")
+                    .setTitle(getString(R.string.choose_color_title))
                     .initialColor(Color.BLUE)
                     .wheelType(ColorPickerView.WHEEL_TYPE.CIRCLE)
                     .density(12)
@@ -80,7 +80,7 @@ class AddEventFragment : Fragment() {
                         )
                     }
                     .setPositiveButton(
-                        "ok",
+                        getString(R.string.yes),
                     ) { dialog, selectedColor, allColors ->
                         binding.eventColorcode.setText(
                             "#" +
@@ -90,7 +90,7 @@ class AddEventFragment : Fragment() {
                         )
                     }
                     .setNegativeButton(
-                        "cancel",
+                        getString(R.string.no),
                         DialogInterface.OnClickListener { dialog, which -> },
                     )
                     .build()
@@ -173,7 +173,7 @@ class AddEventFragment : Fragment() {
                 if (binding.itemName.text.toString().isBlank() ||
                     binding.eventColorcode.text.toString().isBlank()
                 ) {
-                    Toast.makeText(this.requireContext(), "尚有空白欄位", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.requireContext(), getString(R.string.empty_fields), Toast.LENGTH_SHORT).show()
                 } else {
                     addNewEvent()
                 }
@@ -181,7 +181,7 @@ class AddEventFragment : Fragment() {
             binding.chooseAction.setOnClickListener {
                 ColorPickerDialogBuilder
                     .with(context)
-                    .setTitle("Choose color")
+                    .setTitle(getString(R.string.choose_color_title))
                     .initialColor(Color.BLUE)
                     .wheelType(ColorPickerView.WHEEL_TYPE.CIRCLE)
                     .density(12)
@@ -194,7 +194,7 @@ class AddEventFragment : Fragment() {
                         )
                     }
                     .setPositiveButton(
-                        "ok",
+                        getString(R.string.yes),
                     ) { dialog, selectedColor, allColors ->
                         binding.eventColorcode.setText(
                             "#" +
@@ -204,7 +204,7 @@ class AddEventFragment : Fragment() {
                         )
                     }
                     .setNegativeButton(
-                        "cancel",
+                        getString(R.string.no),
                         DialogInterface.OnClickListener { dialog, which -> },
                     )
                     .build()

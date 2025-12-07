@@ -68,7 +68,7 @@ class DayPieFragment : Fragment() {
                     pieData.setValueTextColor(Color.BLUE)
 
                     data = pieData
-                    centerText = "$${state.totalCost}"
+                    centerText = "${getString(R.string.currency_symbol)}${state.totalCost}"
                     invalidate()
                 }
 
@@ -79,7 +79,7 @@ class DayPieFragment : Fragment() {
                     setHasFixedSize(true)
                 }
 
-                binding.todayTv.text = "本日花費: ${state.totalCost}"
+                binding.todayTv.text = getString(R.string.today_total_cost, state.totalCost.toString())
             }
         }
     }

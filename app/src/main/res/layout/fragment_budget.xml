@@ -23,7 +23,7 @@
                 android:layout_width="182dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="每月預算"
+                android:text="@string/monthly_budget"
                 android:textAlignment="center"
                 android:textSize="30dp"
                 android:textStyle="bold" />
@@ -34,14 +34,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:ems="10"
-                android:hint="輸入預算" />
+                android:hint="@string/enter_budget_hint" />
 
             <Button
                 android:id="@+id/buttonlimit"
                 android:layout_width="131dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="確定" />
+                android:text="@string/confirm" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

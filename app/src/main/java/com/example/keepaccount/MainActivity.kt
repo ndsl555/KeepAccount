@@ -16,17 +16,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var tutorialPref: TutorialPref // ⭐ 用 SharedPreferences 存取
+    private lateinit var tutorialPref: TutorialPref //  用 SharedPreferences 存取
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        tutorialPref = TutorialPref(this) // ⭐ 初始化 Pref
+        tutorialPref = TutorialPref(this) //  初始化 Pref
 
         initView()
-        checkTutorialStatus() // ⭐ 啟動時檢查是否要顯示教學 Dialog
+        checkTutorialStatus() //  啟動時檢查是否要顯示教學 Dialog
     }
 
     private fun initView() {
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * ⭐ 不用 Flow，不用 DB，不用 ViewModel
+     *  不用 Flow，不用 DB，不用 ViewModel
      */
     private fun checkTutorialStatus() {
         if (!tutorialPref.isTutorialShown()) {
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * ⭐ 用 SharedPreferences 控制之後不再跳
+     *  用 SharedPreferences 控制之後不再跳
      */
     private fun showTutorialDialog() {
         MaterialAlertDialogBuilder(this)
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
             .setCancelable(false)
             .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
 
-                // ⭐ 記錄為「已讀」
+                //  記錄為「已讀」
                 tutorialPref.setTutorialShown()
 
                 // 導頁
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
 }
 
 /**
- * ⭐ Extension 幫你找 NavHostFragment
+ *  Extension 幫你找 NavHostFragment
  */
 private fun FragmentManager.findNavHostFragment(
     @IdRes id: Int,

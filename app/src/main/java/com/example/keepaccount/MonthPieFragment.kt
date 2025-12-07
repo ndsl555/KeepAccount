@@ -67,7 +67,7 @@ class MonthPieFragment : Fragment() {
                     pieData.setValueTextColor(Color.BLUE)
 
                     data = pieData
-                    centerText = "$${state.totalCost}"
+                    centerText = "${getString(R.string.currency_symbol)}${state.totalCost}"
                     invalidate()
                 }
 
@@ -78,7 +78,7 @@ class MonthPieFragment : Fragment() {
                     setHasFixedSize(true)
                 }
 
-                binding.todayTv.text = "本月花費: ${state.totalCost}"
+                binding.todayTv.text = getString(R.string.this_month_cost, state.totalCost.toString())
             }
         }
     }

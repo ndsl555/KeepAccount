@@ -44,7 +44,7 @@ class StripFragment : Fragment() {
     ): View {
         _binding = FragmentStripBinding.inflate(inflater, container, false)
 
-        binding.monthnameTv.text = "${thismonth}月總花費"
+        binding.monthnameTv.text = getString(R.string.month_total_cost, thismonth)
 
         initRecyclerView() // 初始化 RecyclerView
         initParam()
@@ -91,8 +91,8 @@ class StripFragment : Fragment() {
         budget: Int,
         rankList: List<Example2Item>,
     ) {
-        binding.totalcostTv.text = "${cost}元"
-        binding.budTv.text = "預算${budget}元"
+        binding.totalcostTv.text = getString(R.string.cost_with_unit, cost)
+        binding.budTv.text = getString(R.string.budget_with_unit, budget)
 
         val balance = budget - cost
         binding.progressBar.max = budget
@@ -100,17 +100,17 @@ class StripFragment : Fragment() {
 
         when {
             balance >= 1000 -> { // 正常
-                binding.situationTv.text = "剩餘 ${balance}元"
+                binding.situationTv.text = getString(R.string.remaining_balance, balance)
                 binding.situationTv.setTextColor(Color.GREEN)
             }
             balance in 0.0..999.0 -> { // 快沒錢了
-                binding.situationTv.text = "剩餘 ${balance}元"
+                binding.situationTv.text = getString(R.string.remaining_balance, balance)
                 binding.situationTv.setTextColor(Color.GREEN)
                 binding.progressBar.progressTintList =
                     ColorStateList.valueOf("#FFA500".toColorInt())
             }
             else -> { // 超支
-                binding.situationTv.text = "超支 ${-balance}元"
+                binding.situationTv.text = getString(R.string.overspending, -balance)
                 binding.situationTv.setTextColor(Color.RED)
                 binding.progressBar.progressTintList = ColorStateList.valueOf(Color.RED)
             }
@@ -118,7 +118,7 @@ class StripFragment : Fragment() {
 
         //  更新 Adapter 資料，不重建
         rankAdapter.submitList(rankList)
-        binding.todayTv.text = "本月花費: $cost"
+        binding.todayTv.text = getString(R.string.this_month_cost, cost)
     }
 
     /** 預算輸入對話框 */
@@ -136,9 +136,9 @@ class StripFragment : Fragment() {
             val numStr = num.trim() // 去除首尾空白
             val numInt = numStr.toIntOrNull() // 嘗試轉成 Int，如果失敗會返回 null
             if (numStr.isBlank()) {
-                Toast.makeText(requireContext(), "尚未輸入本月預算", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.no_budget_toast), Toast.LENGTH_SHORT).show()
             } else if (numInt == null) {
-                Toast.makeText(requireContext(), "請輸入數字", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.enter_number_toast), Toast.LENGTH_SHORT).show()
             } else {
                 viewModel.saveBudGet(num.toInt(), thisyear, thismonth)
                 dialog.dismiss()
@@ -150,7 +150,7 @@ class StripFragment : Fragment() {
     /** 計算距離下個月剩餘天數 */
     private fun updateRemainingDays() {
         val dayPass = YearMonth.now().lengthOfMonth() - calendar.get(Calendar.DAY_OF_MONTH) + 1
-        binding.leastdayTv.text = "距離下個月還有${dayPass}天"
+        binding.leastdayTv.text = getString(R.string.remaining_days, dayPass)
     }
 
     override fun onDestroyView() {

@@ -73,7 +73,7 @@ class AddItemFragment : Fragment() {
                 binding.itemPrice.text.isNullOrBlank() ||
                 binding.itemColorcode.text.isNullOrBlank()
             ) {
-                Toast.makeText(requireContext(), "尚有空白欄位", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.empty_fields), Toast.LENGTH_SHORT).show()
             } else {
                 addNewItem()
             }

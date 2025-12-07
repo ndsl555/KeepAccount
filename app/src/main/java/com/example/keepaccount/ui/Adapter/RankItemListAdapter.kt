@@ -51,6 +51,6 @@ class RankItemListAdapter :
 
         holder.txtName.text = current.itemname
         holder.txtPrice.text = current.itemprice.toString()
-        holder.txtRank.text = "第${position + 1}名" // ⬅️ 保留你的邏輯
+        holder.txtRank.text = holder.itemView.context.getString(R.string.rank_format_string, position + 1)
     }
 }

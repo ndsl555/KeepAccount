@@ -41,5 +41,31 @@
     <string name="barcode_fragment_title">條碼載具</string>
     <string name="budget_fragment_title">額度管理</string>
     <string name="event_detail_fragment_title">項目資訊</string>
+    <string name="adjust_brightness">調整螢幕亮度</string>
+    <string name="invoice_carrier">發票載具</string>
+    <string name="rank_n">第N名</string>
+    <string name="name">名子</string>
+    <string name="money">錢</string>
+    <string name="monthly_budget">每月預算</string>
+    <string name="confirm">確定</string>
+    <string name="enter_budget_hint">輸入預算</string>
+    <string name="empty_fields">尚有空白欄位</string>
+    <string name="choose_color_title">選擇顏色</string>
+    <string name="enter_string">輸入字串</string>
+    <string name="saved">已保存</string>
+    <string name="not_entered">未輸入</string>
+    <string name="month_total_cost">%1$s月總花費</string>
+    <string name="cost_with_unit">%1$s元</string>
+    <string name="budget_with_unit">預算%1$s元</string>
+    <string name="remaining_balance">剩餘 %1$s元</string>
+    <string name="overspending">超支 %1$s元</string>
+    <string name="this_month_cost">本月花費: %1$s</string>
+    <string name="no_budget_toast">尚未輸入本月預算</string>
+    <string name="enter_number_toast">請輸入數字</string>
+    <string name="remaining_days">距離下個月還有%1$s天</string>
+    <string name="today_consumption_status">今日消費狀況</string>
+    <string name="monthly_consumption_status">本月消費狀況</string>
+    <string name="rank_format_string">第%1$d名</string>
+    <string name="today_total_cost">本日花費: %1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
