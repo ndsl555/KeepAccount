@@ -1,9 +1,8 @@
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ktlint)
-    alias(libs.plugins.androidx.navigation.safe.args) //  Add this line
+    alias(libs.plugins.androidx.navigation.safe.args)
     id("com.google.devtools.ksp") version "2.2.0-2.0.2"
 }
 
@@ -17,9 +16,7 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders += mapOf("MAPS_API_KEY" to (project.findProperty("MAPS_API_KEY") ?: ""))
     }
 
     buildTypes {
