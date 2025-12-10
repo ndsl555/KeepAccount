@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    tools:context=".BudGetFragment">
+    android:layout_gravity="center">
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="60dp"
-        android:padding="20dp"
-        >
+        android:padding="20dp">
 
         <LinearLayout
             android:layout_width="405dp"
@@ -23,18 +20,26 @@
                 android:layout_width="182dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/monthly_budget"
+                android:text="@string/barcode_fragment_title"
                 android:textAlignment="center"
                 android:textSize="30dp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/editTextlimit"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/item_name_label"
                 android:layout_width="187dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:ems="10"
-                android:hint="@string/enter_budget_hint" />
+                android:hint="@string/enter_barcode_hint"
+                app:boxStrokeColor="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextlimit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textVisiblePassword"
+                    android:singleLine="true" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/buttonlimit"

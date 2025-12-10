@@ -48,7 +48,8 @@
     <string name="money">錢</string>
     <string name="monthly_budget">每月預算</string>
     <string name="confirm">確定</string>
-    <string name="enter_budget_hint">輸入預算</string>
+    <string name="enter_budget_hint">輸入預算<font color='#FF0000'>*</font></string>
+    <string name="enter_barcode_hint">輸入載具編碼<font color='#FF0000'>*</font></string>
     <string name="empty_fields">尚有空白欄位</string>
     <string name="choose_color_title">選擇顏色</string>
     <string name="enter_string">輸入字串</string>

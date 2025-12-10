@@ -1,10 +1,13 @@
 package com.example.keepaccount
 
-import android.app.AlertDialog
+import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import com.example.keepaccount.ViewModels.BarcodeViewModel
 import com.example.keepaccount.databinding.FragmentBarcodeBinding
@@ -58,25 +61,25 @@ class BarCodeFragment : Fragment() {
     }
 
     private fun showInputDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(getString(R.string.enter_string))
+        val dialogBinding = layoutInflater.inflate(R.layout.dialog_barcode, null)
+        val dialog =
+            Dialog(requireContext()).apply {
+                setContentView(dialogBinding)
+                setCancelable(true)
+                window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+            }
 
-        val input = EditText(requireContext())
-        builder.setView(input)
-
-        builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
-            val text = input.text.toString()
+        dialogBinding.findViewById<Button>(R.id.buttonlimit).setOnClickListener {
+            val text = dialogBinding.findViewById<EditText>(R.id.editTextlimit).text.toString()
             if (text.isNotBlank()) {
                 viewModel.saveBarcode(text)
+                dialog.dismiss()
                 Toast.makeText(requireContext(), getString(R.string.saved), Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), getString(R.string.not_entered), Toast.LENGTH_SHORT).show()
             }
         }
-
-        builder.setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
-
-        builder.show()
+        dialog.show()
     }
 
     override fun onDestroyView() {

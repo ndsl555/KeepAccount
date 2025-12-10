@@ -123,7 +123,7 @@ class StripFragment : Fragment() {
 
     /** 預算輸入對話框 */
     private fun setupEnterBudgetDialog() {
-        val dialogBinding = layoutInflater.inflate(R.layout.fragment_budget, null)
+        val dialogBinding = layoutInflater.inflate(R.layout.dialog_budget, null)
         val dialog =
             Dialog(requireContext()).apply {
                 setContentView(dialogBinding)
