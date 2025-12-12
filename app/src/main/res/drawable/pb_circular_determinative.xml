@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 背景圓圈 -->
+    <item android:id="@android:id/background">
+        <shape
+            android:shape="ring"
+            android:useLevel="false"
+            android:thicknessRatio="20">
+            <solid android:color="@android:color/darker_gray" />
+        </shape>
+    </item>
+
+    <!-- 可選 - secondary progress -->
+<!--    <item android:id="@android:id/secondaryProgress">-->
+<!--        <rotate android:fromDegrees="270" android:toDegrees="270">-->
+<!--            <shape-->
+<!--                android:shape="ring"-->
+<!--                android:thicknessRatio="20">-->
+<!--                <solid android:color="@android:color/black" />-->
+<!--            </shape>-->
+<!--        </rotate>-->
+<!--    </item>-->
+
+    <!-- 主進度條（彩色） -->
+    <item android:id="@android:id/progress">
+        <rotate android:fromDegrees="270" android:toDegrees="270">
+            <shape
+                android:shape="ring"
+                android:thicknessRatio="20">
+                <gradient
+                    android:type="sweep"
+                    android:startColor="@color/teal_200"
+                    android:centerColor="@color/white"
+                    android:endColor="@color/teal_700" />
+            </shape>
+        </rotate>
+    </item>
+
+</layer-list>

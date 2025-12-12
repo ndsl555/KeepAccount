@@ -71,23 +71,21 @@ class StripViewModel(
             val cost = monthItems.sumOf { it.itemPrice }
 
             /** 排行榜 */
-            val rankList =
-                monthItems
-                    .groupBy { it.itemName }
-                    .map { (name, list) ->
-                        Example2Item(
-                            itemname = name,
-                            itemprice = list.sumOf { it.itemPrice }.toInt(),
-                        )
-                    }
-                    .sortedByDescending { it.itemprice }
+            monthItems
+                .groupBy { it.itemName }
+                .map { (name, list) ->
+                    Example2Item(
+                        itemname = name,
+                        itemprice = list.sumOf { it.itemPrice }.toInt(),
+                    )
+                }
+                .sortedByDescending { it.itemprice }
 
             /** ------- 一次 Update UI ------- **/
             _boardUI.value =
                 StripUIState(
                     budget = budget,
-                    cost = cost,
-                    rankList = rankList,
+                    cost = cost.toInt(),
                 )
         }
     }
@@ -97,8 +95,7 @@ class StripViewModel(
 
 data class StripUIState(
     val budget: Int = 0,
-    val cost: Double = 0.0,
-    val rankList: List<Example2Item> = emptyList(),
+    val cost: Int = 0,
 )
 
 data class Example2Item(
