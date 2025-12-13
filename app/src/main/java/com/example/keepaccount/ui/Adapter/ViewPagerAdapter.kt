@@ -1,4 +1,4 @@
-package com.example.keepaccount.ui.Adapter
+package com.example.keepaccount.ui.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

@@ -7,15 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.keepaccount.Extension.launchAndRepeatWithViewLifecycle
+import com.example.keepaccount.ViewModels.VisualSharedViewModel
 import com.example.keepaccount.databinding.FragmentPieBinding
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.formatter.PercentFormatter
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
+import kotlin.getValue
 
 class DayPieFragment : Fragment() {
     private var _binding: FragmentPieBinding? = null
@@ -26,6 +30,7 @@ class DayPieFragment : Fragment() {
     private val thisday = calendar.get(Calendar.DATE).toString()
 
     private val viewModel: DayPieViewModel by viewModel()
+    private val sharedViewModel: VisualSharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,40 +51,48 @@ class DayPieFragment : Fragment() {
 
     private fun initView() {
         launchAndRepeatWithViewLifecycle {
-            viewModel.uiState.collect { state ->
-                // 更新 PieChart
-                binding.pcChart.apply {
-                    setUsePercentValues(true)
-                    description.isEnabled = false
-                    setDrawHoleEnabled(true)
-                    setHoleColor(Color.WHITE)
-                    setDrawCenterText(true)
-                    rotationAngle = 0f
-                    animateY(1400, Easing.EaseInOutQuad)
-
-                    val pieDataSet = PieDataSet(state.pieEntries, "")
-                    pieDataSet.colors = state.pieColors
-                    pieDataSet.sliceSpace = 3f
-                    pieDataSet.selectionShift = 10f
-
-                    val pieData = PieData(pieDataSet)
-                    pieData.setValueFormatter(PercentFormatter())
-                    pieData.setValueTextSize(12f)
-                    pieData.setValueTextColor(Color.BLUE)
-
-                    data = pieData
-                    centerText = "${getString(R.string.currency_symbol)}${state.totalCost}"
-                    invalidate()
+            launch {
+                sharedViewModel.sortType.collect { sortType ->
+                    viewModel.sortItems(sortType)
                 }
+            }
 
-                // 更新 RecyclerView
-                binding.recyclerView.apply {
-                    adapter = ExampleAdapter(state.todayItems)
-                    layoutManager = LinearLayoutManager(context)
-                    setHasFixedSize(true)
+            launch {
+                viewModel.uiState.collect { state ->
+                    // 更新 PieChart
+                    binding.pcChart.apply {
+                        setUsePercentValues(true)
+                        description.isEnabled = false
+                        setDrawHoleEnabled(true)
+                        setHoleColor(Color.WHITE)
+                        setDrawCenterText(true)
+                        rotationAngle = 0f
+                        animateY(1400, Easing.EaseInOutQuad)
+
+                        val pieDataSet = PieDataSet(state.pieEntries, "")
+                        pieDataSet.colors = state.pieColors
+                        pieDataSet.sliceSpace = 3f
+                        pieDataSet.selectionShift = 10f
+
+                        val pieData = PieData(pieDataSet)
+                        pieData.setValueFormatter(PercentFormatter())
+                        pieData.setValueTextSize(12f)
+                        pieData.setValueTextColor(Color.BLUE)
+
+                        data = pieData
+                        centerText = "${getString(R.string.currency_symbol)}${state.totalCost}"
+                        invalidate()
+                    }
+
+                    // 更新 RecyclerView
+                    binding.recyclerView.apply {
+                        adapter = ExampleAdapter(state.todayItems)
+                        layoutManager = LinearLayoutManager(context)
+                        setHasFixedSize(true)
+                    }
+
+                    binding.todayTv.text = getString(R.string.today_total_cost, state.totalCost.toString())
                 }
-
-                binding.todayTv.text = getString(R.string.today_total_cost, state.totalCost.toString())
             }
         }
     }

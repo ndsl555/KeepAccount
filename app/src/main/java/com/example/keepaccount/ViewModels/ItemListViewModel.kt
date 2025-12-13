@@ -24,6 +24,18 @@ class ItemListViewModel(
     private val _markedDays = MutableStateFlow<List<Int>>(emptyList())
     val markedDays = _markedDays.asStateFlow()
 
+    fun sortItemsByCostDesc() {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.sortedByDescending { it.cost }
+        }
+    }
+
+    fun sortItemsByCostAsc() {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.sortedBy { it.cost }
+        }
+    }
+
     fun getMarkedDays(
         year: String,
         month: String,

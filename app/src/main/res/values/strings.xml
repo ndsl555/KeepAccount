@@ -68,5 +68,7 @@
     <string name="monthly_consumption_status">本月消費狀況</string>
     <string name="rank_format_string">第%1$d名</string>
     <string name="today_total_cost">本日花費: %1$s</string>
+    <string name="dscend">金額由高到低</string>
+    <string name="ascend">金額由低到高</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
