@@ -74,7 +74,7 @@ class StripViewModel(
             _boardUI.value =
                 StripUIState(
                     budget = budget,
-                    cost = cost.toInt(),
+                    cost = cost,
                 )
         }
     }

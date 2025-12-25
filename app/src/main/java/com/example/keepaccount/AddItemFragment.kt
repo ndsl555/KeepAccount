@@ -96,7 +96,7 @@ class AddItemFragment : Fragment() {
             viewModel.addNewItem(
                 Item(
                     itemName = binding.itemName.text.toString(),
-                    itemPrice = binding.itemPrice.text.toString().toDouble(),
+                    itemPrice = binding.itemPrice.text.toString().toInt(),
                     itemColorcode = binding.itemColorcode.text.toString(),
                     itemYear = year,
                     itemMonth = month,

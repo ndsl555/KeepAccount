@@ -40,13 +40,13 @@ class DayPieViewModel(
             when (val result = getItemsByDateUseCase.invoke(GetItemsByDateUseCase.Parameters(thisYear, thisMonth, thisDay))) {
                 is Result.Success -> {
                     val grouped = result.data.groupBy { it.itemName }
-                    val totalCost = result.data.sumOf { it.itemPrice.toInt() }
+                    val totalCost = result.data.sumOf { it.itemPrice }
 
                     val mergedList =
                         grouped.map { (name, list) ->
                             ExampleItem(
                                 itemname = name,
-                                itemcost = list.sumOf { it.itemPrice.toInt() },
+                                itemcost = list.sumOf { it.itemPrice },
                             )
                         }
 

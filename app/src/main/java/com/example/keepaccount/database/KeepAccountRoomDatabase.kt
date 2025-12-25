@@ -10,13 +10,13 @@ import com.example.keepaccount.Entity.Event
 import com.example.keepaccount.Entity.Item
 
 @Database(
-    entities = [ // Corrected from 'entitles'
+    entities = [ 
         BarEntity::class,
         Item::class,
         BudGet::class,
         Event::class,
     ],
-    version = 5,
+    version = 6,
     exportSchema = true,
 )
 abstract class KeepAccountRoomDatabase : RoomDatabase(), KeepAccountDatabase {
@@ -88,6 +88,40 @@ abstract class KeepAccountRoomDatabase : RoomDatabase(), KeepAccountDatabase {
             object : Migration(4, 5) {
                 override fun migrate(db: SupportSQLiteDatabase) {
                     db.execSQL("DROP TABLE IF EXISTS tutorialStatusTable")
+                }
+            }
+
+        val MIGRATION_5_6: Migration =
+            object : Migration(5, 6) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    // 1. Create a new temp table with the correct schema (price as INTEGER)
+                    db.execSQL(
+                        """
+                        CREATE TABLE ItemTable_new (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            name TEXT NOT NULL,
+                            price INTEGER NOT NULL,
+                            colorcode TEXT NOT NULL,
+                            year TEXT NOT NULL,
+                            month TEXT NOT NULL,
+                            day TEXT NOT NULL
+                        )
+                        """.trimIndent(),
+                    )
+
+                    // 2. Copy the data from the old table to the new one, casting the price.
+                    db.execSQL(
+                        """
+                        INSERT INTO ItemTable_new (id, name, price, colorcode, year, month, day)
+                        SELECT id, name, CAST(price AS INTEGER), colorcode, year, month, day FROM ItemTable
+                        """.trimIndent(),
+                    )
+
+                    // 3. Remove the old table
+                    db.execSQL("DROP TABLE ItemTable")
+
+                    // 4. Rename the new table to the original name
+                    db.execSQL("ALTER TABLE ItemTable_new RENAME TO ItemTable")
                 }
             }
     }

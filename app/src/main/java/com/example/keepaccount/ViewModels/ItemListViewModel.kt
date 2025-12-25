@@ -124,6 +124,6 @@ class ItemListViewModel(
 
 data class ShowItem(
     val name: String = "",
-    val cost: Double = 0.0,
+    val cost: Int = 0,
     val color: String = "",
 )

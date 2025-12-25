@@ -1,4 +1,3 @@
-
 package com.example.keepaccount.Entity
 
 import androidx.room.ColumnInfo
@@ -16,7 +15,7 @@ data class Item(
     @ColumnInfo(name = "name")
     val itemName: String,
     @ColumnInfo(name = "price")
-    val itemPrice: Double,
+    val itemPrice: Int,
     @ColumnInfo(name = "colorcode")
     val itemColorcode: String,
     @ColumnInfo(name = "year")

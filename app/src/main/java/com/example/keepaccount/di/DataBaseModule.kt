@@ -30,6 +30,7 @@ val databaseModule =
                 .addMigrations(KeepAccountRoomDatabase.MIGRATION_2_3)
                 .addMigrations(KeepAccountRoomDatabase.MIGRATION_3_4)
                 .addMigrations(KeepAccountRoomDatabase.MIGRATION_4_5)
+                .addMigrations(KeepAccountRoomDatabase.MIGRATION_5_6)
                 .build()
         }
         single { get<KeepAccountRoomDatabase>() as KeepAccountDatabase }
