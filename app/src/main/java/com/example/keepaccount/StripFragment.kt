@@ -14,6 +14,12 @@ import androidx.fragment.app.Fragment
 import com.example.keepaccount.Extension.launchAndRepeatWithViewLifecycle
 import com.example.keepaccount.ViewModels.StripViewModel
 import com.example.keepaccount.databinding.FragmentStripBinding
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -54,11 +60,19 @@ class StripFragment : Fragment() {
                     updateUI(ui.cost, ui.budget)
                 }
             }
+            launch {
+                viewModel.yearlyCosts.collect { yearlyCosts ->
+                    if (yearlyCosts.isNotEmpty()) {
+                        setupLineChart(yearlyCosts)
+                    }
+                }
+            }
         }
     }
 
     private fun initParam() {
         viewModel.observeItems(thisyear, thismonth)
+        viewModel.getYearlyCosts(thisyear)
     }
 
     private fun updateUI(
@@ -105,6 +119,68 @@ class StripFragment : Fragment() {
             }
         }
         dialog.show()
+    }
+
+    private fun setupLineChart(data: Map<Int, Int>) {
+        val entries = ArrayList<Entry>()
+        // Sort data by month to ensure the line connects correctly
+        val sortedData = data.toSortedMap()
+        for ((month, cost) in sortedData) {
+            // Entry's x-value is month, y-value is cost. Both must be Floats.
+            entries.add(Entry(month.toFloat(), cost.toFloat()))
+        }
+
+        val dataSet = LineDataSet(entries, "每月花費")
+        // --- DataSet Style ---
+        dataSet.color = Color.rgb(65, 105, 225) // RoyalBlue color
+        dataSet.valueTextColor = Color.BLACK
+        dataSet.setCircleColor(Color.rgb(65, 105, 225))
+        dataSet.circleHoleColor = Color.WHITE
+        dataSet.circleRadius = 4f
+        dataSet.circleHoleRadius = 2f
+        dataSet.lineWidth = 2.5f
+        dataSet.setDrawValues(false) // Hide values on each point
+
+        val lineData = LineData(dataSet)
+        binding.lineChart.data = lineData
+
+        // --- Chart Style ---
+        binding.lineChart.description.isEnabled = false // Use TextView in layout instead
+
+        // X-Axis
+        val xAxis = binding.lineChart.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.granularity = 1f // Minimum interval is 1 month
+        xAxis.setLabelCount(12, true)
+        xAxis.valueFormatter =
+            object : ValueFormatter() {
+                override fun getAxisLabel(
+                    value: Float,
+                    axis: AxisBase?,
+                ): String {
+                    return "${value.toInt()}月"
+                }
+            }
+
+        // Y-Axis
+        binding.lineChart.axisRight.isEnabled = false // Hide right Y-axis
+        val yAxis = binding.lineChart.axisLeft
+        yAxis.axisMinimum = 0f // Start Y-axis at 0
+        yAxis.valueFormatter =
+            object : ValueFormatter() {
+                override fun getAxisLabel(
+                    value: Float,
+                    axis: AxisBase?,
+                ): String {
+                    return "${value.toInt()}元"
+                }
+            }
+
+        // General
+        binding.lineChart.legend.isEnabled = false // Hide the legend
+        binding.lineChart.setExtraOffsets(5f, 10f, 15f, 10f)
+        binding.lineChart.animateX(800) // Animate X-axis
+        binding.lineChart.invalidate() // Refresh chart
     }
 
     override fun onDestroyView() {

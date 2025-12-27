@@ -22,7 +22,10 @@ class StripViewModel(
     private val _boardUI = MutableStateFlow(StripUIState())
     val boardUI: StateFlow<StripUIState> = _boardUI.asStateFlow()
 
-    /** ---- 公開方法 ---- **/
+    private val _yearlyCosts = MutableStateFlow<Map<Int, Int>>(emptyMap())
+    val yearlyCosts: StateFlow<Map<Int, Int>> = _yearlyCosts.asStateFlow()
+
+    /** ---- 公開方法 ---- */
     fun saveBudGet(
         input: Int,
         year: String,
@@ -70,7 +73,7 @@ class StripViewModel(
             /** 計算花費 */
             val cost = monthItems.sumOf { it.itemPrice }
 
-            /** ------- 一次 Update UI ------- **/
+            /** ------- 一次 Update UI ------- */
             _boardUI.value =
                 StripUIState(
                     budget = budget,
@@ -78,9 +81,24 @@ class StripViewModel(
                 )
         }
     }
-}
 
-/** ------------------ UI State ------------------ */
+    fun getYearlyCosts(year: String) {
+        viewModelScope.launch {
+            val allItems =
+                when (val result = getItemsUseCase.invoke()) {
+                    is Result.Success -> result.data
+                    else -> emptyList()
+                }
+            val yearlyItems = allItems.filter { it.itemYear == year }
+            val monthlyCosts =
+                (1..12).associateWith { month ->
+                    yearlyItems.filter { it.itemMonth == month.toString() }
+                        .sumOf { it.itemPrice }
+                }
+            _yearlyCosts.value = monthlyCosts
+        }
+    }
+}
 
 data class StripUIState(
     val budget: Int = 0,

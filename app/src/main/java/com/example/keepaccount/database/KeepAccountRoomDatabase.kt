@@ -10,7 +10,7 @@ import com.example.keepaccount.Entity.Event
 import com.example.keepaccount.Entity.Item
 
 @Database(
-    entities = [ 
+    entities = [
         BarEntity::class,
         Item::class,
         BudGet::class,
