@@ -69,9 +69,9 @@
     <string name="today_total_cost">本日花費: %1$s</string>
     <string name="dscend">金額由高到低</string>
     <string name="ascend">金額由低到高</string>
-    <string name="barcode_and_invoice_fragment_title">載具/兌獎</string>
-
-    <string name="lottery_check">發票兌獎</string>
+    <string name="barcode_and_invoice_fragment_title">載具/對獎</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="lottery_check">發票對獎</string>
     <string name="network_type_wifi">WiFi</string>
     <string name="network_type_mobile">Mobile</string>
     <string name="network_type_no_network">請檢察網路連線狀態\n若因為網路問題導致中獎號碼無法存取\n請連上網後,下拉更新</string>
@@ -83,5 +83,4 @@
     <string name="first_prize_bonus">必須8碼全中\n才可得獎金 %1$s 萬</string>
     <string name="loading_text">正在載入最新一期中獎號碼…</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
 </resources>
