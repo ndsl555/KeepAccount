@@ -1,6 +1,7 @@
 package com.example.keepaccount
 
 import android.app.Application
+import com.example.keepaccount.Utils.NetworkUtils
 import com.example.keepaccount.di.dataModule
 import com.example.keepaccount.di.databaseModule
 import com.example.keepaccount.di.ioDispatcherModule
@@ -13,6 +14,7 @@ import org.koin.core.context.startKoin
 class keepAccountApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+        NetworkUtils.initialize(this)
         startKoin {
             androidContext(this@keepAccountApplication)
             modules(

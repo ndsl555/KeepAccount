@@ -1,16 +1,22 @@
 package com.example.keepaccount
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.keepaccount.Utils.NetworkUtils
+import com.example.keepaccount.Utils.NetworkUtils.getNetworkType
+import com.example.keepaccount.Utils.NetworkUtils.isNetworkConnected
 import com.example.keepaccount.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -24,9 +30,49 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         tutorialPref = TutorialPref(this) //  初始化 Pref
-
+        checkNetworkStatus()
+        observeNetworkState()
         initView()
         checkTutorialStatus() //  啟動時檢查是否要顯示教學 Dialog
+    }
+
+    private fun observeNetworkState() {
+        lifecycleScope.launch {
+            NetworkUtils.networkState.collect { isConnected ->
+                if (isConnected) {
+                    // 網路恢复
+                    showNetworkRestored()
+                } else {
+                    // 網路斷開
+                    showNetworkLost()
+                }
+            }
+        }
+    }
+
+    private fun showNetworkRestored() {
+        // 显示網路恢复提示
+        Toast.makeText(this, "網路已恢复", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showNetworkLost() {
+        // 显示網路斷開提示
+        showNoWifiDialog()
+        Toast.makeText(this, "網路已斷開", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun checkNetworkStatus() {
+        if (isNetworkConnected(baseContext)) {
+            val networkType = getNetworkType(baseContext)
+            Toast.makeText(this, "網路已連接 - $networkType", Toast.LENGTH_SHORT).show()
+        } else {
+            showNoWifiDialog()
+            Toast.makeText(this, "網路未連接", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showNoWifiDialog() {
+        NoNetworkDialogFragment().show(supportFragmentManager, "NoNetworkDialogFragment")
     }
 
     private fun initView() {

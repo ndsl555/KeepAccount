@@ -74,7 +74,7 @@
     <string name="lottery_check">發票兌獎</string>
     <string name="network_type_wifi">WiFi</string>
     <string name="network_type_mobile">Mobile</string>
-    <string name="network_type_no_network">請檢察網路連線狀態\n若因為網路問題導致空品清單無畫面\n請連上網後,下拉更新</string>
+    <string name="network_type_no_network">請檢察網路連線狀態\n若因為網路問題導致中獎號碼無法存取\n請連上網後,下拉更新</string>
     <string name="hint_enter_numbers">請輸入發票後三碼</string>
     <string name="hint_check_numbers">請核對獎號</string>
     <string name="congrats">恭喜中獎🎉 趕緊核對!</string>

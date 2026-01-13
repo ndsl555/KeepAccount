@@ -84,6 +84,7 @@ class LotteryCheckViewModel(
                     "LotteryCheckViewModel",
                     "Network Error: ${networkResult.exception}",
                 )
+                _isLoading.value = false
             }
         } catch (e: Exception) {
             Log.e("LotteryCheckViewModel", "Exception in fetchAndUpdateIfDifferent", e)
