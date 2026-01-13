@@ -10,7 +10,7 @@ import com.example.keepaccount.ui.adapter.BarCodeAndInvoiceFragmentViewPagerAdap
 import com.google.android.material.tabs.TabLayoutMediator
 
 class BarCodeAndInvoiceFragment : Fragment() {
-    private val tabTitleArray = arrayOf("載具設定", "發票兌獎")
+    private val tabTitleArray = arrayOf("載具設定", "發票對獎")
     private var _binding: FragmentBarcodeInvoiceBinding? = null
     private val binding get() = _binding!!
 
