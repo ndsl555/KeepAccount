@@ -26,8 +26,12 @@ okhttp = "4.12.0"
 retrofit = "2.9.0"
 playServicesLocation = "21.3.0"
 lifecycleViewmodelKtx = "2.10.0"
+jsoup = "1.22.1"
+swiperefreshlayout = "1.2.0"
 
 [libraries]
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
+jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 
 colorpicker = { module = "com.github.QuadFlask:colorpicker", version.ref = "colorpicker" }
 material-calendar-view = { module = "com.applandeo:material-calendar-view", version.ref = "materialCalendarView" }

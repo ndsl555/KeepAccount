@@ -17,6 +17,9 @@ import com.example.keepaccount.UseCase.GetItemsByMonthUseCase
 import com.example.keepaccount.UseCase.GetItemsUseCase
 import com.example.keepaccount.UseCase.GetUsedDaysInMonthUseCase
 import com.example.keepaccount.UseCase.LoadBarCodeUseCase
+import com.example.keepaccount.UseCase.LoadInvoiceUseCase
+import com.example.keepaccount.UseCase.LotteryCheckUseCase
+import com.example.keepaccount.UseCase.SaveInvoiceUseCase
 import com.example.keepaccount.UseCase.UpdateEventColorByEventNameUseCase
 import com.example.keepaccount.UseCase.UpdateEventUseCase
 import com.example.keepaccount.UseCase.UpdateItemUseCase
@@ -45,4 +48,7 @@ val domainModule =
         factory { GetItemsByDateUseCase(get(), get(koinIO)) }
         factory { GetItemsByMonthUseCase(get(), get(koinIO)) }
         factory { GetUsedDaysInMonthUseCase(get(), get(koinIO)) }
+        factory { LotteryCheckUseCase(get(), get(koinIO)) }
+        factory { SaveInvoiceUseCase(get(), get(koinIO)) }
+        factory { LoadInvoiceUseCase(get(), get(koinIO)) }
     }

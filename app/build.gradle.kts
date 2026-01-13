@@ -70,8 +70,10 @@ dependencies {
     implementation(libs.mpandroidchart)
     implementation(libs.colorpicker)
     implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.swiperefreshlayout)
     ksp(libs.moshi.kotlin.codegen) //  注意是 kapt，不是 implementation
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.jsoup)
 }

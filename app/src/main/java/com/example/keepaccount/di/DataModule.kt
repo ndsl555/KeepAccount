@@ -6,7 +6,11 @@ import com.example.keepaccount.Repository.EventRepository
 import com.example.keepaccount.Repository.IBarRepository
 import com.example.keepaccount.Repository.IBudGetRepository
 import com.example.keepaccount.Repository.IEventRepository
+import com.example.keepaccount.Repository.IInvoiceRepository
+import com.example.keepaccount.Repository.ILotteryRepository
 import com.example.keepaccount.Repository.ISpendItemRepository
+import com.example.keepaccount.Repository.InvoiceRepository
+import com.example.keepaccount.Repository.LotteryRepository
 import com.example.keepaccount.Repository.SpendItemRepository
 import org.koin.dsl.module
 
@@ -17,4 +21,6 @@ val dataModule =
         factory<IBarRepository> { BarRepository(get(koinIO), get()) }
         factory<IBudGetRepository> { BudGetRepository(get(koinIO), get()) }
         factory<IEventRepository> { EventRepository(get(koinIO), get()) }
+        factory<ILotteryRepository> { LotteryRepository(get()) }
+        factory<IInvoiceRepository> { InvoiceRepository(get(koinIO), get()) }
     }

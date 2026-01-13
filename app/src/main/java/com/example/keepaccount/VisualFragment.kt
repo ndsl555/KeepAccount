@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import com.example.keepaccount.ViewModels.SortType
 import com.example.keepaccount.ViewModels.VisualSharedViewModel
 import com.example.keepaccount.databinding.FragmentVisualBinding
-import com.example.keepaccount.ui.adapter.ViewPagerAdapter
+import com.example.keepaccount.ui.adapter.VisualFragmentViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
@@ -38,7 +38,7 @@ class VisualFragment : Fragment() {
         setHasOptionsMenu(true)
         // 設定 ViewPager adapter
         val viewPager = binding.viewpager2
-        viewPager.adapter = ViewPagerAdapter(parentFragmentManager, lifecycle)
+        viewPager.adapter = VisualFragmentViewPagerAdapter(parentFragmentManager, lifecycle)
 
         // 設定 TabLayout + ViewPager2
         TabLayoutMediator(binding.tabLayout, viewPager) { tab, position ->

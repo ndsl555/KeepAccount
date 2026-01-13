@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.navigationItemListFragment,
                     R.id.navigationEventListFragment,
                     R.id.navigationStripFragment,
-                    R.id.navigationBarcodeFragment,
+                    R.id.navigationBarCodeAndInvoiceFragment,
                     R.id.navigationVisualFragment,
                 ),
             )
@@ -59,8 +59,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_budget ->
                     navController.navigate(NavHomeGraphDirections.actionGlobalToNavigationStripFragment())
 
-                R.id.nav_barcode ->
-                    navController.navigate(NavHomeGraphDirections.actionGlobalToNavigationBarcodeFragment())
+                R.id.nav_barcode_invoice ->
+                    navController.navigate(NavHomeGraphDirections.actionGlobalToNavigationBarCodeAndInvoiceFragment())
 
                 R.id.nav_report ->
                     navController.navigate(NavHomeGraphDirections.actionGlobalToNavigationVisualFragment())

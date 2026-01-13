@@ -8,6 +8,7 @@ import com.example.keepaccount.ViewModels.BarcodeViewModel
 import com.example.keepaccount.ViewModels.EventDetailViewModel
 import com.example.keepaccount.ViewModels.EventListViewModel
 import com.example.keepaccount.ViewModels.ItemListViewModel
+import com.example.keepaccount.ViewModels.LotteryCheckViewModel
 import com.example.keepaccount.ViewModels.StripViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
@@ -17,6 +18,7 @@ val viewModule: Module =
     module {
         includes(ioDispatcherModule, domainModule, moshiModule)
         viewModel { BarcodeViewModel(get(), get()) }
+        viewModel { LotteryCheckViewModel(get(), get(), get()) }
         viewModel { AddItemViewModel(get(), get()) }
         viewModel { ItemListViewModel(get(), get(), get()) }
         viewModel { StripViewModel(get(), get(), get()) }

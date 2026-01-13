@@ -100,12 +100,6 @@
             app:popUpToInclusive="true" />
     </fragment>
 
-    <!-- (保留你原本的 Barcode / Budget Fragment) -->
-    <fragment
-        android:id="@+id/navigationBarcodeFragment"
-        android:name="com.example.keepaccount.BarCodeFragment"
-        android:label="@string/barcode_fragment_title"
-        tools:layout="@layout/fragment_barcode" />
 
     <fragment
         android:id="@+id/navigationStripFragment"
@@ -119,6 +113,14 @@
         android:label="@string/visual_fragment_title"
         tools:layout="@layout/fragment_visual" />
 
+    <fragment
+        android:id="@+id/navigationBarCodeAndInvoiceFragment"
+        android:name="com.example.keepaccount.BarCodeAndInvoiceFragment"
+        android:label="@string/barcode_and_invoice_fragment_title"
+        tools:layout="@layout/fragment_barcode_invoice"/>
+
+
+
 
 
     <!-- Global actions 保留 -->
@@ -130,9 +132,6 @@
         android:id="@+id/action_global_to_navigationEventListFragment"
         app:destination="@id/navigationEventListFragment" />
 
-    <action
-        android:id="@+id/action_global_to_navigationBarcodeFragment"
-        app:destination="@id/navigationBarcodeFragment" />
 
     <action
         android:id="@+id/action_global_to_navigationStripFragment"
@@ -141,6 +140,9 @@
     <action
         android:id="@+id/action_global_to_navigationVisualFragment"
         app:destination="@id/navigationVisualFragment"/>
+    <action
+        android:id="@+id/action_global_to_navigationBarCodeAndInvoiceFragment"
+        app:destination="@id/navigationBarCodeAndInvoiceFragment"/>
 
 
 

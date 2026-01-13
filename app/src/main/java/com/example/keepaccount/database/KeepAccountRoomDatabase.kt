@@ -1,12 +1,15 @@
 package com.example.keepaccount.database
 
 import androidx.room.Database
-import androidx.room.RoomDatabase // Make sure RoomDatabase is imported
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.keepaccount.Entity.BarEntity
 import com.example.keepaccount.Entity.BudGet
+import com.example.keepaccount.Entity.Converters
 import com.example.keepaccount.Entity.Event
+import com.example.keepaccount.Entity.InvoiceNumber
 import com.example.keepaccount.Entity.Item
 
 @Database(
@@ -15,10 +18,12 @@ import com.example.keepaccount.Entity.Item
         Item::class,
         BudGet::class,
         Event::class,
+        InvoiceNumber::class,
     ],
-    version = 6,
+    version = 7,
     exportSchema = true,
 )
+@TypeConverters(Converters::class)
 abstract class KeepAccountRoomDatabase : RoomDatabase(), KeepAccountDatabase {
     companion object {
         const val DATABASE_NAME = "KeepAccount.db"
@@ -122,6 +127,24 @@ abstract class KeepAccountRoomDatabase : RoomDatabase(), KeepAccountDatabase {
 
                     // 4. Rename the new table to the original name
                     db.execSQL("ALTER TABLE ItemTable_new RENAME TO ItemTable")
+                }
+            }
+
+        val MIGRATION_6_7 =
+            object : Migration(6, 7) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    //    創建 InvoiceTable
+
+                    db.execSQL(
+                        """
+                        CREATE TABLE IF NOT EXISTS `InvoiceTable` (
+                            `id` INTEGER PRIMARY KEY NOT NULL,
+                            `specialistPrize` TEXT NOT NULL,
+                            `specialPrize` TEXT NOT NULL,
+                            `firstPrize` TEXT NOT NULL
+                        )
+                        """.trimIndent(),
+                    )
                 }
             }
     }
