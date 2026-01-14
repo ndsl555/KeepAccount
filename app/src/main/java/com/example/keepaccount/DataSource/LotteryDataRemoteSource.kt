@@ -1,5 +1,6 @@
 package com.example.keepaccount.DataSource
 
+import android.util.Log
 import com.example.keepaccount.Entity.InvoiceNumber
 import com.example.keepaccount.NetWork.LotteryService
 import com.example.keepaccount.Utils.Result
@@ -22,14 +23,20 @@ class LotteryDataRemoteSource(
                         // The class for bolded numbers has changed from "font-weight-bold" to "fw-bold".
                         // Select all elements with the "fw-bold" class and map them to their text content.
                         val numbers = doc.getElementsByClass("fw-bold").map { it.text() }
+                        val topicText = doc.getElementsByClass("etw-on").first()?.text()
 
                         // There should be at least 8 parts to form the numbers.
                         // 1 for special, 1 for specialist, and 3x2 for the first prizes.
 
+                        print(topicText)
                         print(numbers)
+                        Log.e("Parse topic", "topic: $topicText")
+                        Log.e("Parse numbers", "numbers: $numbers")
+
                         if (numbers.size >= 8) {
                             val invoiceNumber =
                                 InvoiceNumber(
+                                    topic = topicText ?: "",
                                     specialistPrize = numbers[0],
                                     specialPrize = numbers[1],
                                     firstPrize =

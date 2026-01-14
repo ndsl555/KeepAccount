@@ -22,7 +22,7 @@ class LotteryCheckViewModel(
     private val saveInvoiceUseCase: SaveInvoiceUseCase,
     private val loadInvoiceUseCase: LoadInvoiceUseCase,
 ) : ViewModel() {
-    private val _lotteryNumber = MutableStateFlow(InvoiceNumber(1, "", "", emptyList()))
+    private val _lotteryNumber = MutableStateFlow(InvoiceNumber(1, "", "", "", emptyList()))
     val lotteryNumber: StateFlow<InvoiceNumber> = _lotteryNumber.asStateFlow()
 
     private val _isLoading = MutableStateFlow(false)
@@ -96,6 +96,7 @@ class LotteryCheckViewModel(
         local: InvoiceNumber,
         remote: InvoiceNumber,
     ): Boolean {
+        if (local.topic != remote.topic) return true
         if (local.firstPrize.size != remote.firstPrize.size) return true
         if (local.firstPrize.zip(remote.firstPrize).any { it.first != it.second }) return true
         if (local.specialistPrize != remote.specialistPrize) return true

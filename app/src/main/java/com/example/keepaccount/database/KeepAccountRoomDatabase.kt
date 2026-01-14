@@ -20,7 +20,7 @@ import com.example.keepaccount.Entity.Item
         Event::class,
         InvoiceNumber::class,
     ],
-    version = 7,
+    version = 8,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -145,6 +145,14 @@ abstract class KeepAccountRoomDatabase : RoomDatabase(), KeepAccountDatabase {
                         )
                         """.trimIndent(),
                     )
+                }
+            }
+
+        val MIGRATION_7_8 =
+            object : Migration(7, 8) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    // 新增 topic 欄位
+                    db.execSQL("ALTER TABLE `InvoiceTable` ADD COLUMN `topic` TEXT NOT NULL DEFAULT ''")
                 }
             }
     }

@@ -34,6 +34,7 @@ val databaseModule =
                 .addMigrations(KeepAccountRoomDatabase.MIGRATION_4_5)
                 .addMigrations(KeepAccountRoomDatabase.MIGRATION_5_6)
                 .addMigrations(KeepAccountRoomDatabase.MIGRATION_6_7)
+                .addMigrations(KeepAccountRoomDatabase.MIGRATION_7_8)
             builder
                 .build()
         }

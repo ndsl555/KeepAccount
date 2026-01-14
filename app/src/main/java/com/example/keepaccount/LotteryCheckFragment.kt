@@ -34,7 +34,7 @@ class LotteryCheckFragment : Fragment() {
 
     private val viewModel: LotteryCheckViewModel by viewModel()
 
-    private var lotteryNumber = InvoiceNumber(1, "", "", emptyList())
+    private var lotteryNumber = InvoiceNumber(1, "", "", "", emptyList())
     private var allPrizes = emptyList<Prize>()
 
     enum class WinningState {
@@ -89,6 +89,7 @@ class LotteryCheckFragment : Fragment() {
                     val visibility2 = if (isLoading) View.VISIBLE else View.GONE
                     binding.lotteryInputContainer.visibility = visibility
                     binding.hint.visibility = visibility
+                    binding.hintTopic.visibility = visibility
                     binding.prizeContainer.visibility = visibility
                     binding.loadingContainer.visibility = visibility2
                 }
@@ -131,6 +132,7 @@ class LotteryCheckFragment : Fragment() {
             firstPrizeMappingContainer.visibility = View.GONE
             specialPrizeMappingContainer.visibility = View.GONE
             eightNumberHint.visibility = View.GONE
+            hintTopic.text = lotteryNumber.topic
         }
 
     private fun setupSwipeToRefresh() {
