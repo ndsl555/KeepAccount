@@ -138,7 +138,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:text="頭獎"
+                            android:text="@string/first_prize"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -169,7 +169,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:text="頭獎"
+                            android:text="@string/first_prize"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -200,7 +200,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:text="頭獎"
+                            android:text="@string/first_prize"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -231,7 +231,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:text="特別獎"
+                            android:text="@string/special_prize"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -247,7 +247,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:gravity="end"
-                            android:text="需八碼全中"/>
+                            android:text="@string/eight_digits_required"/>
                     </LinearLayout>
 
                     <!-- 特獎 -->
@@ -262,7 +262,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:text="特獎"
+                            android:text="@string/grand_prize"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -278,7 +278,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:gravity="end"
-                            android:text="需八碼全中"/>
+                            android:text="@string/eight_digits_required"/>
 
 
                     </LinearLayout>
@@ -295,7 +295,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="獎金對照表"
+                            android:text="@string/prize_comparison_table"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="8dp" />
@@ -311,12 +311,12 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="末 3 碼" />
+                                android:text="@string/last_3_digits" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="200 元"
+                                android:text="@string/prize_200"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -336,12 +336,12 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="末 4 碼" />
+                                android:text="@string/last_4_digits" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1,000 元"
+                                android:text="@string/prize_1000"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -361,12 +361,12 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="末 5 碼" />
+                                android:text="@string/last_5_digits" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="4,000 元"
+                                android:text="@string/prize_4000"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -386,12 +386,12 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="末 6 碼" />
+                                android:text="@string/last_6_digits" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1萬 元"
+                                android:text="@string/prize_10000"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -411,12 +411,12 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="末 7 碼" />
+                                android:text="@string/last_7_digits" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="4萬 元"
+                                android:text="@string/prize_40000"
                                 android:textStyle="bold" />
                         </LinearLayout>
 

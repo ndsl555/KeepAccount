@@ -82,5 +82,20 @@
     <string name="topic">後三碼對獎</string>
     <string name="first_prize_bonus">必須8碼全中\n才可得獎金 %1$s 萬</string>
     <string name="loading_text">正在載入最新一期中獎號碼…</string>
+    <string name="first_prize">頭獎</string>
+    <string name="special_prize">特別獎</string>
+    <string name="grand_prize">特獎</string>
+    <string name="eight_digits_required">需八碼全中</string>
+    <string name="prize_comparison_table">獎金對照表</string>
+    <string name="last_3_digits">末 3 碼</string>
+    <string name="prize_200">200 元</string>
+    <string name="last_4_digits">末 4 碼</string>
+    <string name="prize_1000">1,000 元</string>
+    <string name="last_5_digits">末 5 碼</string>
+    <string name="prize_4000">4,000 元</string>
+    <string name="last_6_digits">末 6 碼</string>
+    <string name="prize_10000">1萬 元</string>
+    <string name="last_7_digits">末 7 碼</string>
+    <string name="prize_40000">4萬 元</string>
 
 </resources>

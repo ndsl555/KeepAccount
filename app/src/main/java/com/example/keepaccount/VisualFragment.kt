@@ -16,7 +16,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class VisualFragment : Fragment() {
-    private val tabTitleArray = arrayOf("今日消費狀況", "本月消費狀況")
     private var _binding: FragmentVisualBinding? = null
     private val binding get() = _binding!!
     private val sharedViewModel: VisualSharedViewModel by activityViewModel() // 或 by activityViewModels()
@@ -41,6 +40,7 @@ class VisualFragment : Fragment() {
         viewPager.adapter = VisualFragmentViewPagerAdapter(parentFragmentManager, lifecycle)
 
         // 設定 TabLayout + ViewPager2
+        val tabTitleArray = arrayOf(getString(R.string.today_consumption_status), getString(R.string.monthly_consumption_status))
         TabLayoutMediator(binding.tabLayout, viewPager) { tab, position ->
             tab.text = tabTitleArray[position]
         }.attach()
