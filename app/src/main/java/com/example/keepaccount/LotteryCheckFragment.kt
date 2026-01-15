@@ -3,11 +3,15 @@ package com.example.keepaccount
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.TextWatcher
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.keepaccount.Entity.InvoiceNumber
@@ -44,6 +48,8 @@ class LotteryCheckFragment : Fragment() {
         NONE,
     }
 
+    private lateinit var prizeNumberViewMap: Map<View, TextView>
+
     private val prizeViewMap by lazy {
         listOf(
             binding.layoutFirstPrize1,
@@ -75,6 +81,14 @@ class LotteryCheckFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        prizeNumberViewMap =
+            mapOf(
+                binding.layoutFirstPrize1 to binding.tvFirstPrize1Number,
+                binding.layoutFirstPrize2 to binding.tvFirstPrize2Number,
+                binding.layoutFirstPrize3 to binding.tvFirstPrize3Number,
+                binding.layoutSpecialistPrize to binding.tvSpecialistPrizeNumber,
+                binding.layoutSpecialPrize to binding.tvSpecialPrizeNumber,
+            )
         initView()
         setupSwipeToRefresh()
         setupLotteryInput()
@@ -228,6 +242,37 @@ class LotteryCheckFragment : Fragment() {
         }
     }
 
+    private fun applyLastThreeHighlight(
+        number: String,
+        input: String,
+        textView: TextView,
+    ) {
+        val spannable = SpannableString(number)
+
+        if (input.isNotEmpty()) {
+            val lastThree = number.takeLast(3)
+
+            if (lastThree.startsWith(input)) {
+                val start = number.length - 3
+                val end = start + input.length
+
+                spannable.setSpan(
+                    ForegroundColorSpan(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            android.R.color.holo_red_dark,
+                        ),
+                    ),
+                    start,
+                    end,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE,
+                )
+            }
+        }
+
+        textView.text = spannable
+    }
+
     private fun updatePrizeVisibility(input: String) {
         val result = checkWinningResult(input, lotteryNumber)
 
@@ -237,42 +282,86 @@ class LotteryCheckFragment : Fragment() {
             -> {
                 prizeViewMap.forEach { it.visibility = View.VISIBLE }
                 bingoContent.forEach { it.visibility = View.GONE }
+
+                // 還原文字（不著色）
+                prizeViewMap.forEachIndexed { index, layout ->
+                    val textView = prizeNumberViewMap[layout] ?: return@forEachIndexed
+                    textView.text = allPrizes[index].number
+                }
             }
 
             WinningState.MAYBE -> {
                 bingoContent.forEach { it.visibility = View.GONE }
+
                 prizeViewMap.forEachIndexed { index, layout ->
-                    val number = allPrizes[index].number
-                    layout.visibility =
-                        if (number.takeLast(3).startsWith(input)) View.VISIBLE else View.GONE
+                    val prize = allPrizes[index]
+                    val number = prize.number
+
+                    val lastThree = number.takeLast(3)
+                    val isMatch = lastThree.startsWith(input)
+
+                    layout.visibility = if (isMatch) View.VISIBLE else View.GONE
+
+                    val numberTextView =
+                        prizeNumberViewMap[layout] ?: return@forEachIndexed
+
+                    applyLastThreeHighlight(number, input, numberTextView)
                 }
             }
 
             WinningState.BINGO -> {
-                // 先隱藏全部
                 prizeViewMap.forEach { it.visibility = View.GONE }
                 bingoContent.forEach { it.visibility = View.GONE }
 
-                // 顯示中獎的獎項
                 result.winningPrizes.forEach { prize ->
                     when (prize) {
                         is PrizeType.FirstPrize -> {
-                            prizeViewMap[prize.index].visibility = View.VISIBLE
+                            val layout = prizeViewMap[prize.index]
+                            layout.visibility = View.VISIBLE
+
+                            val number = allPrizes[prize.index].number
+                            val textView =
+                                prizeNumberViewMap[layout] ?: return@forEach
+
+                            applyLastThreeHighlight(number, input, textView)
+
                             bingoContent[1].visibility = View.VISIBLE
                         }
+
                         PrizeType.SpecialistPrize -> {
-                            prizeViewMap[3].visibility = View.VISIBLE
+                            val layout = prizeViewMap[3]
+                            layout.visibility = View.VISIBLE
+
+                            val number = allPrizes[3].number
+                            val textView =
+                                prizeNumberViewMap[layout] ?: return@forEach
+
+                            applyLastThreeHighlight(number, input, textView)
+
                             bingoContent[0].visibility = View.VISIBLE
                             bingoContent[2].visibility = View.VISIBLE
+
                             binding.eightNumberHint.visibility = View.VISIBLE
-                            binding.eightNumberHint.text = getString(R.string.first_prize_bonus, "1000")
+                            binding.eightNumberHint.text =
+                                getString(R.string.first_prize_bonus, "1000")
                         }
+
                         PrizeType.SpecialPrize -> {
-                            prizeViewMap[4].visibility = View.VISIBLE
+                            val layout = prizeViewMap[4]
+                            layout.visibility = View.VISIBLE
+
+                            val number = allPrizes[4].number
+                            val textView =
+                                prizeNumberViewMap[layout] ?: return@forEach
+
+                            applyLastThreeHighlight(number, input, textView)
+
                             bingoContent[0].visibility = View.VISIBLE
                             bingoContent[2].visibility = View.VISIBLE
+
                             binding.eightNumberHint.visibility = View.VISIBLE
-                            binding.eightNumberHint.text = getString(R.string.first_prize_bonus, "200")
+                            binding.eightNumberHint.text =
+                                getString(R.string.first_prize_bonus, "200")
                         }
                     }
                 }
