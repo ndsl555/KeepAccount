@@ -101,14 +101,35 @@
                         tools:text="3" />
                 </LinearLayout>
                 <!-- 提示文字 -->
-                <TextView
-                    android:id="@+id/hint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                <LinearLayout
                     android:layout_marginTop="24dp"
-                    android:gravity="center"
-                    android:text="@string/hint_enter_numbers" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/hint"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:text="@string/hint_enter_numbers"/>
+
+                    <TextView
+                        android:id="@+id/count"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/count_invoice"
+                        android:gravity="center"/>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/hintTopic"

@@ -35,6 +35,7 @@ import kotlin.text.takeLast
 class LotteryCheckFragment : Fragment() {
     private var _binding: FragmentLotterycheckBinding? = null
     private val binding get() = _binding!!
+    private var count = 0
 
     private val viewModel: LotteryCheckViewModel by viewModel()
 
@@ -147,6 +148,7 @@ class LotteryCheckFragment : Fragment() {
             specialPrizeMappingContainer.visibility = View.GONE
             eightNumberHint.visibility = View.GONE
             hintTopic.text = lotteryNumber.topic
+            binding.count.text = ""
         }
 
     private fun setupSwipeToRefresh() {
@@ -192,6 +194,10 @@ class LotteryCheckFragment : Fragment() {
 
                 override fun afterTextChanged(s: Editable?) {
                     var text = s?.toString().orEmpty()
+                    if (text.length == 3) {
+                        count++
+                        binding.count.text = getString(R.string.count_invoice, count.toString())
+                    }
                     if (text.length > 3) { // 超過 3 碼 → 重置，只留最後一碼
                         val lastChar = text.last().toString()
                         s?.replace(0, s.length, lastChar)

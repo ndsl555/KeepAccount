@@ -97,5 +97,7 @@
     <string name="prize_10000">1萬 元</string>
     <string name="last_7_digits">末 7 碼</string>
     <string name="prize_40000">4萬 元</string>
+    <string name="count_invoice">共%1$s張</string>
+
 
 </resources>
