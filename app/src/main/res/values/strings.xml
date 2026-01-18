@@ -29,6 +29,8 @@
     <string name="delete_question">確定要刪除此項目?</string>
     <string name="no">取消</string>
     <string name="yes">確定</string>
+    <string name="i_know">知道了</string>
+    <string name="go_to_setting">前往設定</string>
     <string name="jump_to_nav_event_list_fragment">請至項目管理頁,新增或修改支出項目</string>
     <string name="currency_symbol">$</string>
     <string name="edit_item">Edit Item</string>

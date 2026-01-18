@@ -41,22 +41,35 @@
             android:layout_height="100dp"
             android:layout_marginTop="16dp"
             android:src="@drawable/outline_android_wifi_3_bar_question_24"
-            app:layout_constraintBottom_toTopOf="@+id/positive_button"
+            app:layout_constraintBottom_toTopOf="@+id/ok_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dialog_message" />
 
 
         <Button
-            android:id="@+id/positive_button"
+            android:id="@+id/ok_button"
             style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.178"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="OK" />
+            tools:text="@string/i_know" />
+
+        <Button
+            android:id="@+id/go_to_setting_button"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ok_button"
+            tools:test="@string/go_to_setting"
+            />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
