@@ -15,6 +15,7 @@ constraintlayout = "2.2.1"
 material = "1.13.0"
 navigationFragment = "2.9.4"
 navigationUiKtx = "2.7.7"
+poiOoxml = "5.5.1"
 roomCompiler = "2.8.0"
 roomCommonJvm = "2.8.0"
 roomKtx = "2.8.0"
@@ -36,6 +37,7 @@ jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 colorpicker = { module = "com.github.QuadFlask:colorpicker", version.ref = "colorpicker" }
 material-calendar-view = { module = "com.applandeo:material-calendar-view", version.ref = "materialCalendarView" }
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
+poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poiOoxml" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 zxing-core = { group = "com.google.zxing", name = "core", version = "3.4.1" }

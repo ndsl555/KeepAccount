@@ -6,4 +6,7 @@
     <item
         android:id="@+id/menu_show_by_ascending"
         android:title="@string/ascend"/>
+    <item
+        android:id="@+id/menu_export_to_excel"
+        android:title="@string/export_to_excel"/>
 </menu>

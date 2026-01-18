@@ -69,6 +69,12 @@ class ItemListFragment : Fragment() {
         }
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+
+        menu.findItem(R.id.menu_export_to_excel)?.isVisible = false
+    }
+
     override fun onCreateOptionsMenu(
         menu: Menu,
         inflater: MenuInflater,

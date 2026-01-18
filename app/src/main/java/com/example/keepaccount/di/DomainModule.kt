@@ -8,6 +8,7 @@ import com.example.keepaccount.UseCase.DeleteEventUseCase
 import com.example.keepaccount.UseCase.DeleteItemByDateAndNameUseCase
 import com.example.keepaccount.UseCase.DeleteItemByNameUseCase
 import com.example.keepaccount.UseCase.DeleteItemUseCase
+import com.example.keepaccount.UseCase.ExportMonthlyConsumptionToExcelUseCase
 import com.example.keepaccount.UseCase.GetBudGetUseCase
 import com.example.keepaccount.UseCase.GetEventByIdNameUseCase
 import com.example.keepaccount.UseCase.GetEventsUseCase
@@ -23,6 +24,7 @@ import com.example.keepaccount.UseCase.SaveInvoiceUseCase
 import com.example.keepaccount.UseCase.UpdateEventColorByEventNameUseCase
 import com.example.keepaccount.UseCase.UpdateEventUseCase
 import com.example.keepaccount.UseCase.UpdateItemUseCase
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val domainModule =
@@ -51,4 +53,5 @@ val domainModule =
         factory { LotteryCheckUseCase(get(), get(koinIO)) }
         factory { SaveInvoiceUseCase(get(), get(koinIO)) }
         factory { LoadInvoiceUseCase(get(), get(koinIO)) }
+        factory { ExportMonthlyConsumptionToExcelUseCase(androidContext()) }
     }

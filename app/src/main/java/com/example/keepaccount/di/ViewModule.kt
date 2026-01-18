@@ -10,6 +10,7 @@ import com.example.keepaccount.ViewModels.EventListViewModel
 import com.example.keepaccount.ViewModels.ItemListViewModel
 import com.example.keepaccount.ViewModels.LotteryCheckViewModel
 import com.example.keepaccount.ViewModels.StripViewModel
+import com.example.keepaccount.ViewModels.VisualSharedViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -27,4 +28,5 @@ val viewModule: Module =
         viewModel { EventDetailViewModel(get(), get(), get(), get()) }
         viewModel { AddEventViewModel(get(), get(), get(), get(), get()) }
         viewModel { EventListViewModel(get()) }
+        viewModel { VisualSharedViewModel(get(), get()) }
     }

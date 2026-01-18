@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.keepaccount.Extension.launchAndRepeatWithViewLifecycle
 import com.example.keepaccount.ViewModels.VisualSharedViewModel
@@ -17,6 +16,7 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.formatter.PercentFormatter
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -28,7 +28,7 @@ class MonthPieFragment : Fragment() {
     private val thismonth = (calendar.get(Calendar.MONTH) + 1).toString()
 
     private val viewModel: MonthPieViewModel by viewModel()
-    private val sharedViewModel: VisualSharedViewModel by activityViewModels()
+    private val sharedViewModel: VisualSharedViewModel by activityViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
