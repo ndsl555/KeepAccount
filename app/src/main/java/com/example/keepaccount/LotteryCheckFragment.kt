@@ -1,7 +1,14 @@
 package com.example.keepaccount
 
+import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableString
@@ -12,13 +19,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.createBitmap
 import androidx.fragment.app.Fragment
 import com.example.keepaccount.Entity.InvoiceNumber
 import com.example.keepaccount.Entity.isReady
 import com.example.keepaccount.Extension.launchAndRepeatWithViewLifecycle
 import com.example.keepaccount.ViewModels.LotteryCheckViewModel
 import com.example.keepaccount.databinding.FragmentLotterycheckBinding
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.collections.any
@@ -65,6 +75,7 @@ class LotteryCheckFragment : Fragment() {
             binding.eightNumberHint,
             binding.firstPrizeMappingContainer,
             binding.specialPrizeMappingContainer,
+            binding.chipScreenshot,
         )
     }
 
@@ -82,6 +93,10 @@ class LotteryCheckFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        binding.chipScreenshot.setOnClickListener {
+            takeScreenshot(binding.containerLayout)
+        }
+
         prizeNumberViewMap =
             mapOf(
                 binding.layoutFirstPrize1 to binding.tvFirstPrize1Number,
@@ -93,6 +108,61 @@ class LotteryCheckFragment : Fragment() {
         initView()
         setupSwipeToRefresh()
         setupLotteryInput()
+    }
+
+    private fun takeScreenshot(view: View) {
+        view.post {
+            val bitmap =
+                createBitmap(view.width, view.height)
+            val canvas = Canvas(bitmap)
+            view.draw(canvas)
+            saveBitmap(bitmap)
+        }
+    }
+
+    private fun saveBitmap(bitmap: Bitmap) {
+        val filename = "lottery_${System.currentTimeMillis()}.png"
+
+        val values =
+            ContentValues().apply {
+                put(MediaStore.Images.Media.DISPLAY_NAME, filename)
+                put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+                put(
+                    MediaStore.Images.Media.RELATIVE_PATH,
+                    Environment.DIRECTORY_PICTURES + "/KeepAccount",
+                )
+            }
+
+        val uri =
+            requireContext().contentResolver.insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                values,
+            )
+
+        if (uri == null) {
+            Toast.makeText(requireContext(), "截圖失敗", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        requireContext().contentResolver.openOutputStream(uri).use { out ->
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out!!)
+        }
+
+        Snackbar.make(binding.root, "截圖已儲存", Snackbar.LENGTH_LONG)
+            .setAction("查看") { openImage(uri) }
+            .show()
+    }
+
+    private fun openImage(uri: Uri) {
+        val intent =
+            Intent(Intent.ACTION_VIEW).apply {
+                setDataAndType(uri, "image/*")
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+
+        if (intent.resolveActivity(requireContext().packageManager) != null) {
+            startActivity(intent)
+        }
     }
 
     private fun initView() {
@@ -149,6 +219,7 @@ class LotteryCheckFragment : Fragment() {
             eightNumberHint.visibility = View.GONE
             hintTopic.text = lotteryNumber.topic
             binding.count.text = ""
+            chipScreenshot.visibility = View.GONE
         }
 
     private fun setupSwipeToRefresh() {
@@ -332,6 +403,7 @@ class LotteryCheckFragment : Fragment() {
                             applyLastThreeHighlight(number, input, textView)
 
                             bingoContent[1].visibility = View.VISIBLE
+                            bingoContent[3].visibility = View.VISIBLE
                         }
 
                         PrizeType.SpecialistPrize -> {

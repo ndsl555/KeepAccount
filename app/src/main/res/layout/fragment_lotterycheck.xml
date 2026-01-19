@@ -443,6 +443,18 @@
 
 
                     </LinearLayout>
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_screenshot"
+                        style="@style/Widget.MaterialComponents.Chip.Action"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="📸 截圖"
+                        android:layout_gravity="center"
+                        app:chipIconVisible="true"
+                        app:chipStrokeWidth="1dp" />
+
+
                     <LinearLayout
                         android:layout_marginTop="24dp"
                         android:gravity="center"

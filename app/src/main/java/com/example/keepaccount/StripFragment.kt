@@ -27,6 +27,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -257,7 +258,9 @@ class StripFragment : Fragment() {
         contentValues.put(MediaStore.Images.Media.IS_PENDING, 0)
         resolver.update(imageUri, contentValues, null, null)
 
-        openImage(imageUri)
+        Snackbar.make(binding.root, "截圖已儲存", Snackbar.LENGTH_LONG)
+            .setAction("查看") { openImage(imageUri) }
+            .show()
     }
 
     private fun openImage(uri: Uri) {
