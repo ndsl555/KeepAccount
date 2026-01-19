@@ -2,17 +2,20 @@ package com.example.keepaccount.UseCase
 
 import android.content.ContentValues
 import android.content.Context
+import android.net.Uri
 import android.provider.MediaStore
 import com.example.keepaccount.Entity.Item
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ExportMonthlyConsumptionToExcelUseCase(private val context: Context) {
+class ExportMonthlyConsumptionToExcelUseCase(
+    private val context: Context,
+) {
     /**
-     * 匯出 Excel，回傳是否成功
+     * 匯出 Excel，成功回傳 Uri，失敗回傳 null
      */
-    operator fun invoke(items: List<Item>): Boolean {
+    operator fun invoke(items: List<Item>): Uri? {
         val workbook = XSSFWorkbook()
         val sheet = workbook.createSheet("當月花銷明細")
 
@@ -27,33 +30,42 @@ class ExportMonthlyConsumptionToExcelUseCase(private val context: Context) {
             val row = sheet.createRow(index + 1)
             row.createCell(0).setCellValue("${item.itemYear}/${item.itemMonth}/${item.itemDay}")
             row.createCell(1).setCellValue(item.itemName)
-            row.createCell(2).setCellValue(item.itemPrice.toString())
+            row.createCell(2).setCellValue(item.itemPrice.toDouble())
         }
 
-        val timeStamp = SimpleDateFormat("yyyyMM", Locale.getDefault()).format(Date())
+        val timeStamp =
+            SimpleDateFormat("yyyyMM", Locale.getDefault()).format(Date())
         val fileName = "${timeStamp}花銷明細.xlsx"
 
         val contentValues =
             ContentValues().apply {
                 put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
-                put(MediaStore.MediaColumns.MIME_TYPE, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                put(MediaStore.MediaColumns.RELATIVE_PATH, "Documents/KeepAccount")
+                put(
+                    MediaStore.MediaColumns.MIME_TYPE,
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                )
+                put(
+                    MediaStore.MediaColumns.RELATIVE_PATH,
+                    "Documents/KeepAccount",
+                )
             }
+
+        val resolver = context.contentResolver
 
         return try {
-            val resolver = context.contentResolver
             val uri =
                 resolver.insert(MediaStore.Files.getContentUri("external"), contentValues)
-                    ?: return false
+                    ?: return null
 
-            resolver.openOutputStream(uri).use { outputStream ->
+            resolver.openOutputStream(uri)?.use { outputStream ->
                 workbook.write(outputStream)
             }
+
             workbook.close()
-            true
+            uri
         } catch (e: Exception) {
             e.printStackTrace()
-            false
+            null
         }
     }
 }
