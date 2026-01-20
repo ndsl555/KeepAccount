@@ -149,20 +149,21 @@ class LotteryCheckFragment : Fragment() {
         }
 
         Snackbar.make(binding.root, "截圖已儲存", Snackbar.LENGTH_LONG)
-            .setAction("查看") { openImage(uri) }
+            .setAction(getString(R.string.screen_shot_and_share)) { shareImage(uri) }
             .show()
     }
 
-    private fun openImage(uri: Uri) {
+    private fun shareImage(uri: Uri) {
         val intent =
-            Intent(Intent.ACTION_VIEW).apply {
-                setDataAndType(uri, "image/*")
+            Intent(Intent.ACTION_SEND).apply {
+                type = "image/*"
+                putExtra(Intent.EXTRA_STREAM, uri)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
 
-        if (intent.resolveActivity(requireContext().packageManager) != null) {
-            startActivity(intent)
-        }
+        startActivity(
+            Intent.createChooser(intent, "分享圖片"),
+        )
     }
 
     private fun initView() {
