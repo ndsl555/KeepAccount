@@ -1,6 +1,9 @@
 package com.example.keepaccount
 
 import android.app.Dialog
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
@@ -32,6 +35,24 @@ class BarCodeFragment : Fragment() {
         viewModel.loadLatestBarcode()
 
         return binding.root
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.codeNum.setOnClickListener {
+            val textToCopy = binding.codeNum.text.toString()
+
+            if (textToCopy.isNotEmpty()) {
+                val clipboard = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("barcode", textToCopy)
+                clipboard.setPrimaryClip(clip)
+
+                Toast.makeText(requireContext(), "已複製: $textToCopy", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun setupListeners() {
