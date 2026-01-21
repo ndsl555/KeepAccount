@@ -149,7 +149,7 @@ class LotteryCheckFragment : Fragment() {
         }
 
         Snackbar.make(binding.root, "截圖已儲存", Snackbar.LENGTH_LONG)
-            .setAction(getString(R.string.screen_shot_and_share)) { shareImage(uri) }
+            .setAction(getString(R.string.share)) { shareImage(uri) }
             .show()
     }
 

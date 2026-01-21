@@ -13,6 +13,7 @@ import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -42,6 +43,9 @@ class StripFragment : Fragment() {
 
     private val viewModel: StripViewModel by viewModel()
 
+    private var currentCost: Int = 0
+    private var currentBudget: Int = 0
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,12 +59,45 @@ class StripFragment : Fragment() {
         initParam()
         initView()
         setupMenu()
+        setupListeners()
 
+        return binding.root
+    }
+
+    private fun setupListeners() {
         binding.insertBugetDialogBtn.setOnClickListener {
             setupEnterBudgetDialog()
         }
 
-        return binding.root
+        binding.visibleChip.setOnCheckedChangeListener { _, isChecked ->
+            applyChipState(isChecked)
+        }
+
+        applyChipState(binding.visibleChip.isChecked)
+    }
+
+    private fun applyChipState(isChecked: Boolean) {
+        binding.visibleChip.text =
+            if (isChecked) {
+                getString(R.string.text_gone)
+            } else {
+                getString(R.string.text_show)
+            }
+
+        binding.visibleChip.chipIcon =
+            if (isChecked) {
+                AppCompatResources.getDrawable(
+                    requireContext(),
+                    R.drawable.outline_visibility_off_24,
+                )
+            } else {
+                AppCompatResources.getDrawable(
+                    requireContext(),
+                    R.drawable.outline_visibility_24,
+                )
+            }
+
+        renderAmount()
     }
 
     private fun setupMenu() {
@@ -73,7 +110,6 @@ class StripFragment : Fragment() {
                     menuInflater: MenuInflater,
                 ) {
                     menuInflater.inflate(R.menu.option_menu, menu)
-
                     menu.findItem(R.id.menu_export_to_excel)?.isVisible = false
                     menu.findItem(R.id.menu_show_by_ascending)?.isVisible = false
                     menu.findItem(R.id.menu_show_by_dscending)?.isVisible = false
@@ -82,7 +118,6 @@ class StripFragment : Fragment() {
                 override fun onMenuItemSelected(item: MenuItem): Boolean {
                     return when (item.itemId) {
                         R.id.menu_export_picture -> {
-                            println("onMenuItemSelected")
                             saveChartAndOpen()
                             true
                         }
@@ -121,8 +156,10 @@ class StripFragment : Fragment() {
         cost: Int,
         budget: Int,
     ) {
-        binding.totalcostTv.text = getString(R.string.cost_with_unit, cost)
-        binding.budTv.text = getString(R.string.budget_with_unit, budget)
+        currentCost = cost
+        currentBudget = budget
+
+        renderAmount()
 
         val progress =
             if (budget <= 0) {
@@ -133,6 +170,20 @@ class StripFragment : Fragment() {
 
         binding.progressTv.text = "$progress%"
         binding.circularDeterminativePb.progress = progress
+    }
+
+    private fun renderAmount() {
+        val isHidden = binding.visibleChip.isChecked
+
+        if (isHidden) {
+            binding.totalcostTv.text = "****"
+            binding.budTv.text = "****"
+        } else {
+            binding.totalcostTv.text =
+                getString(R.string.cost_with_unit, currentCost)
+            binding.budTv.text =
+                getString(R.string.budget_with_unit, currentBudget)
+        }
     }
 
     private fun setupEnterBudgetDialog() {
@@ -146,13 +197,18 @@ class StripFragment : Fragment() {
 
         dialogView.findViewById<Button>(R.id.buttonlimit).setOnClickListener {
             val text =
-                dialogView.findViewById<EditText>(R.id.editTextlimit).text.toString().trim()
+                dialogView.findViewById<EditText>(R.id.editTextlimit)
+                    .text.toString().trim()
+
             val value = text.toIntOrNull()
 
             when {
                 text.isBlank() ->
-                    Toast.makeText(requireContext(), R.string.no_budget_toast, Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.no_budget_toast,
+                        Toast.LENGTH_SHORT,
+                    ).show()
 
                 value == null ->
                     Toast.makeText(

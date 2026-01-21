@@ -103,6 +103,9 @@
     <string name="export_to_excel">匯出當月開銷Excel表</string>
     <string name="export_picture">下載年度花費圖表</string>
     <string name="screen_shot_and_share">📸 截圖並分享</string>
+    <string name="share">分享</string>
+    <string name="text_gone">隱藏金額</string>
+    <string name="text_show">顯示金額</string>
 
 
 </resources>
