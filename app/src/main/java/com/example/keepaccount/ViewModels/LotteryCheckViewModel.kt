@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.keepaccount.Entity.InvoiceNumber
 import com.example.keepaccount.Entity.isReady
+import com.example.keepaccount.QrWinningResult
+import com.example.keepaccount.QrWinningType
 import com.example.keepaccount.UseCase.LoadInvoiceUseCase
 import com.example.keepaccount.UseCase.LotteryCheckUseCase
 import com.example.keepaccount.UseCase.SaveInvoiceUseCase
@@ -30,6 +32,46 @@ class LotteryCheckViewModel(
 
     init {
         getLotteryNumberFromDB()
+    }
+
+    fun checkWinningByQr(invoiceNumber: String): QrWinningResult {
+        val lottery = _lotteryNumber.value
+
+        if (!lottery.isReady()) {
+            return QrWinningResult(QrWinningType.NONE)
+        }
+
+        if (invoiceNumber == lottery.specialistPrize) {
+            return QrWinningResult(QrWinningType.SPECIALIST_PRIZE, "🎉恭喜！中「特別獎」 1000萬")
+        }
+
+        if (invoiceNumber == lottery.specialPrize) {
+            return QrWinningResult(QrWinningType.SPECIAL_PRIZE, "🎉恭喜！中「特獎」 200萬")
+        }
+
+        lottery.firstPrize.forEach { prize ->
+            when {
+                invoiceNumber == prize ->
+                    return QrWinningResult(QrWinningType.FIRST_PRIZE, "🎉恭喜！中「頭獎」 20萬")
+
+                invoiceNumber.takeLast(7) == prize.takeLast(7) ->
+                    return QrWinningResult(QrWinningType.FIRST_PRIZE, "🎉恭喜！中 4萬")
+
+                invoiceNumber.takeLast(6) == prize.takeLast(6) ->
+                    return QrWinningResult(QrWinningType.FIRST_PRIZE, "🎉恭喜！中 1萬")
+
+                invoiceNumber.takeLast(5) == prize.takeLast(5) ->
+                    return QrWinningResult(QrWinningType.FIRST_PRIZE, "🎉恭喜！中「特獎」 4千")
+
+                invoiceNumber.takeLast(4) == prize.takeLast(4) ->
+                    return QrWinningResult(QrWinningType.FIRST_PRIZE, "🎉恭喜！中「特獎」 1千")
+
+                invoiceNumber.takeLast(3) == prize.takeLast(3) ->
+                    return QrWinningResult(QrWinningType.FIRST_PRIZE, "🎉恭喜！中「特獎」 200")
+            }
+        }
+
+        return QrWinningResult(QrWinningType.NONE, "沒中 , 再接再厲 \uD83D\uDE05")
     }
 
     fun getLotteryNumberFromDB() {

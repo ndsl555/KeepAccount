@@ -106,6 +106,9 @@
     <string name="share">分享</string>
     <string name="text_gone">隱藏金額</string>
     <string name="text_show">顯示金額</string>
+    <string name="manual_check">手動對獎</string>
+    <string name="qr_code_scan">QR Code 掃描</string>
+    <string name="scan_next">掃描下一張</string>
 
 
 </resources>
