@@ -61,13 +61,13 @@ class LotteryCheckViewModel(
                     return QrWinningResult(QrWinningType.FIRST_PRIZE, "🎉恭喜！中 1萬")
 
                 invoiceNumber.takeLast(5) == prize.takeLast(5) ->
-                    return QrWinningResult(QrWinningType.FIRST_PRIZE, "🎉恭喜！中「特獎」 4千")
+                    return QrWinningResult(QrWinningType.FIRST_PRIZE, "🎉恭喜！中 4千")
 
                 invoiceNumber.takeLast(4) == prize.takeLast(4) ->
-                    return QrWinningResult(QrWinningType.FIRST_PRIZE, "🎉恭喜！中「特獎」 1千")
+                    return QrWinningResult(QrWinningType.FIRST_PRIZE, "🎉恭喜！中 1千")
 
                 invoiceNumber.takeLast(3) == prize.takeLast(3) ->
-                    return QrWinningResult(QrWinningType.FIRST_PRIZE, "🎉恭喜！中「特獎」 200")
+                    return QrWinningResult(QrWinningType.FIRST_PRIZE, "🎉恭喜！中 200")
             }
         }
 
