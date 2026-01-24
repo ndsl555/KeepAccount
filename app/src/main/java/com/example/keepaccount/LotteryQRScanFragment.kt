@@ -21,18 +21,16 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LotteryQRScanFragment : Fragment() {
     private val viewModel: LotteryCheckViewModel by viewModel()
-
     private var _binding: FragmentLotteryQrScanBinding? = null
     private val binding get() = _binding!!
 
-    // 停止掃描狀態
     private var isScanningPausedByResult = false
+    private var count = 0
 
-    // Fragment 是否已經準備好 lottery 資料
     private val isLotteryReady: Boolean
         get() = viewModel.lotteryNumber.value.isReady()
 
-    // 提取 QR Code 前 10 碼，取後 8 碼
+    // 取 QR 前 10 碼 → 驗證 → 取後 8 碼
     private fun extractInvoiceLast8FromQr(raw: String): String? {
         if (raw.length < 10) return null
         val head = raw.substring(0, 10)
@@ -51,13 +49,10 @@ class LotteryQRScanFragment : Fragment() {
                 if (isScanningPausedByResult) return
                 result ?: return
 
-                // 暫停掃描
                 binding.barcodeScanner.pause()
                 isScanningPausedByResult = true
 
-                val raw = result.text
-                val invoiceNumber = extractInvoiceLast8FromQr(raw)
-
+                val invoiceNumber = extractInvoiceLast8FromQr(result.text)
                 if (invoiceNumber == null) {
                     Toast.makeText(requireContext(), "無法解析發票號碼", Toast.LENGTH_SHORT).show()
                     isScanningPausedByResult = false
@@ -65,18 +60,21 @@ class LotteryQRScanFragment : Fragment() {
                     return
                 }
 
-                // 判斷中獎結果
                 val winningResult = viewModel.checkWinningByQr(invoiceNumber)
 
-                val visibilityState = if (winningResult.type == QrWinningType.NONE) View.GONE else View.VISIBLE
+                binding.textView.text = winningResult.money
 
-                val message = winningResult.money
+                // 只在成功時顯示與更新 count
+                count++
+                binding.count.apply {
+                    visibility = View.VISIBLE
+                    text = getString(R.string.count_invoice, count)
+                }
 
-                binding.textView.text = message
+                binding.chipScreenshot.visibility =
+                    if (winningResult.type == QrWinningType.NONE) View.GONE else View.VISIBLE
 
-                binding.chipScreenshot.visibility = visibilityState
-
-                Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), winningResult.money, Toast.LENGTH_LONG).show()
             }
 
             override fun possibleResultPoints(resultPoints: List<ResultPoint>) {}
@@ -101,18 +99,15 @@ class LotteryQRScanFragment : Fragment() {
         binding.barcodeScanner.post {
             val width = binding.barcodeScanner.width
             val height = binding.barcodeScanner.height
-
-            // 🔥 建議比例（發票 QR 很快）
-            val frameWidth = (width * 0.7f).toInt()
-            val frameHeight = (height * 0.3f).toInt()
-
-            barcodeView.framingRectSize = Size(frameWidth, frameHeight)
+            barcodeView.framingRectSize =
+                Size(
+                    (width * 0.7f).toInt(),
+                    (height * 0.3f).toInt(),
+                )
         }
 
-        // 設定連續掃描
         binding.barcodeScanner.decodeContinuous(callback)
 
-        // Chip 點擊 → 繼續掃描下一張
         binding.chipNextScan.setOnClickListener {
             isScanningPausedByResult = false
             binding.textView.text = ""
@@ -145,10 +140,7 @@ class LotteryQRScanFragment : Fragment() {
                 putExtra(Intent.EXTRA_STREAM, uri)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
-
-        startActivity(
-            Intent.createChooser(intent, "分享圖片"),
-        )
+        startActivity(Intent.createChooser(intent, "分享圖片"))
     }
 
     override fun onResume() {

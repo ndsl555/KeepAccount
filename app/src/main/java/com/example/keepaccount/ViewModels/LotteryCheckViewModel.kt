@@ -35,6 +35,8 @@ class LotteryCheckViewModel(
     }
 
     fun checkWinningByQr(invoiceNumber: String): QrWinningResult {
+        Log.e("LotteryCheckViewModel", "invoiceNumber: $invoiceNumber")
+
         val lottery = _lotteryNumber.value
 
         if (!lottery.isReady()) {
