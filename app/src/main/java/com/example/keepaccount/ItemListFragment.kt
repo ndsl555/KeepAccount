@@ -71,8 +71,6 @@ class ItemListFragment : Fragment() {
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        menu.findItem(R.id.menu_export_picture)?.isVisible = false
-
         menu.findItem(R.id.menu_export_to_excel)?.isVisible = false
     }
 

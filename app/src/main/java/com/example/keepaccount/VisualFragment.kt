@@ -81,9 +81,6 @@ class VisualFragment : Fragment() {
                     inflater: MenuInflater,
                 ) {
                     inflater.inflate(R.menu.option_menu, menu)
-
-                    // Visual 頁不顯示「匯出圖片」
-                    menu.findItem(R.id.menu_export_picture)?.isVisible = false
                 }
 
                 override fun onMenuItemSelected(item: MenuItem): Boolean {

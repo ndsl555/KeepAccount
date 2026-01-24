@@ -1,27 +1,21 @@
 package com.example.keepaccount
 
 import android.app.Dialog
-import android.content.ContentValues
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toDrawable
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import com.example.keepaccount.Extension.launchAndRepeatWithViewLifecycle
 import com.example.keepaccount.ViewModels.StripViewModel
 import com.example.keepaccount.databinding.FragmentStripBinding
+import com.example.keepaccount.util.ScreenshotUtil
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -58,7 +52,6 @@ class StripFragment : Fragment() {
 
         initParam()
         initView()
-        setupMenu()
         setupListeners()
 
         return binding.root
@@ -71,6 +64,23 @@ class StripFragment : Fragment() {
 
         binding.visibleChip.setOnCheckedChangeListener { _, isChecked ->
             applyChipState(isChecked)
+        }
+
+        binding.chipScreenshot.setOnClickListener {
+            ScreenshotUtil.captureAndSave(
+                context = requireContext(),
+                view = binding.lineChart,
+                onSuccess = { uri ->
+                    Snackbar.make(binding.root, "截圖已儲存", Snackbar.LENGTH_LONG)
+                        .setAction("查看") {
+                            openImage(uri)
+                        }
+                        .show()
+                },
+                onError = {
+                    Toast.makeText(requireContext(), "圖片儲存失敗", Toast.LENGTH_SHORT).show()
+                },
+            )
         }
 
         applyChipState(binding.visibleChip.isChecked)
@@ -98,36 +108,6 @@ class StripFragment : Fragment() {
             }
 
         renderAmount()
-    }
-
-    private fun setupMenu() {
-        val menuHost = requireActivity() as MenuHost
-
-        menuHost.addMenuProvider(
-            object : MenuProvider {
-                override fun onCreateMenu(
-                    menu: Menu,
-                    menuInflater: MenuInflater,
-                ) {
-                    menuInflater.inflate(R.menu.option_menu, menu)
-                    menu.findItem(R.id.menu_export_to_excel)?.isVisible = false
-                    menu.findItem(R.id.menu_show_by_ascending)?.isVisible = false
-                    menu.findItem(R.id.menu_show_by_dscending)?.isVisible = false
-                }
-
-                override fun onMenuItemSelected(item: MenuItem): Boolean {
-                    return when (item.itemId) {
-                        R.id.menu_export_picture -> {
-                            saveChartAndOpen()
-                            true
-                        }
-                        else -> false
-                    }
-                }
-            },
-            viewLifecycleOwner,
-            Lifecycle.State.RESUMED,
-        )
     }
 
     private fun initParam() {
@@ -280,43 +260,6 @@ class StripFragment : Fragment() {
             animateX(800)
             invalidate()
         }
-    }
-
-    private fun saveChartAndOpen() {
-        val bitmap = binding.lineChart.chartBitmap
-        val resolver = requireContext().contentResolver
-
-        val fileName = "YearlyCost_${System.currentTimeMillis()}.png"
-
-        val contentValues =
-            ContentValues().apply {
-                put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
-                put(MediaStore.Images.Media.MIME_TYPE, "image/png")
-                put(
-                    MediaStore.Images.Media.RELATIVE_PATH,
-                    Environment.DIRECTORY_PICTURES + "/KeepAccount",
-                )
-                put(MediaStore.Images.Media.IS_PENDING, 1)
-            }
-
-        val imageUri =
-            resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-                ?: run {
-                    Toast.makeText(requireContext(), "圖片建立失敗", Toast.LENGTH_SHORT).show()
-                    return
-                }
-
-        resolver.openOutputStream(imageUri)?.use { out ->
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
-        }
-
-        contentValues.clear()
-        contentValues.put(MediaStore.Images.Media.IS_PENDING, 0)
-        resolver.update(imageUri, contentValues, null, null)
-
-        Snackbar.make(binding.root, "截圖已儲存", Snackbar.LENGTH_LONG)
-            .setAction("查看") { openImage(imageUri) }
-            .show()
     }
 
     private fun openImage(uri: Uri) {
