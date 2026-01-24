@@ -158,11 +158,13 @@ class StripFragment : Fragment() {
         if (isHidden) {
             binding.totalcostTv.text = "****"
             binding.budTv.text = "****"
+            binding.lineChart.visibility = View.GONE
         } else {
             binding.totalcostTv.text =
                 getString(R.string.cost_with_unit, currentCost)
             binding.budTv.text =
                 getString(R.string.budget_with_unit, currentBudget)
+            binding.lineChart.visibility = View.VISIBLE
         }
     }
 
