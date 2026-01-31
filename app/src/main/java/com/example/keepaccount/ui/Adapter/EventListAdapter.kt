@@ -45,7 +45,9 @@ class EventListAdapter : RecyclerView.Adapter<EventListAdapter.ItemViewHolder>()
             binding.apply {
                 binding.itemName.text = event.eventName
                 println(event.eventColorCode)
-                binding.itemColorshow.setBackgroundColor(event.eventColorCode.toColorInt())
+                // 保留 XML 的圓形 drawable，只改顏色
+                val bg = itemColorshow.background.mutate()
+                bg.setTint(event.eventColorCode.toColorInt())
                 root.setOnClickListener {
                     onItemClick?.invoke(event)
                 }
