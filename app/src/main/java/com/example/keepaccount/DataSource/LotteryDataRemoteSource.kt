@@ -10,7 +10,7 @@ import org.jsoup.Jsoup
 
 class LotteryDataRemoteSource(
     private val lotteryService: LotteryService,
-    private val ioDispatcher: CoroutineDispatcher,
+    private val ioDispatcher: CoroutineDispatcher
 ) : ILotteryRemoteDataSource {
     override suspend fun getLotteryNumber(): Result<InvoiceNumber> =
         withContext(ioDispatcher) {
@@ -40,17 +40,17 @@ class LotteryDataRemoteSource(
                                     specialistPrize = numbers[0],
                                     specialPrize = numbers[1],
                                     firstPrize =
-                                        listOf(
-                                            numbers[2] + numbers[3], // Combine the two parts of the first prize number
-                                            numbers[4] + numbers[5],
-                                            numbers[6] + numbers[7],
-                                        ),
+                                    listOf(
+                                        numbers[2] + numbers[3], // Combine the two parts of the first prize number
+                                        numbers[4] + numbers[5],
+                                        numbers[6] + numbers[7]
+                                    )
                                 )
                             Result.Success(invoiceNumber)
                         } else {
                             // If parsing fails, return a specific error.
                             Result.Error(
-                                Exception("Error parsing lottery numbers: Not enough numbers found in HTML. Found: ${numbers.size}"),
+                                Exception("Error parsing lottery numbers: Not enough numbers found in HTML. Found: ${numbers.size}")
                             )
                         }
                     } else {

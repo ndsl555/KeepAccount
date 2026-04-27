@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class AddItemViewModel(
     private val addItemUseCase: AddItemUseCase,
-    private val getEventsUseCase: GetEventsUseCase,
+    private val getEventsUseCase: GetEventsUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<List<Event>>(emptyList())
     val uiState: StateFlow<List<Event>> = _uiState.asStateFlow()
@@ -36,7 +36,7 @@ class AddItemViewModel(
         itemColorcode: String,
         itemYear: String,
         itemMonth: String,
-        itemDay: String,
+        itemDay: String
     ): Boolean {
         if (itemName.isBlank() || itemPrice.isBlank() || itemColorcode.isBlank() || itemYear.isBlank() ||
             itemMonth.isBlank() || itemDay.isBlank()

@@ -30,7 +30,7 @@ interface ItemDao {
     @Query("UPDATE ItemTable SET colorcode = :newColorCode WHERE name = :name")
     suspend fun updateColorCodeByName(
         name: String,
-        newColorCode: String,
+        newColorCode: String
     )
 
     // 根據 name 刪除所有符合的資料
@@ -42,12 +42,12 @@ interface ItemDao {
     SELECT * FROM ItemTable
     WHERE year = :year AND month = :month AND day = :day
     ORDER BY id DESC
-""",
+"""
     )
     fun getItemsByDate(
         year: String,
         month: String,
-        day: String,
+        day: String
     ): List<Item>
 
     @Query(
@@ -55,21 +55,21 @@ interface ItemDao {
     SELECT * FROM ItemTable
     WHERE year = :year AND month = :month
     ORDER BY id DESC
-""",
+"""
     )
     fun getItemsByMonth(
         year: String,
-        month: String,
+        month: String
     ): List<Item>
 
     @Query(
-        "DELETE FROM ItemTable WHERE year = :year AND month = :month AND day = :day AND name = :name",
+        "DELETE FROM ItemTable WHERE year = :year AND month = :month AND day = :day AND name = :name"
     )
     suspend fun deleteByDateAndName(
         year: String,
         month: String,
         day: String,
-        name: String,
+        name: String
     )
 
     @Query(
@@ -77,10 +77,10 @@ interface ItemDao {
     SELECT day FROM ItemTable
     WHERE year = :year AND month = :month
     GROUP BY day
-""",
+"""
     )
     suspend fun getUsedDaysInMonth(
         year: String,
-        month: String,
+        month: String
     ): List<String>
 }

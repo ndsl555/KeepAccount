@@ -43,7 +43,7 @@ inline fun <reified T, reified R> Result<T>.successOrNot(successOr: (T) -> R): R
 
 inline fun <reified T, reified R> Result<T>.successResultOrThrow(
     throwable: (Throwable) -> Unit = {},
-    successOr: (T) -> R,
+    successOr: (T) -> R
 ): R {
     return when (this) {
         is Result.Success -> {

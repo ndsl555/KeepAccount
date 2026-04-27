@@ -11,13 +11,13 @@ class ExampleAdapter(private val exampleList: List<ExampleItem>) :
     RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): ExampleViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(
                 R.layout.today_item,
                 parent,
-                false,
+                false
             )
 
         return ExampleViewHolder(itemView)
@@ -25,7 +25,7 @@ class ExampleAdapter(private val exampleList: List<ExampleItem>) :
 
     override fun onBindViewHolder(
         holder: ExampleViewHolder,
-        position: Int,
+        position: Int
     ) {
         val currentItem = exampleList[position]
 

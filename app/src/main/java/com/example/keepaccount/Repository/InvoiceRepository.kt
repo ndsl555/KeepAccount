@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 
 class InvoiceRepository(
     private val ioDispatcher: CoroutineDispatcher,
-    private val dataSource: IInvoiceDataSource,
+    private val dataSource: IInvoiceDataSource
 ) : IInvoiceRepository {
     override suspend fun insertInvoice(invoice: InvoiceNumber) =
         withContext(ioDispatcher) {

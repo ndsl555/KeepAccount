@@ -13,6 +13,6 @@ class GetEventByIdNameUseCase(val eventRepository: IEventRepository, dispatcher:
     }
 
     data class Parameters(
-        val id: Int,
+        val id: Int
     )
 }

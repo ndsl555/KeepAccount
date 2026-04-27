@@ -9,5 +9,5 @@ data class BarEntity(
     @PrimaryKey
     var id: Int = 1,
     @ColumnInfo(name = "barCodeData")
-    var barCodeData: String = "",
+    var barCodeData: String = ""
 )

@@ -83,7 +83,7 @@ class LotteryQRScanFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLotteryQrScanBinding.inflate(inflater, container, false)
         return binding.root
@@ -91,7 +91,7 @@ class LotteryQRScanFragment : Fragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -102,7 +102,7 @@ class LotteryQRScanFragment : Fragment() {
             barcodeView.framingRectSize =
                 Size(
                     (width * 0.7f).toInt(),
-                    (height * 0.3f).toInt(),
+                    (height * 0.3f).toInt()
                 )
         }
 
@@ -128,7 +128,7 @@ class LotteryQRScanFragment : Fragment() {
                 },
                 onError = {
                     Toast.makeText(requireContext(), "截圖失敗", Toast.LENGTH_SHORT).show()
-                },
+                }
             )
         }
     }

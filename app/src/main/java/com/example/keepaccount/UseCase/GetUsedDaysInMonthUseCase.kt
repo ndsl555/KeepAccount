@@ -13,6 +13,6 @@ class GetUsedDaysInMonthUseCase(val itemRepository: ISpendItemRepository, dispat
 
     data class Parameters(
         val year: String,
-        val month: String,
+        val month: String
     )
 }

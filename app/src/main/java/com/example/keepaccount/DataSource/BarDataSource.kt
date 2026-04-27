@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 
 class BarDataSource(
     private val dao: BarCodeDao,
-    private val ioDispatcher: CoroutineDispatcher,
+    private val ioDispatcher: CoroutineDispatcher
 ) : IBarDataSource {
     override suspend fun insertBar(bar: BarEntity) =
         withContext(ioDispatcher) {

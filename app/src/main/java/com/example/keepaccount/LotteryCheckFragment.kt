@@ -15,7 +15,7 @@ class LotteryCheckFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLotterycheckBinding.inflate(inflater, container, false)
         return binding.root
@@ -23,7 +23,7 @@ class LotteryCheckFragment : Fragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -57,30 +57,30 @@ sealed class PrizeType {
 // 表示判斷結果
 data class WinningCheckResult(
     val state: WinningState,
-    val winningPrizes: List<PrizeType> = emptyList(), // 可以中多個獎
+    val winningPrizes: List<PrizeType> = emptyList() // 可以中多個獎
 )
 
 data class Prize(
     val type: String,
     val number: String,
-    val result: String,
+    val result: String
 )
 
 enum class WinningState {
     INITIAL,
     BINGO,
     MAYBE,
-    NONE,
+    NONE
 }
 
 enum class QrWinningType {
     SPECIALIST_PRIZE, // 特別獎
     SPECIAL_PRIZE, // 特獎
     FIRST_PRIZE, // 頭獎
-    NONE,
+    NONE
 }
 
 data class QrWinningResult(
     val type: QrWinningType,
-    val money: String? = null,
+    val money: String? = null
 )

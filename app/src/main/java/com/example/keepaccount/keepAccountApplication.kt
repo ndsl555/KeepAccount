@@ -24,8 +24,8 @@ class keepAccountApplication : Application() {
                     viewModule,
                     ioDispatcherModule,
                     moshiModule,
-                    networkModule,
-                ),
+                    networkModule
+                )
             )
         }
     }

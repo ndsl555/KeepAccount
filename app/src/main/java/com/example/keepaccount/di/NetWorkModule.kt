@@ -32,7 +32,7 @@ val networkModule =
         factory<ILotteryRemoteDataSource> {
             LotteryDataRemoteSource(
                 get(),
-                get(koinIO),
+                get(koinIO)
             )
         }
     }

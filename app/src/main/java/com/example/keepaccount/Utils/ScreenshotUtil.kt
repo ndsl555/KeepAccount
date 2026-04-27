@@ -15,7 +15,7 @@ object ScreenshotUtil {
         view: View,
         folderName: String = "KeepAccount",
         onSuccess: (uri: android.net.Uri) -> Unit,
-        onError: (() -> Unit)? = null,
+        onError: (() -> Unit)? = null
     ) {
         view.post {
             try {
@@ -39,7 +39,7 @@ object ScreenshotUtil {
     private fun saveBitmap(
         context: Context,
         bitmap: Bitmap,
-        folderName: String,
+        folderName: String
     ): android.net.Uri? {
         val filename = "lottery_${System.currentTimeMillis()}.png"
 
@@ -49,7 +49,7 @@ object ScreenshotUtil {
                 put(MediaStore.Images.Media.MIME_TYPE, "image/png")
                 put(
                     MediaStore.Images.Media.RELATIVE_PATH,
-                    Environment.DIRECTORY_PICTURES + "/$folderName",
+                    Environment.DIRECTORY_PICTURES + "/$folderName"
                 )
             }
 
@@ -57,7 +57,7 @@ object ScreenshotUtil {
         val uri =
             resolver.insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                values,
+                values
             ) ?: return null
 
         resolver.openOutputStream(uri)?.use { out ->

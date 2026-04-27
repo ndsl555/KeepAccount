@@ -13,7 +13,7 @@ data class InvoiceNumber(
     var topic: String,
     val specialistPrize: String, // 特獎
     val specialPrize: String, // 特別獎
-    val firstPrize: List<String>, // 頭獎（3 組）
+    val firstPrize: List<String> // 頭獎（3 組）
 )
 
 /**

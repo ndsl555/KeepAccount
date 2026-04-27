@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 
 class EventDataSource(
     private val dao: EventDao,
-    private val ioDispatcher: CoroutineDispatcher,
+    private val ioDispatcher: CoroutineDispatcher
 ) : IEventDataSource {
     override suspend fun getEvents(): Result<List<Event>> =
         withContext(ioDispatcher) {

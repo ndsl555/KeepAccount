@@ -11,12 +11,12 @@ class SaveInvoiceUseCase(val invoiceRepository: IInvoiceRepository, dispatcher: 
     UseCase<SaveInvoiceUseCase.Parameters, Unit>(dispatcher) {
     override suspend fun execute(parameters: Parameters): Result<Unit> {
         invoiceRepository.insertInvoice(
-            parameters.invoiceNumber,
+            parameters.invoiceNumber
         )
         return Success(Unit)
     }
 
     data class Parameters(
-        val invoiceNumber: InvoiceNumber,
+        val invoiceNumber: InvoiceNumber
     )
 }

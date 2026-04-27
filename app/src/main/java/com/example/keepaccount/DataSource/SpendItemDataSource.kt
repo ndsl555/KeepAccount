@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 
 class SpendItemDataSource(
     private val dao: ItemDao,
-    private val ioDispatcher: CoroutineDispatcher,
+    private val ioDispatcher: CoroutineDispatcher
 ) : ISpendItemDataSource {
     override suspend fun getItems(): Result<List<Item>> =
         withContext(ioDispatcher) {
@@ -45,7 +45,7 @@ class SpendItemDataSource(
     // 根據 name 更新 colorcode
     override suspend fun updateColorCodeByName(
         name: String,
-        newColorCode: String,
+        newColorCode: String
     ) = withContext(ioDispatcher) {
         dao.updateColorCodeByName(name, newColorCode)
     }
@@ -64,7 +64,7 @@ class SpendItemDataSource(
     override suspend fun getItemsByDate(
         year: String,
         month: String,
-        day: String,
+        day: String
     ): Result<List<Item>> =
         withContext(ioDispatcher) {
             return@withContext try {
@@ -77,7 +77,7 @@ class SpendItemDataSource(
 
     override suspend fun getItemsByMonth(
         year: String,
-        month: String,
+        month: String
     ): Result<List<Item>> {
         return withContext(ioDispatcher) {
             return@withContext try {
@@ -93,14 +93,14 @@ class SpendItemDataSource(
         year: String,
         month: String,
         day: String,
-        name: String,
+        name: String
     ) = withContext(ioDispatcher) {
         dao.deleteByDateAndName(year, month, day, name)
     }
 
     override suspend fun getUsedDaysInMonth(
         year: String,
-        month: String,
+        month: String
     ): Result<List<String>> =
         withContext(ioDispatcher) {
             return@withContext try {

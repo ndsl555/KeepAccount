@@ -15,6 +15,6 @@ class AddEventUseCase(val eventRepository: IEventRepository, dispatcher: Corouti
     }
 
     data class Parameters(
-        val event: Event,
+        val event: Event
     )
 }

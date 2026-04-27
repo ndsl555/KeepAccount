@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 
 class SpendItemRepository(
     private val ioDispatcher: CoroutineDispatcher,
-    private val dataSource: ISpendItemDataSource,
+    private val dataSource: ISpendItemDataSource
 ) : ISpendItemRepository {
     override suspend fun insertItem(item: Item) =
         withContext(ioDispatcher) {
@@ -33,7 +33,7 @@ class SpendItemRepository(
     // 根據 name 更新 colorcode
     override suspend fun updateColorCodeByName(
         name: String,
-        newColorCode: String,
+        newColorCode: String
     ) = withContext(ioDispatcher) {
         dataSource.updateColorCodeByName(name, newColorCode)
     }
@@ -52,7 +52,7 @@ class SpendItemRepository(
     override suspend fun getItemsByDate(
         year: String,
         month: String,
-        day: String,
+        day: String
     ): Result<List<Item>> =
         withContext(ioDispatcher) {
             return@withContext dataSource.getItemsByDate(year, month, day)
@@ -60,7 +60,7 @@ class SpendItemRepository(
 
     override suspend fun getItemsByMonth(
         year: String,
-        month: String,
+        month: String
     ): Result<List<Item>> {
         return withContext(ioDispatcher) {
             return@withContext dataSource.getItemsByMonth(year, month)
@@ -71,14 +71,14 @@ class SpendItemRepository(
         year: String,
         month: String,
         day: String,
-        name: String,
+        name: String
     ) = withContext(ioDispatcher) {
         dataSource.deleteByDateAndName(year, month, day, name)
     }
 
     override suspend fun getUsedDaysInMonth(
         year: String,
-        month: String,
+        month: String
     ): Result<List<String>> =
         withContext(ioDispatcher) {
             return@withContext dataSource.getUsedDaysInMonth(year, month)

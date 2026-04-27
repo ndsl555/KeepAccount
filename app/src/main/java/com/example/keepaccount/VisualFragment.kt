@@ -33,7 +33,7 @@ class VisualFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentVisualBinding.inflate(inflater, container, false)
         return binding.root
@@ -41,7 +41,7 @@ class VisualFragment : Fragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -60,7 +60,7 @@ class VisualFragment : Fragment() {
         val titles =
             arrayOf(
                 getString(R.string.today_consumption_status),
-                getString(R.string.monthly_consumption_status),
+                getString(R.string.monthly_consumption_status)
             )
 
         TabLayoutMediator(binding.tabLayout, binding.viewpager2) { tab, position ->
@@ -78,7 +78,7 @@ class VisualFragment : Fragment() {
             object : MenuProvider {
                 override fun onCreateMenu(
                     menu: Menu,
-                    inflater: MenuInflater,
+                    inflater: MenuInflater
                 ) {
                     inflater.inflate(R.menu.option_menu, menu)
                 }
@@ -105,7 +105,7 @@ class VisualFragment : Fragment() {
                 }
             },
             viewLifecycleOwner,
-            Lifecycle.State.RESUMED,
+            Lifecycle.State.RESUMED
         )
     }
 
@@ -135,7 +135,7 @@ class VisualFragment : Fragment() {
             Intent(Intent.ACTION_VIEW).apply {
                 setDataAndType(
                     uri,
-                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 )
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }

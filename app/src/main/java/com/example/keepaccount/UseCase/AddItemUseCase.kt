@@ -15,6 +15,6 @@ class AddItemUseCase(val itemRepository: ISpendItemRepository, dispatcher: Corou
     }
 
     data class Parameters(
-        val item: Item,
+        val item: Item
     )
 }

@@ -43,7 +43,7 @@ class StripFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentStripBinding.inflate(inflater, container, false)
 
@@ -79,7 +79,7 @@ class StripFragment : Fragment() {
                 },
                 onError = {
                     Toast.makeText(requireContext(), "圖片儲存失敗", Toast.LENGTH_SHORT).show()
-                },
+                }
             )
         }
 
@@ -98,12 +98,12 @@ class StripFragment : Fragment() {
             if (isChecked) {
                 AppCompatResources.getDrawable(
                     requireContext(),
-                    R.drawable.outline_visibility_off_24,
+                    R.drawable.outline_visibility_off_24
                 )
             } else {
                 AppCompatResources.getDrawable(
                     requireContext(),
-                    R.drawable.outline_visibility_24,
+                    R.drawable.outline_visibility_24
                 )
             }
 
@@ -134,7 +134,7 @@ class StripFragment : Fragment() {
 
     private fun updateUI(
         cost: Int,
-        budget: Int,
+        budget: Int
     ) {
         currentCost = cost
         currentBudget = budget
@@ -189,14 +189,14 @@ class StripFragment : Fragment() {
                     Toast.makeText(
                         requireContext(),
                         R.string.no_budget_toast,
-                        Toast.LENGTH_SHORT,
+                        Toast.LENGTH_SHORT
                     ).show()
 
                 value == null ->
                     Toast.makeText(
                         requireContext(),
                         R.string.enter_number_toast,
-                        Toast.LENGTH_SHORT,
+                        Toast.LENGTH_SHORT
                     ).show()
 
                 else -> {
@@ -239,7 +239,7 @@ class StripFragment : Fragment() {
                     object : ValueFormatter() {
                         override fun getAxisLabel(
                             value: Float,
-                            axis: AxisBase?,
+                            axis: AxisBase?
                         ): String {
                             return "${value.toInt()}月"
                         }
@@ -252,7 +252,7 @@ class StripFragment : Fragment() {
                     object : ValueFormatter() {
                         override fun getAxisLabel(
                             value: Float,
-                            axis: AxisBase?,
+                            axis: AxisBase?
                         ): String {
                             return "${value.toInt()}元"
                         }

@@ -19,14 +19,14 @@ class AddEventViewModel(
     private val updateEventUseCase: UpdateEventUseCase,
     private val getEventByIdNameUseCase: GetEventByIdNameUseCase,
     private val updateEventColorByEventNameUseCase: UpdateEventColorByEventNameUseCase,
-    private val transactionRunner: DatabaseTransactionRunner, // ← 只新增這一行
+    private val transactionRunner: DatabaseTransactionRunner // ← 只新增這一行
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(Event(0, "", ""))
     val uiState: StateFlow<Event> = _uiState.asStateFlow()
 
     fun isEntryValid(
         itemName: String,
-        itemColorcode: String,
+        itemColorcode: String
     ): Boolean {
         return !(itemName.isBlank() || itemColorcode.isBlank())
     }
@@ -63,8 +63,8 @@ class AddEventViewModel(
                         updateEventColorByEventNameUseCase(
                             UpdateEventColorByEventNameUseCase.Parameters(
                                 event.eventName,
-                                event.eventColorCode,
-                            ),
+                                event.eventColorCode
+                            )
                         )
                 ) {
                     is Result.Success -> {

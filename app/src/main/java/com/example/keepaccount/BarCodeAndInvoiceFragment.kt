@@ -16,7 +16,7 @@ class BarCodeAndInvoiceFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBarcodeInvoiceBinding.inflate(inflater, container, false)
         return binding.root
@@ -24,7 +24,7 @@ class BarCodeAndInvoiceFragment : Fragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         // 設定 ViewPager adapter

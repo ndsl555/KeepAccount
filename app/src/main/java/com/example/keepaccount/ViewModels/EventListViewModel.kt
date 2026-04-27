@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class EventListViewModel(
-    private val getEventsUseCase: GetEventsUseCase,
+    private val getEventsUseCase: GetEventsUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<List<Event>>(emptyList())
     val uiState: StateFlow<List<Event>> = _uiState.asStateFlow()

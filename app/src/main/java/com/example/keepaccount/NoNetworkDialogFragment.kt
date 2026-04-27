@@ -16,7 +16,7 @@ class NoNetworkDialogFragment : DialogFragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = DialogNoNetworkBinding.inflate(inflater, container, false)
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
@@ -25,7 +25,7 @@ class NoNetworkDialogFragment : DialogFragment(), View.OnClickListener {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         initView()

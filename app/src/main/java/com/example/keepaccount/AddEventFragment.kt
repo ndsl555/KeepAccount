@@ -40,7 +40,7 @@ class AddEventFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentAddEventBinding.inflate(inflater, container, false)
         return binding.root
@@ -52,7 +52,7 @@ class AddEventFragment : Fragment() {
     private fun isEntryValid(): Boolean {
         return viewModel.isEntryValid(
             binding.itemName.text.toString(),
-            binding.eventColorcode.toString(),
+            binding.eventColorcode.toString()
         )
     }
 
@@ -75,23 +75,23 @@ class AddEventFragment : Fragment() {
                         println(
                             "onColorSelected: 0x" +
                                 Integer.toHexString(
-                                    selectedColor,
-                                ),
+                                    selectedColor
+                                )
                         )
                     }
                     .setPositiveButton(
-                        getString(R.string.yes),
+                        getString(R.string.yes)
                     ) { dialog, selectedColor, allColors ->
                         binding.eventColorcode.setText(
                             "#" +
                                 Integer.toHexString(
-                                    selectedColor,
-                                ).substring(2),
+                                    selectedColor
+                                ).substring(2)
                         )
                     }
                     .setNegativeButton(
                         getString(R.string.no),
-                        DialogInterface.OnClickListener { dialog, which -> },
+                        DialogInterface.OnClickListener { dialog, which -> }
                     )
                     .build()
                     .show()
@@ -107,8 +107,8 @@ class AddEventFragment : Fragment() {
             viewModel.addNewEvent(
                 getNewEventEntry(
                     binding.itemName.text.toString(),
-                    binding.eventColorcode.text.toString(),
-                ),
+                    binding.eventColorcode.text.toString()
+                )
             )
             findNavController().popBackStack()
         }
@@ -116,11 +116,11 @@ class AddEventFragment : Fragment() {
 
     private fun getNewEventEntry(
         itemName: String,
-        itemColorcode: String,
+        itemColorcode: String
     ): Event {
         return Event(
             eventName = itemName,
-            eventColorCode = itemColorcode,
+            eventColorCode = itemColorcode
         )
     }
 
@@ -133,8 +133,8 @@ class AddEventFragment : Fragment() {
                 getUpdatedItemEntry(
                     this.navigationArgs.itemId,
                     this.binding.itemName.text.toString(),
-                    this.binding.eventColorcode.text.toString(),
-                ),
+                    this.binding.eventColorcode.text.toString()
+                )
             )
             findNavController().popBackStack()
         }
@@ -143,12 +143,12 @@ class AddEventFragment : Fragment() {
     private fun getUpdatedItemEntry(
         itemId: Int,
         itemName: String,
-        itemColorcode: String,
+        itemColorcode: String
     ): Event {
         return Event(
             id = itemId,
             eventName = itemName,
-            eventColorCode = itemColorcode,
+            eventColorCode = itemColorcode
         )
     }
 
@@ -160,7 +160,7 @@ class AddEventFragment : Fragment() {
      */
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -189,23 +189,23 @@ class AddEventFragment : Fragment() {
                         println(
                             "onColorSelected: 0x" +
                                 Integer.toHexString(
-                                    selectedColor,
-                                ),
+                                    selectedColor
+                                )
                         )
                     }
                     .setPositiveButton(
-                        getString(R.string.yes),
+                        getString(R.string.yes)
                     ) { dialog, selectedColor, allColors ->
                         binding.eventColorcode.setText(
                             "#" +
                                 Integer.toHexString(
-                                    selectedColor,
-                                ).substring(2),
+                                    selectedColor
+                                ).substring(2)
                         )
                     }
                     .setNegativeButton(
                         getString(R.string.no),
-                        DialogInterface.OnClickListener { dialog, which -> },
+                        DialogInterface.OnClickListener { dialog, which -> }
                     )
                     .build()
                     .show()

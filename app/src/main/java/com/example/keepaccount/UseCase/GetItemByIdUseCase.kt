@@ -13,6 +13,6 @@ class GetItemByIdUseCase(val itemRepository: ISpendItemRepository, dispatcher: C
     }
 
     data class Parameters(
-        val id: Int,
+        val id: Int
     )
 }

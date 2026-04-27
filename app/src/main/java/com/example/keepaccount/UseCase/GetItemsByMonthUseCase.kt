@@ -14,6 +14,6 @@ class GetItemsByMonthUseCase(val itemRepository: ISpendItemRepository, dispatche
 
     data class Parameters(
         val year: String,
-        val month: String,
+        val month: String
     )
 }

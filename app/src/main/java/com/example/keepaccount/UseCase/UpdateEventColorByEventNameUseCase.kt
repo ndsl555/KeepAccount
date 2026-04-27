@@ -15,6 +15,6 @@ class UpdateEventColorByEventNameUseCase(val spendItemRepository: ISpendItemRepo
 
     data class Parameters(
         val name: String,
-        val colorCode: String,
+        val colorCode: String
     )
 }

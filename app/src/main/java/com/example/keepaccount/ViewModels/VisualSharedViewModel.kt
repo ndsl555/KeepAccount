@@ -17,7 +17,7 @@ import java.time.LocalDate
 
 class VisualSharedViewModel(
     private val getItemsByMonthUseCase: GetItemsByMonthUseCase,
-    private val exportMonthlyConsumptionToExcelUseCase: ExportMonthlyConsumptionToExcelUseCase,
+    private val exportMonthlyConsumptionToExcelUseCase: ExportMonthlyConsumptionToExcelUseCase
 ) : ViewModel() {
     private val _sortType = MutableStateFlow(SortType.NO)
     val sortType: StateFlow<SortType> = _sortType
@@ -31,7 +31,7 @@ class VisualSharedViewModel(
 
     fun exportMonthlyConsumptionToExcel(
         year: String,
-        month: String,
+        month: String
     ) {
         viewModelScope.launch {
             when (
@@ -43,7 +43,7 @@ class VisualSharedViewModel(
                             LocalDate.of(
                                 it.itemYear.toInt(),
                                 it.itemMonth.toInt(),
-                                it.itemDay.toInt(),
+                                it.itemDay.toInt()
                             )
                         }
 
@@ -73,5 +73,5 @@ sealed class VisualUiEvent {
 enum class SortType {
     COST_DESC,
     COST_ASC,
-    NO,
+    NO
 }

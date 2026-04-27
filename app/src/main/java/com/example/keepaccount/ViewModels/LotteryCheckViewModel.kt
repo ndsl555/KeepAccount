@@ -22,7 +22,7 @@ import kotlin.collections.zip
 class LotteryCheckViewModel(
     private val useCase: LotteryCheckUseCase,
     private val saveInvoiceUseCase: SaveInvoiceUseCase,
-    private val loadInvoiceUseCase: LoadInvoiceUseCase,
+    private val loadInvoiceUseCase: LoadInvoiceUseCase
 ) : ViewModel() {
     private val _lotteryNumber = MutableStateFlow(InvoiceNumber(1, "", "", "", emptyList()))
     val lotteryNumber: StateFlow<InvoiceNumber> = _lotteryNumber.asStateFlow()
@@ -115,7 +115,7 @@ class LotteryCheckViewModel(
                 if (localData == null || !localData.isReady() || isDifferent(localData, remoteData)) {
                     Log.e(
                         "LotteryCheckViewModel",
-                        "Updating DB & UI because data is new or different",
+                        "Updating DB & UI because data is new or different"
                     )
                     _lotteryNumber.value = remoteData
                     saveInvoiceUseCase.invoke(SaveInvoiceUseCase.Parameters(remoteData))
@@ -126,7 +126,7 @@ class LotteryCheckViewModel(
             } else if (networkResult is Result.Error) {
                 Log.e(
                     "LotteryCheckViewModel",
-                    "Network Error: ${networkResult.exception}",
+                    "Network Error: ${networkResult.exception}"
                 )
                 _isLoading.value = false
             }
@@ -138,7 +138,7 @@ class LotteryCheckViewModel(
     // helper: 比對 DB 與網路資料
     private fun isDifferent(
         local: InvoiceNumber,
-        remote: InvoiceNumber,
+        remote: InvoiceNumber
     ): Boolean {
         if (local.topic != remote.topic) return true
         if (local.firstPrize.size != remote.firstPrize.size) return true

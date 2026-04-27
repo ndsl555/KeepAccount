@@ -25,7 +25,7 @@ val databaseModule =
                 Room.databaseBuilder(
                     androidContext(),
                     KeepAccountRoomDatabase::class.java,
-                    KeepAccountRoomDatabase.DATABASE_NAME,
+                    KeepAccountRoomDatabase.DATABASE_NAME
                 )
             builder
                 .addMigrations(KeepAccountRoomDatabase.MIGRATION_1_2)

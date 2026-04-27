@@ -23,7 +23,7 @@ data class Item(
     @ColumnInfo(name = "month")
     val itemMonth: String,
     @ColumnInfo(name = "day")
-    val itemDay: String,
+    val itemDay: String
 )
 
 /**

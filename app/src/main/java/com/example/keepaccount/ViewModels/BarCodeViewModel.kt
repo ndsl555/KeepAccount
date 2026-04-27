@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class BarcodeViewModel(
     private val addBarCodeUseCase: AddBarCodeUseCase,
-    private val loadBarCodeUseCase: LoadBarCodeUseCase,
+    private val loadBarCodeUseCase: LoadBarCodeUseCase
 ) : ViewModel() {
     private val _barcodeBitmap = MutableLiveData<Bitmap>()
     val barcodeBitmap: LiveData<Bitmap> = _barcodeBitmap

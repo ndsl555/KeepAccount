@@ -37,7 +37,7 @@ class ItemListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = ItemListFragmentBinding.inflate(inflater, container, false)
         return binding.root
@@ -45,7 +45,7 @@ class ItemListFragment : Fragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
@@ -63,7 +63,7 @@ class ItemListFragment : Fragment() {
                     getString(R.string.add_fragment_title),
                     selectedYear,
                     selectedMonth,
-                    selectedDay,
+                    selectedDay
                 )
             findNavController().navigate(action)
         }
@@ -76,7 +76,7 @@ class ItemListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater,
+        inflater: MenuInflater
     ) {
         inflater.inflate(R.menu.option_menu, menu)
     }
@@ -151,7 +151,7 @@ class ItemListFragment : Fragment() {
 
                     viewModel.getItemsByDate(selectedYear, selectedMonth, selectedDay)
                 }
-            },
+            }
         )
 
         // 換到下一月 → 更新標記日（不動列表）
@@ -160,7 +160,7 @@ class ItemListFragment : Fragment() {
                 override fun onChange() {
                     refreshMarkedDaysForCurrentMonth()
                 }
-            },
+            }
         )
 
         // 換到上一月 → 更新標記日（不動列表）
@@ -169,7 +169,7 @@ class ItemListFragment : Fragment() {
                 override fun onChange() {
                     refreshMarkedDaysForCurrentMonth()
                 }
-            },
+            }
         )
     }
 

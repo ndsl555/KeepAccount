@@ -12,5 +12,5 @@ data class Event(
     @ColumnInfo(name = "name")
     val eventName: String,
     @ColumnInfo(name = "colorcode")
-    val eventColorCode: String,
+    val eventColorCode: String
 )

@@ -32,7 +32,7 @@ class EventDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentEventDetailBinding.inflate(inflater, container, false)
         return binding.root
@@ -57,7 +57,7 @@ class EventDetailFragment : Fragment() {
         val action =
             EventDetailFragmentDirections.actionNavigationEventDetailFragmentToNavigationAddEventFragment(
                 getString(R.string.edit_fragment_title),
-                event.id,
+                event.id
             )
         this.findNavController().navigate(action)
     }
@@ -87,7 +87,7 @@ class EventDetailFragment : Fragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 

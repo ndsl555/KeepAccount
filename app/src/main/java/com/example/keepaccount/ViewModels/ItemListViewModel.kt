@@ -16,7 +16,7 @@ import kotlin.map
 class ItemListViewModel(
     private val getItemsByDateUseCase: GetItemsByDateUseCase,
     private val getUsedDaysInMonthUseCase: GetUsedDaysInMonthUseCase,
-    private val deleteItemByDateAndNameUseCase: DeleteItemByDateAndNameUseCase,
+    private val deleteItemByDateAndNameUseCase: DeleteItemByDateAndNameUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<List<ShowItem>>(emptyList())
     val uiState: StateFlow<List<ShowItem>> = _uiState.asStateFlow()
@@ -38,7 +38,7 @@ class ItemListViewModel(
 
     fun getMarkedDays(
         year: String,
-        month: String,
+        month: String
     ) {
         viewModelScope.launch {
             when (val result = getUsedDaysInMonthUseCase(GetUsedDaysInMonthUseCase.Parameters(year, month))) {
@@ -61,13 +61,13 @@ class ItemListViewModel(
     fun getItemsByDate(
         year: String,
         month: String,
-        day: String,
+        day: String
     ) {
         viewModelScope.launch {
             when (
                 val result =
                     getItemsByDateUseCase.invoke(
-                        GetItemsByDateUseCase.Parameters(year, month, day),
+                        GetItemsByDateUseCase.Parameters(year, month, day)
                     )
             ) {
                 is Result.Success -> {
@@ -78,7 +78,7 @@ class ItemListViewModel(
                             ShowItem(
                                 name = name,
                                 cost = list.sumOf { it.itemPrice },
-                                color = list.first().itemColorcode,
+                                color = list.first().itemColorcode
                             )
                         }
 
@@ -96,7 +96,7 @@ class ItemListViewModel(
         year: String,
         month: String,
         day: String,
-        name: String,
+        name: String
     ) {
         viewModelScope.launch {
             when (
@@ -106,8 +106,8 @@ class ItemListViewModel(
                             year,
                             month,
                             day,
-                            name,
-                        ),
+                            name
+                        )
                     )
             ) {
                 is Result.Success -> {
@@ -125,5 +125,5 @@ class ItemListViewModel(
 data class ShowItem(
     val name: String = "",
     val cost: Int = 0,
-    val color: String = "",
+    val color: String = ""
 )

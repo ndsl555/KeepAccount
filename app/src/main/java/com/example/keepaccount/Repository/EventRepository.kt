@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 
 class EventRepository(
     private val ioDispatcher: CoroutineDispatcher,
-    private val dataSource: IEventDataSource,
+    private val dataSource: IEventDataSource
 ) : IEventRepository {
     override suspend fun insertEvent(event: Event) =
         withContext(ioDispatcher) {

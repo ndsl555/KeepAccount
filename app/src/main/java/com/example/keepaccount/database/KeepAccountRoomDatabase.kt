@@ -18,10 +18,10 @@ import com.example.keepaccount.Entity.Item
         Item::class,
         BudGet::class,
         Event::class,
-        InvoiceNumber::class,
+        InvoiceNumber::class
     ],
     version = 8,
-    exportSchema = true,
+    exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class KeepAccountRoomDatabase : RoomDatabase(), KeepAccountDatabase {
@@ -38,7 +38,7 @@ abstract class KeepAccountRoomDatabase : RoomDatabase(), KeepAccountDatabase {
                             `name` TEXT NOT NULL,
                             `colorcode` TEXT NOT NULL
                         )
-                        """.trimIndent(),
+                        """.trimIndent()
                     )
                 }
             }
@@ -57,7 +57,7 @@ abstract class KeepAccountRoomDatabase : RoomDatabase(), KeepAccountDatabase {
                 month TEXT NOT NULL,
                 day TEXT NOT NULL
             )
-        """,
+        """
                     )
 
                     // 2. 將舊資料複製過去
@@ -66,7 +66,7 @@ abstract class KeepAccountRoomDatabase : RoomDatabase(), KeepAccountDatabase {
             INSERT INTO ItemTable (id, name, price, colorcode, year, month, day)
             SELECT id, name, price, colorcode, year, month, day
             FROM Item
-        """,
+        """
                     )
 
                     // 3. 刪除舊表
@@ -84,7 +84,7 @@ abstract class KeepAccountRoomDatabase : RoomDatabase(), KeepAccountDatabase {
                             id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                             isShown INTEGER NOT NULL
                         )
-                        """.trimIndent(),
+                        """.trimIndent()
                     )
                 }
             }
@@ -111,7 +111,7 @@ abstract class KeepAccountRoomDatabase : RoomDatabase(), KeepAccountDatabase {
                             month TEXT NOT NULL,
                             day TEXT NOT NULL
                         )
-                        """.trimIndent(),
+                        """.trimIndent()
                     )
 
                     // 2. Copy the data from the old table to the new one, casting the price.
@@ -119,7 +119,7 @@ abstract class KeepAccountRoomDatabase : RoomDatabase(), KeepAccountDatabase {
                         """
                         INSERT INTO ItemTable_new (id, name, price, colorcode, year, month, day)
                         SELECT id, name, CAST(price AS INTEGER), colorcode, year, month, day FROM ItemTable
-                        """.trimIndent(),
+                        """.trimIndent()
                     )
 
                     // 3. Remove the old table
@@ -143,7 +143,7 @@ abstract class KeepAccountRoomDatabase : RoomDatabase(), KeepAccountDatabase {
                             `specialPrize` TEXT NOT NULL,
                             `firstPrize` TEXT NOT NULL
                         )
-                        """.trimIndent(),
+                        """.trimIndent()
                     )
                 }
             }

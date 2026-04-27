@@ -45,7 +45,7 @@ class LotteryManualCheckFragment : Fragment() {
             binding.layoutFirstPrize2,
             binding.layoutFirstPrize3,
             binding.layoutSpecialistPrize,
-            binding.layoutSpecialPrize,
+            binding.layoutSpecialPrize
         )
     }
     private val bingoContent by lazy {
@@ -53,14 +53,14 @@ class LotteryManualCheckFragment : Fragment() {
             binding.eightNumberHint,
             binding.firstPrizeMappingContainer,
             binding.specialPrizeMappingContainer,
-            binding.chipScreenshot,
+            binding.chipScreenshot
         )
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLotteryManualCheckBinding.inflate(inflater, container, false)
         return binding.root
@@ -68,7 +68,7 @@ class LotteryManualCheckFragment : Fragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding.chipScreenshot.setOnClickListener {
@@ -84,7 +84,7 @@ class LotteryManualCheckFragment : Fragment() {
                 },
                 onError = {
                     Toast.makeText(requireContext(), "截圖失敗", Toast.LENGTH_SHORT).show()
-                },
+                }
             )
         }
 
@@ -94,7 +94,7 @@ class LotteryManualCheckFragment : Fragment() {
                 binding.layoutFirstPrize2 to binding.tvFirstPrize2Number,
                 binding.layoutFirstPrize3 to binding.tvFirstPrize3Number,
                 binding.layoutSpecialistPrize to binding.tvSpecialistPrizeNumber,
-                binding.layoutSpecialPrize to binding.tvSpecialPrizeNumber,
+                binding.layoutSpecialPrize to binding.tvSpecialPrizeNumber
             )
         initView()
         setupSwipeToRefresh()
@@ -110,7 +110,7 @@ class LotteryManualCheckFragment : Fragment() {
             }
 
         startActivity(
-            Intent.createChooser(intent, "分享圖片"),
+            Intent.createChooser(intent, "分享圖片")
         )
     }
 
@@ -148,7 +148,7 @@ class LotteryManualCheckFragment : Fragment() {
                 Prize("頭獎", invoiceNumber.firstPrize[1], ""),
                 Prize("頭獎", invoiceNumber.firstPrize[2], ""),
                 Prize("特別獎", invoiceNumber.specialistPrize, "需八碼全中"),
-                Prize("特獎", invoiceNumber.specialPrize, "需八碼全中"),
+                Prize("特獎", invoiceNumber.specialPrize, "需八碼全中")
             )
 
         initCol()
@@ -182,7 +182,7 @@ class LotteryManualCheckFragment : Fragment() {
             listOf(
                 binding.lotteryDigit1,
                 binding.lotteryDigit2,
-                binding.lotteryDigit3,
+                binding.lotteryDigit3
             )
 
         val clickListener =
@@ -202,14 +202,14 @@ class LotteryManualCheckFragment : Fragment() {
                     s: CharSequence?,
                     start: Int,
                     count: Int,
-                    after: Int,
+                    after: Int
                 ) = Unit
 
                 override fun onTextChanged(
                     s: CharSequence?,
                     start: Int,
                     before: Int,
-                    count: Int,
+                    count: Int
                 ) = Unit
 
                 override fun afterTextChanged(s: Editable?) {
@@ -230,13 +230,13 @@ class LotteryManualCheckFragment : Fragment() {
                     checkHintText(text)
                     updatePrizeVisibility(text)
                 }
-            },
+            }
         )
     }
 
     private fun checkWinningResult(
         input: String,
-        invoice: InvoiceNumber,
+        invoice: InvoiceNumber
     ): WinningCheckResult {
         if (input.isEmpty()) return WinningCheckResult(WinningState.INITIAL)
 
@@ -271,7 +271,7 @@ class LotteryManualCheckFragment : Fragment() {
     private fun applyLastThreeHighlight(
         number: String,
         input: String,
-        textView: TextView,
+        textView: TextView
     ) {
         val spannable = SpannableString(number)
 
@@ -286,12 +286,12 @@ class LotteryManualCheckFragment : Fragment() {
                     ForegroundColorSpan(
                         ContextCompat.getColor(
                             requireContext(),
-                            android.R.color.holo_red_dark,
-                        ),
+                            android.R.color.holo_red_dark
+                        )
                     ),
                     start,
                     end,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
             }
         }
@@ -304,7 +304,7 @@ class LotteryManualCheckFragment : Fragment() {
 
         when (result.state) {
             WinningState.INITIAL,
-            WinningState.NONE,
+            WinningState.NONE
             -> {
                 prizeViewMap.forEach { it.visibility = View.VISIBLE }
                 bingoContent.forEach { it.visibility = View.GONE }
@@ -403,21 +403,21 @@ class LotteryManualCheckFragment : Fragment() {
             WinningState.INITIAL -> {
                 binding.hint.text = getString(R.string.hint_enter_numbers)
                 binding.hint.setTextColor(
-                    ContextCompat.getColor(requireContext(), R.color.black),
+                    ContextCompat.getColor(requireContext(), R.color.black)
                 )
             }
 
             WinningState.MAYBE -> {
                 binding.hint.text = ""
                 binding.hint.setTextColor(
-                    ContextCompat.getColor(requireContext(), R.color.black),
+                    ContextCompat.getColor(requireContext(), R.color.black)
                 )
             }
 
             WinningState.NONE -> {
                 binding.hint.text = getString(R.string.hint_sorry_try_again)
                 binding.hint.setTextColor(
-                    ContextCompat.getColor(requireContext(), R.color.black),
+                    ContextCompat.getColor(requireContext(), R.color.black)
                 )
             }
 
@@ -435,7 +435,7 @@ class LotteryManualCheckFragment : Fragment() {
                 }
 
                 binding.hint.setTextColor(
-                    ContextCompat.getColor(requireContext(), R.color.orange_700),
+                    ContextCompat.getColor(requireContext(), R.color.orange_700)
                 )
             }
         }

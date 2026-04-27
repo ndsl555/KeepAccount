@@ -17,7 +17,7 @@ interface ISpendItemDataSource {
     // 根據 name 更新 colorcode
     suspend fun updateColorCodeByName(
         name: String,
-        newColorCode: String,
+        newColorCode: String
     )
 
     // 根據 name 刪除資料
@@ -26,23 +26,23 @@ interface ISpendItemDataSource {
     suspend fun getItemsByDate(
         year: String,
         month: String,
-        day: String,
+        day: String
     ): Result<List<Item>>
 
     suspend fun getItemsByMonth(
         year: String,
-        month: String,
+        month: String
     ): Result<List<Item>>
 
     suspend fun deleteByDateAndName(
         year: String,
         month: String,
         day: String,
-        name: String,
+        name: String
     )
 
     suspend fun getUsedDaysInMonth(
         year: String,
-        month: String,
+        month: String
     ): Result<List<String>>
 }

@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 
 class BudGetDataSource(
     private val dao: BudGetDao,
-    private val ioDispatcher: CoroutineDispatcher,
+    private val ioDispatcher: CoroutineDispatcher
 ) : IBudGetDataSource {
     override suspend fun insertBudGet(budGet: BudGet) =
         withContext(ioDispatcher) {

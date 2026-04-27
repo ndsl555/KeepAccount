@@ -9,5 +9,5 @@ class BudGet(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 1,
     @ColumnInfo(name = "bud_permonth")
-    val itemBudGet: Int = 0,
+    val itemBudGet: Int = 0
 )

@@ -88,8 +88,8 @@ class MainActivity : AppCompatActivity() {
                     R.id.navigationEventListFragment,
                     R.id.navigationStripFragment,
                     R.id.navigationBarCodeAndInvoiceFragment,
-                    R.id.navigationVisualFragment,
-                ),
+                    R.id.navigationVisualFragment
+                )
             )
 
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -139,7 +139,7 @@ class MainActivity : AppCompatActivity() {
 
                 // 導頁
                 navController.navigate(
-                    NavHomeGraphDirections.actionGlobalToNavigationEventListFragment(),
+                    NavHomeGraphDirections.actionGlobalToNavigationEventListFragment()
                 )
                 binding.mainBottomNavigationView.selectedItemId = R.id.nav_event
 
@@ -157,5 +157,5 @@ class MainActivity : AppCompatActivity() {
  *  Extension 幫你找 NavHostFragment
  */
 private fun FragmentManager.findNavHostFragment(
-    @IdRes id: Int,
+    @IdRes id: Int
 ) = findFragmentById(id) as NavHostFragment

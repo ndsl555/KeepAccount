@@ -21,7 +21,7 @@ class ItemListAdapter : RecyclerView.Adapter<ItemListAdapter.ItemViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): ItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemListItemBinding.inflate(inflater, parent, false)
@@ -30,7 +30,7 @@ class ItemListAdapter : RecyclerView.Adapter<ItemListAdapter.ItemViewHolder>() {
 
     override fun onBindViewHolder(
         holder: ItemViewHolder,
-        position: Int,
+        position: Int
     ) {
         holder.bind(items[position])
     }
@@ -39,7 +39,7 @@ class ItemListAdapter : RecyclerView.Adapter<ItemListAdapter.ItemViewHolder>() {
 
     inner class ItemViewHolder(
         private val context: Context,
-        private val binding: ItemListItemBinding,
+        private val binding: ItemListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ShowItem) {
             binding.apply {
@@ -59,14 +59,14 @@ class ItemListAdapter : RecyclerView.Adapter<ItemListAdapter.ItemViewHolder>() {
             object : DiffUtil.ItemCallback<ShowItem>() {
                 override fun areItemsTheSame(
                     oldItem: ShowItem,
-                    newItem: ShowItem,
+                    newItem: ShowItem
                 ): Boolean {
                     return oldItem.name == newItem.name
                 }
 
                 override fun areContentsTheSame(
                     oldItem: ShowItem,
-                    newItem: ShowItem,
+                    newItem: ShowItem
                 ): Boolean {
                     return oldItem == newItem
                 }

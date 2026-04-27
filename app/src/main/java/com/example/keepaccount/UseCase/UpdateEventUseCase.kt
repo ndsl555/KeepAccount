@@ -15,6 +15,6 @@ class UpdateEventUseCase(val eventRepository: IEventRepository, dispatcher: Coro
     }
 
     data class Parameters(
-        val event: Event,
+        val event: Event
     )
 }

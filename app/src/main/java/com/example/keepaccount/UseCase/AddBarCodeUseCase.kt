@@ -15,6 +15,6 @@ class AddBarCodeUseCase(val barRepository: IBarRepository, dispatcher: Coroutine
     }
 
     data class Parameters(
-        val barEntity: BarEntity,
+        val barEntity: BarEntity
     )
 }

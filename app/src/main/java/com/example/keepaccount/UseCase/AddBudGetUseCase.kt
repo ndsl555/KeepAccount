@@ -15,6 +15,6 @@ class AddBudGetUseCase(val budGetRepository: IBudGetRepository, dispatcher: Coro
     }
 
     data class Parameters(
-        val budGet: BudGet,
+        val budGet: BudGet
     )
 }

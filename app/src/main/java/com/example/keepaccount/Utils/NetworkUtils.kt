@@ -42,7 +42,7 @@ object NetworkUtils {
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
                     capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
                     capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
-            )
+                )
         } catch (e: Exception) {
             e.printStackTrace()
             false
@@ -119,7 +119,7 @@ object NetworkUtils {
                 override fun onUnavailable() {
                     _networkState.value = false
                 }
-            },
+            }
         )
     }
 

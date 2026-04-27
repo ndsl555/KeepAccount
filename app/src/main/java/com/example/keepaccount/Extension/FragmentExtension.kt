@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 inline fun Fragment.launchAndRepeatWithViewLifecycle(
     minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
-    crossinline blok: suspend CoroutineScope.() -> Unit,
+    crossinline blok: suspend CoroutineScope.() -> Unit
 ): Job {
     return viewLifecycleOwner.lifecycleScope.launch {
         viewLifecycleOwner.lifecycle.repeatOnLifecycle(minActiveState) {

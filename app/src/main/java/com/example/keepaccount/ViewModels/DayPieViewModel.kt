@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class DayPieViewModel(
-    private val getItemsByDateUseCase: GetItemsByDateUseCase,
+    private val getItemsByDateUseCase: GetItemsByDateUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(PieUIState())
     val uiState: StateFlow<PieUIState> = _uiState.asStateFlow()
@@ -27,14 +27,14 @@ class DayPieViewModel(
 
         _uiState.value =
             current.copy(
-                todayItems = sortedItems,
+                todayItems = sortedItems
             )
     }
 
     fun loadTodayData(
         thisYear: String,
         thisMonth: String,
-        thisDay: String,
+        thisDay: String
     ) {
         viewModelScope.launch {
             when (val result = getItemsByDateUseCase.invoke(GetItemsByDateUseCase.Parameters(thisYear, thisMonth, thisDay))) {
@@ -46,7 +46,7 @@ class DayPieViewModel(
                         grouped.map { (name, list) ->
                             ExampleItem(
                                 itemname = name,
-                                itemcost = list.sumOf { it.itemPrice },
+                                itemcost = list.sumOf { it.itemPrice }
                             )
                         }
 
@@ -60,7 +60,7 @@ class DayPieViewModel(
                             totalCost = totalCost,
                             pieEntries = pieEntries,
                             pieColors = colors,
-                            todayItems = mergedList,
+                            todayItems = mergedList
                         )
                 }
 
@@ -77,7 +77,7 @@ data class PieUIState(
     val totalCost: Int = 0,
     val pieEntries: List<PieEntry> = emptyList(),
     val pieColors: List<Int> = emptyList(),
-    val todayItems: List<ExampleItem> = emptyList(),
+    val todayItems: List<ExampleItem> = emptyList()
 )
 
 data class ExampleItem(val itemname: String, val itemcost: Int)

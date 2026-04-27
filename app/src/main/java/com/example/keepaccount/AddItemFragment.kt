@@ -40,7 +40,7 @@ class AddItemFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddItemBinding.inflate(inflater, container, false)
 
@@ -58,7 +58,7 @@ class AddItemFragment : Fragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -87,7 +87,7 @@ class AddItemFragment : Fragment() {
             binding.itemColorcode.text.toString(),
             year,
             month,
-            day,
+            day
         )
     }
 
@@ -100,8 +100,8 @@ class AddItemFragment : Fragment() {
                     itemColorcode = binding.itemColorcode.text.toString(),
                     itemYear = year,
                     itemMonth = month,
-                    itemDay = day,
-                ),
+                    itemDay = day
+                )
             )
             findNavController().popBackStack()
         }

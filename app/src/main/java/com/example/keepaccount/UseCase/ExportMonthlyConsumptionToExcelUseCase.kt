@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ExportMonthlyConsumptionToExcelUseCase(
-    private val context: Context,
+    private val context: Context
 ) {
     /**
      * 匯出 Excel，成功回傳 Uri，失敗回傳 null
@@ -42,11 +42,11 @@ class ExportMonthlyConsumptionToExcelUseCase(
                 put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
                 put(
                     MediaStore.MediaColumns.MIME_TYPE,
-                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 )
                 put(
                     MediaStore.MediaColumns.RELATIVE_PATH,
-                    "Documents/KeepAccount",
+                    "Documents/KeepAccount"
                 )
             }
 

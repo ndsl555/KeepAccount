@@ -14,6 +14,6 @@ class DeleteItemByNameUseCase(val itemRepository: ISpendItemRepository, dispatch
     }
 
     data class Parameters(
-        val name: String,
+        val name: String
     )
 }

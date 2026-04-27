@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import kotlin.collections.sortedByDescending
 
 class MonthPieViewModel(
-    private val getItemsByMonthUseCase: GetItemsByMonthUseCase,
+    private val getItemsByMonthUseCase: GetItemsByMonthUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(PieUIState())
     val uiState: StateFlow<PieUIState> = _uiState.asStateFlow()
@@ -28,13 +28,13 @@ class MonthPieViewModel(
 
         _uiState.value =
             current.copy(
-                todayItems = sortedItems,
+                todayItems = sortedItems
             )
     }
 
     fun loadMonthData(
         thisYear: String,
-        thisMonth: String,
+        thisMonth: String
     ) {
         viewModelScope.launch {
             when (val result = getItemsByMonthUseCase.invoke(GetItemsByMonthUseCase.Parameters(thisYear, thisMonth))) {
@@ -46,7 +46,7 @@ class MonthPieViewModel(
                         grouped.map { (name, list) ->
                             ExampleItem(
                                 itemname = name,
-                                itemcost = list.sumOf { it.itemPrice },
+                                itemcost = list.sumOf { it.itemPrice }
                             )
                         }
 
@@ -61,7 +61,7 @@ class MonthPieViewModel(
                             totalCost = totalCost,
                             pieEntries = pieEntries,
                             pieColors = colors,
-                            todayItems = mergedList,
+                            todayItems = mergedList
                         )
                 }
 

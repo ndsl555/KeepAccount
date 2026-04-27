@@ -29,7 +29,7 @@ class EventListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         _binding = EventListFragmentBinding.inflate(inflater, container, false)
         return binding.root
@@ -37,7 +37,7 @@ class EventListFragment : Fragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getAllEvents()
@@ -47,7 +47,7 @@ class EventListFragment : Fragment() {
         binding.floatingActionButton.setOnClickListener {
             val action =
                 EventListFragmentDirections.actionNavigationEventListFragmentToNavigationAddEventFragment(
-                    getString(R.string.add_fragment_title),
+                    getString(R.string.add_fragment_title)
                 )
             this.findNavController().navigate(action)
         }
@@ -77,7 +77,7 @@ class EventListFragment : Fragment() {
         val dividerItemDecoration =
             DividerItemDecoration(
                 recyclerView.context,
-                DividerItemDecoration.VERTICAL,
+                DividerItemDecoration.VERTICAL
             )
         recyclerView.addItemDecoration(dividerItemDecoration)
 

@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class StripViewModel(
     private val getItemsUseCase: GetItemsUseCase,
     private val addBudGetUseCase: AddBudGetUseCase,
-    private val getBudGetUseCase: GetBudGetUseCase,
+    private val getBudGetUseCase: GetBudGetUseCase
 ) : ViewModel() {
     /** ---- UI State ---- **/
     private val _boardUI = MutableStateFlow(StripUIState())
@@ -29,7 +29,7 @@ class StripViewModel(
     fun saveBudGet(
         input: Int,
         year: String,
-        month: String,
+        month: String
     ) {
         val budGet = BudGet(id = 1, itemBudGet = input)
 
@@ -49,7 +49,7 @@ class StripViewModel(
     /** 取得當月資料（預算 + 花費 + 排行榜） */
     fun observeItems(
         year: String,
-        month: String,
+        month: String
     ) {
         viewModelScope.launch {
             /** 取得預算 */
@@ -77,7 +77,7 @@ class StripViewModel(
             _boardUI.value =
                 StripUIState(
                     budget = budget,
-                    cost = cost,
+                    cost = cost
                 )
         }
     }
@@ -102,5 +102,5 @@ class StripViewModel(
 
 data class StripUIState(
     val budget: Int = 0,
-    val cost: Int = 0,
+    val cost: Int = 0
 )

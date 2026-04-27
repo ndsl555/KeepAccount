@@ -12,7 +12,7 @@ import java.net.SocketTimeoutException
 
 suspend fun <T, R> apiCall(
     call: suspend () -> Response<T>,
-    toResult: (T) -> R,
+    toResult: (T) -> R
 ): Result<R> {
     return try {
         val response = call.invoke()
@@ -21,8 +21,8 @@ suspend fun <T, R> apiCall(
             Result.Error(
                 ApiException(
                     response.errorBody().toString(),
-                    response.code(),
-                ),
+                    response.code()
+                )
             )
         } else {
             val body = response.body()
@@ -62,8 +62,8 @@ fun <T> Response<T>.toResult(): Result<T> {
                         Result.Error(
                             ApiException(
                                 errorBody().toString(),
-                                code(),
-                            ),
+                                code()
+                            )
                         )
                     } else {
                         val apiResponse = adapter.fromJson(body.source())
@@ -71,16 +71,16 @@ fun <T> Response<T>.toResult(): Result<T> {
                             ApiException(
                                 apiResponse?.errorMessage ?: "",
                                 code(),
-                                apiResponse?.result ?: -1,
-                            ),
+                                apiResponse?.result ?: -1
+                            )
                         )
                     }
                 } else {
                     Result.Error(
                         ApiException(
                             this.errorBody()?.string() ?: errorBody().toString(),
-                            code(),
-                        ),
+                            code()
+                        )
                     )
                 }
             } else {

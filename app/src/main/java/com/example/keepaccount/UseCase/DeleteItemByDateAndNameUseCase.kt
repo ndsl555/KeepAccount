@@ -17,6 +17,6 @@ class DeleteItemByDateAndNameUseCase(val itemRepository: ISpendItemRepository, d
         val year: String,
         val month: String,
         val day: String,
-        val name: String,
+        val name: String
     )
 }

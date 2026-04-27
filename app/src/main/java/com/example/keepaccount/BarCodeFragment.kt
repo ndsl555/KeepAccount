@@ -26,7 +26,7 @@ class BarCodeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBarcodeBinding.inflate(inflater, container, false)
 
@@ -39,7 +39,7 @@ class BarCodeFragment : Fragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding.codeNum.setOnClickListener {

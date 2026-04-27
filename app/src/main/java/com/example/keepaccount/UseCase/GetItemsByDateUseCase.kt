@@ -15,6 +15,6 @@ class GetItemsByDateUseCase(val itemRepository: ISpendItemRepository, dispatcher
     data class Parameters(
         val year: String,
         val month: String,
-        val day: String,
+        val day: String
     )
 }
