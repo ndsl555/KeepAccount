@@ -1,74 +1,124 @@
 [versions]
 agp = "8.13.0"
-colorpicker = "0.0.15"
 kotlin = "2.2.0"
+
+# AndroidX
 coreKtx = "1.10.1"
-junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
-lifecycleRuntimeKtx = "2.6.1"
 appcompat = "1.7.1"
-materialCalendarView = "1.9.2"
-mpandroidchart = "v3.1.0"
-navigationRuntimeKtx = "2.9.4"
 constraintlayout = "2.2.1"
-material = "1.13.0"
-navigationFragment = "2.9.4"
-navigationUiKtx = "2.7.7"
-poiOoxml = "5.5.1"
-roomCompiler = "2.8.0"
-roomCommonJvm = "2.8.0"
-roomKtx = "2.8.0"
-moshi = "1.15.0"
-databindingAdapters = "8.13.0"
-koin = "3.5.3"
-cameraCore = "1.5.0"
-okhttp = "4.12.0"
-retrofit = "2.9.0"
-playServicesLocation = "21.3.0"
-lifecycleViewmodelKtx = "2.10.0"
-jsoup = "1.22.1"
 swiperefreshlayout = "1.2.0"
 
-[libraries]
-androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
-jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
+# Lifecycle
+lifecycle = "2.10.0"
 
-colorpicker = { module = "com.github.QuadFlask:colorpicker", version.ref = "colorpicker" }
+# Navigation
+navigation = "2.9.4"
+
+# Room
+room = "2.8.0"
+
+# UI / Libraries
+material = "1.13.0"
+materialCalendarView = "1.9.2"
+colorpicker = "0.0.15"
+mpandroidchart = "v3.1.0"
+
+# Network
+retrofit = "2.9.0"
+okhttp = "4.12.0"
+moshi = "1.15.0"
+
+# Google / Android
+playServicesLocation = "21.3.0"
+cameraCore = "1.5.0"
+
+# Data / Parsing
+poiOoxml = "5.5.1"
+jsoup = "1.22.1"
+
+# DI
+koin = "3.5.3"
+
+# Testing
+junit = "4.13.2"
+androidxJunit = "1.1.5"
+espressoCore = "3.5.1"
+mockk = "1.13.8"
+coroutinesTest = "1.7.3"
+
+# ZXing
+zxing = "3.4.1"
+zxingAndroid = "4.3.0"
+
+# Plugins
+ktlint = "11.6.0"
+
+ksp = "2.2.0-2.0.2"
+
+[libraries]
+# AndroidX
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
+
+# Lifecycle
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+
+# Navigation
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigation" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
+androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigation" }
+
+# Room
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+androidx-room-common-jvm = { group = "androidx.room", name = "room-common-jvm", version.ref = "room" }
+
+# UI
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 material-calendar-view = { module = "com.applandeo:material-calendar-view", version.ref = "materialCalendarView" }
+colorpicker = { module = "com.github.QuadFlask:colorpicker", version.ref = "colorpicker" }
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
-poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poiOoxml" }
+
+# Network
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
-zxing-core = { group = "com.google.zxing", name = "core", version = "3.4.1" }
-zxing-android = { group = "com.journeyapps", name = "zxing-android-embedded", version = "4.3.0" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
-androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
-androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
-androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }
-androidx-room-common-jvm = { group = "androidx.room", name = "room-common-jvm", version.ref = "roomCommonJvm" }
-androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
-androidx-databinding-adapters = { group = "androidx.databinding", name = "databinding-adapters", version.ref = "databindingAdapters" }
+
+# Moshi
 moshi = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshi" }
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
-koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
-androidx-camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraCore" }
+
+# Google
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
-androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+androidx-camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraCore" }
+
+# Data
+poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poiOoxml" }
+jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
+
+# DI
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+
+# ZXing
+zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxing" }
+zxing-android = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "zxingAndroid" }
+
+# Testing
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
+
 
 [plugins]
-androidx-navigation-safe-args = { id = "androidx.navigation.safeargs.kotlin", version = "2.7.7" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "11.6.0" }
-
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+# 統一版本來源
+androidx-navigation-safe-args = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }

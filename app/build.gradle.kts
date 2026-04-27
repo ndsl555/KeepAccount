@@ -3,7 +3,13 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.androidx.navigation.safe.args)
-    id("com.google.devtools.ksp") version "2.2.0-2.0.2"
+    alias(libs.plugins.ksp)
+}
+
+// 全域排除 JUnit 5
+configurations.all {
+    exclude(group = "org.junit.jupiter")
+    exclude(group = "org.junit.platform")
 }
 
 android {
@@ -24,20 +30,20 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
+                "proguard-rules.pro"
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
-    ktlint {
-        version.set("1.2.1")
-    }
+
     buildFeatures {
         viewBinding = true
         dataBinding = true
@@ -45,37 +51,61 @@ android {
 }
 
 dependencies {
+    // UI
     implementation(libs.material.calendar.view)
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.gson)
-    implementation(libs.zxing.core)
-    implementation(libs.zxing.android)
-    implementation(libs.koin.android)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.navigation.runtime.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.play.services.location)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    ksp(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.common.jvm)
-    implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.databinding.adapters)
-    implementation(libs.moshi)
-    implementation(libs.moshi.kotlin)
-    implementation(libs.okhttp)
     implementation(libs.mpandroidchart)
     implementation(libs.colorpicker)
-    implementation(libs.androidx.camera.core)
+
+    // Core
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.swiperefreshlayout)
-    ksp(libs.moshi.kotlin.codegen) //  注意是 kapt，不是 implementation
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+
+    // Lifecycle
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    // Navigation
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.navigation.fragment)
+
+    // DI
+    implementation(libs.koin.android)
+
+    // Network
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+    implementation(libs.okhttp)
+
+    // JSON
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
+    ksp(libs.moshi.kotlin.codegen)
+
+    // Room
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    // Google / Device
+    implementation(libs.play.services.location)
+    implementation(libs.androidx.camera.core)
+
+    // Tools
     implementation(libs.jsoup)
     implementation(libs.poi.ooxml)
+
+    // QR
+    implementation(libs.zxing.core)
+    implementation(libs.zxing.android)
+
+    // 測試
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk.android)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }
