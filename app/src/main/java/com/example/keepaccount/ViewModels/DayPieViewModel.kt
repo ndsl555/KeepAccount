@@ -1,9 +1,10 @@
+package com.example.keepaccount.ViewModels
+
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.keepaccount.UseCase.GetItemsByDateUseCase
 import com.example.keepaccount.Utils.Result
-import com.example.keepaccount.ViewModels.SortType
 import com.github.mikephil.charting.data.PieEntry
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,8 +21,8 @@ class DayPieViewModel(
         val current = _uiState.value
         val sortedItems =
             when (sortType) {
-                SortType.COST_DESC -> current.todayItems.sortedByDescending { it.itemcost }
-                SortType.COST_ASC -> current.todayItems.sortedBy { it.itemcost }
+                SortType.COST_DESC -> current.todayItems.sortedByDescending { it.itemPrice }
+                SortType.COST_ASC -> current.todayItems.sortedBy { it.itemPrice }
                 else -> current.todayItems
             }
 
@@ -45,15 +46,16 @@ class DayPieViewModel(
                     val mergedList =
                         grouped.map { (name, list) ->
                             ExampleItem(
-                                itemname = name,
-                                itemcost = list.sumOf { it.itemPrice }
+                                itemName = name,
+                                itemPrice = list.sumOf { it.itemPrice },
+                                itemColor = list.first().itemColorcode
                             )
                         }
 
-                    val pieEntries = mergedList.map { PieEntry(it.itemcost.toFloat(), it.itemname) }
+                    val pieEntries = mergedList.map { PieEntry(it.itemPrice.toFloat(), it.itemName) }
                     val colors =
                         mergedList.map { item ->
-                            grouped[item.itemname]!!.first().itemColorcode.toColorInt()
+                            item.itemColor.toColorInt()
                         }
                     _uiState.value =
                         PieUIState(
@@ -65,7 +67,6 @@ class DayPieViewModel(
                 }
 
                 is Result.Error -> {
-                    // 可加錯誤處理
                     _uiState.value = PieUIState()
                 }
             }
@@ -80,4 +81,4 @@ data class PieUIState(
     val todayItems: List<ExampleItem> = emptyList()
 )
 
-data class ExampleItem(val itemname: String, val itemcost: Int)
+data class ExampleItem(val itemName: String, val itemPrice: Int, val itemColor: String)

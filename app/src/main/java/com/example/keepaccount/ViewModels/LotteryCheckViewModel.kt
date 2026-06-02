@@ -5,13 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.keepaccount.Entity.InvoiceNumber
 import com.example.keepaccount.Entity.isReady
-import com.example.keepaccount.QrWinningResult
-import com.example.keepaccount.QrWinningType
 import com.example.keepaccount.UseCase.LoadInvoiceUseCase
 import com.example.keepaccount.UseCase.LotteryCheckUseCase
 import com.example.keepaccount.UseCase.SaveInvoiceUseCase
 import com.example.keepaccount.Utils.Result
 import com.example.keepaccount.Utils.invoke
+import com.example.keepaccount.ui.screens.QrWinningResult
+import com.example.keepaccount.ui.screens.QrWinningType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

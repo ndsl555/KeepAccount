@@ -59,7 +59,7 @@
     <string name="not_entered">未輸入</string>
     <string name="month_total_cost">%1$s月總花費</string>
     <string name="cost_with_unit">%1$s元</string>
-    <string name="budget_with_unit">預算%1$s元</string>
+    <string name="budget_with_unit">%1$s元</string>
     <string name="remaining_balance">剩餘 %1$s元</string>
     <string name="overspending">超支 %1$s元</string>
     <string name="this_month_cost">本月花費: %1$s</string>
