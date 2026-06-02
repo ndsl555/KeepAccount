@@ -1,153 +1,161 @@
 package com.example.keepaccount
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import android.widget.Toast
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.keepaccount.Utils.NetworkUtils
-import com.example.keepaccount.ui.screens.*
-import com.example.keepaccount.ui.theme.KeepAccountTheme
+import com.example.keepaccount.Utils.NetworkUtils.getNetworkType
+import com.example.keepaccount.Utils.NetworkUtils.isNetworkConnected
+import com.example.keepaccount.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 
-class MainActivity : ComponentActivity() {
-    private lateinit var tutorialPref: TutorialPref
+class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var tutorialPref: TutorialPref //  用 SharedPreferences 存取
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        tutorialPref = TutorialPref(this)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setContent {
-            KeepAccountTheme {
-                MainApp(tutorialPref)
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainApp(tutorialPref: TutorialPref) {
-    val navController = rememberNavController()
-    val isNetworkConnected by NetworkUtils.networkState.collectAsStateWithLifecycle()
-    var showTutorial by remember { mutableStateOf(!tutorialPref.isTutorialShown()) }
-
-    // 網路斷開提示
-    if (!isNetworkConnected) {
-        AlertDialog(
-            onDismissRequest = { },
-            title = { Text(stringResource(android.R.string.dialog_alert_title)) },
-            text = { Text(stringResource(R.string.network_type_no_network)) },
-            confirmButton = {
-                TextButton(onClick = { }) { Text(stringResource(R.string.i_know)) }
-            }
-        )
+        tutorialPref = TutorialPref(this) //  初始化 Pref
+        checkNetworkStatus()
+        observeNetworkState()
+        initView()
+        checkTutorialStatus() //  啟動時檢查是否要顯示教學 Dialog
     }
 
-    // 教學視窗
-    if (showTutorial) {
-        AlertDialog(
-            onDismissRequest = { },
-            title = { Text(stringResource(android.R.string.dialog_alert_title)) },
-            text = { Text(stringResource(R.string.jump_to_nav_event_list_fragment)) },
-            confirmButton = {
-                TextButton(onClick = {
-                    tutorialPref.setTutorialShown()
-                    showTutorial = false
-                    navController.navigate(Screen.EventList.route)
-                }) {
-                    Text(stringResource(R.string.yes))
-                }
-            }
-        )
-    }
-
-    Scaffold(
-        bottomBar = {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentDestination = navBackStackEntry?.destination
-
-            NavigationBar {
-                val items = listOf(
-                    Triple(Screen.ItemList, R.string.list_fragment_title, Icons.Default.DateRange),
-                    Triple(Screen.EventList, R.string.event_fragment_title, Icons.Default.List),
-                    Triple(Screen.Strip, R.string.budget_fragment_title, Icons.Default.Money),
-                    Triple(Screen.BarcodeInvoice, R.string.barcode_and_invoice_fragment_title, Icons.Default.Search),
-                    Triple(Screen.Visual, R.string.visual_fragment_title, Icons.Default.PieChart)
-                )
-
-                items.forEach { (screen, labelRes, icon) ->
-                    NavigationBarItem(
-                        icon = { Icon(icon, contentDescription = null) },
-                        label = { Text(stringResource(labelRes)) },
-                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                        onClick = {
-                            navController.navigate(screen.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        }
-                    )
+    private fun observeNetworkState() {
+        lifecycleScope.launch {
+            NetworkUtils.networkState.collect { isConnected ->
+                if (isConnected) {
+                    // 網路恢复
+                    showNetworkRestored()
+                } else {
+                    // 網路斷開
+                    showNetworkLost()
                 }
             }
         }
-    ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = Screen.ItemList.route,
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            composable(Screen.ItemList.route) { ItemListScreen(navController) }
-            composable(Screen.EventList.route) { EventListScreen(navController) }
-            composable(Screen.Strip.route) { StripScreen(navController) }
-            composable(Screen.BarcodeInvoice.route) { BarcodeAndInvoiceScreen(navController) }
-            composable(Screen.Visual.route) { VisualScreen() }
+    }
 
-            composable(
-                route = Screen.AddItem.route,
-                arguments = listOf(
-                    navArgument("year") { type = NavType.StringType },
-                    navArgument("month") { type = NavType.StringType },
-                    navArgument("day") { type = NavType.StringType }
-                )
-            ) { backStackEntry ->
-                val year = backStackEntry.arguments?.getString("year") ?: ""
-                val month = backStackEntry.arguments?.getString("month") ?: ""
-                val day = backStackEntry.arguments?.getString("day") ?: ""
-                AddItemScreen(navController, year, month, day)
-            }
+    private fun showNetworkRestored() {
+        // 显示網路恢复提示
+        Toast.makeText(this, "網路已恢复", Toast.LENGTH_SHORT).show()
+    }
 
-            composable(
-                route = Screen.AddEvent.route,
-                arguments = listOf(navArgument("eventId") { type = NavType.IntType; defaultValue = -1 })
-            ) { backStackEntry ->
-                val eventId = backStackEntry.arguments?.getInt("eventId") ?: -1
-                AddEventScreen(navController, eventId)
-            }
+    private fun showNetworkLost() {
+        // 显示網路斷開提示
+        showNoWifiDialog()
+        Toast.makeText(this, "網路已斷開", Toast.LENGTH_SHORT).show()
+    }
 
-            composable(
-                route = Screen.EventDetail.route,
-                arguments = listOf(navArgument("eventId") { type = NavType.IntType })
-            ) { backStackEntry ->
-                val eventId = backStackEntry.arguments?.getInt("eventId") ?: -1
-                EventDetailScreen(navController, eventId)
-            }
+    private fun checkNetworkStatus() {
+        if (isNetworkConnected(baseContext)) {
+            val networkType = getNetworkType(baseContext)
+            Toast.makeText(this, "網路已連接 - $networkType", Toast.LENGTH_SHORT).show()
+        } else {
+            showNoWifiDialog()
+            Toast.makeText(this, "網路未連接", Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun showNoWifiDialog() {
+        NoNetworkDialogFragment().show(supportFragmentManager, "NoNetworkDialogFragment")
+    }
+
+    private fun initView() {
+        val bottomNavView: BottomNavigationView = findViewById(R.id.mainBottomNavigationView)
+        val navHostFragment = supportFragmentManager.findNavHostFragment(R.id.navHostView)
+        navController = navHostFragment.navController
+        navController.setGraph(R.navigation.nav_home_graph)
+
+        appBarConfiguration =
+            AppBarConfiguration(
+                setOf(
+                    R.id.navigationItemListFragment,
+                    R.id.navigationEventListFragment,
+                    R.id.navigationStripFragment,
+                    R.id.navigationBarCodeAndInvoiceFragment,
+                    R.id.navigationVisualFragment
+                )
+            )
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        bottomNavView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_list ->
+                    navController.navigate(NavHomeGraphDirections.actionGlobalToNavigationitemListFragment())
+
+                R.id.nav_event ->
+                    navController.navigate(NavHomeGraphDirections.actionGlobalToNavigationEventListFragment())
+
+                R.id.nav_budget ->
+                    navController.navigate(NavHomeGraphDirections.actionGlobalToNavigationStripFragment())
+
+                R.id.nav_barcode_invoice ->
+                    navController.navigate(NavHomeGraphDirections.actionGlobalToNavigationBarCodeAndInvoiceFragment())
+
+                R.id.nav_report ->
+                    navController.navigate(NavHomeGraphDirections.actionGlobalToNavigationVisualFragment())
+            }
+            true
+        }
+    }
+
+    /**
+     *  不用 Flow，不用 DB，不用 ViewModel
+     */
+    private fun checkTutorialStatus() {
+        if (!tutorialPref.isTutorialShown()) {
+            showTutorialDialog()
+        }
+    }
+
+    /**
+     *  用 SharedPreferences 控制之後不再跳
+     */
+    private fun showTutorialDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(android.R.string.dialog_alert_title))
+            .setMessage(getString(R.string.jump_to_nav_event_list_fragment))
+            .setCancelable(false)
+            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+
+                //  記錄為「已讀」
+                tutorialPref.setTutorialShown()
+
+                // 導頁
+                navController.navigate(
+                    NavHomeGraphDirections.actionGlobalToNavigationEventListFragment()
+                )
+                binding.mainBottomNavigationView.selectedItemId = R.id.nav_event
+
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
 }
+
+/**
+ *  Extension 幫你找 NavHostFragment
+ */
+private fun FragmentManager.findNavHostFragment(
+    @IdRes id: Int
+) = findFragmentById(id) as NavHostFragment
