@@ -6,15 +6,18 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -39,6 +42,7 @@ fun LotteryManualCheckScreen(
     var inputText by remember { mutableStateOf("") }
     var count by remember { mutableStateOf(0) }
     val focusRequester = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(Unit) {
         viewModel.getLotteryNumberFromDB()
@@ -68,19 +72,28 @@ fun LotteryManualCheckScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { focusRequester.requestFocus() },
+                    .clickable {
+                        focusRequester.requestFocus()
+                        keyboardController?.show()
+                    },
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 repeat(3) { index ->
-                    DigitBox(inputText.getOrNull(index)?.toString() ?: "")
+                    DigitBox(
+                        inputText.getOrNull(index)?.toString() ?: "",
+                        onClick = {
+                            focusRequester.requestFocus()
+                            keyboardController?.show()
+                        }
+                    )
                     if (index < 2) Spacer(modifier = Modifier.width(8.dp))
                 }
             }
 
             // 隱藏的 TextField 用於接收鍵盤輸入
-            Box(modifier = Modifier.size(1.dp)) {
-                TextField(
+            Box(modifier = Modifier.size(1.dp).alpha(0f)) {
+                BasicTextField(
                     value = inputText,
                     onValueChange = {
                         if (it.length <= 3) {
@@ -114,15 +127,20 @@ fun LotteryManualCheckScreen(
 }
 
 @Composable
-fun DigitBox(char: String) {
+fun DigitBox(char: String, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .size(60.dp)
             .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp)),
+            .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp))
+            .clickable { onClick() }, // 讓方格可被點擊
         contentAlignment = Alignment.Center
     ) {
-        Text(text = char, style = MaterialTheme.typography.headlineLarge)
+        Text(
+            text = char,
+            style = MaterialTheme.typography.headlineLarge,
+            color = if (char.isEmpty()) MaterialTheme.colorScheme.outlineVariant else MaterialTheme.colorScheme.onSurface
+        )
     }
 }
 
