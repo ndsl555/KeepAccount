@@ -8,6 +8,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,6 +20,7 @@ import androidx.core.graphics.toColorInt
 import androidx.navigation.NavController
 import com.applandeo.materialcalendarview.CalendarView
 import com.applandeo.materialcalendarview.EventDay
+import com.applandeo.materialcalendarview.listeners.OnCalendarPageChangeListener
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import com.example.keepaccount.R
 import com.example.keepaccount.Screen
@@ -36,6 +39,8 @@ fun ItemListScreen(
     val markedDays by viewModel.markedDays.collectAsState()
 
     var selectedDate by remember { mutableStateOf(Calendar.getInstance()) }
+    // 新增：用來追蹤月曆目前顯示的月份（用於更新標記）
+    var displayedMonth by remember { mutableStateOf(Calendar.getInstance()) }
 
     Scaffold(
         topBar = {
@@ -52,7 +57,6 @@ fun ItemListScreen(
                 val year = selectedDate.get(Calendar.YEAR).toString()
                 val month = (selectedDate.get(Calendar.MONTH) + 1).toString()
                 val day = selectedDate.get(Calendar.DAY_OF_MONTH).toString()
-                // 實作導航邏輯：導向新增頁面並帶入日期參數
                 navController.navigate(Screen.AddItem.createRoute(year, month, day))
             }) {
                 Icon(Icons.Default.Add, contentDescription = "Add")
@@ -75,11 +79,34 @@ fun ItemListScreen(
                                 )
                             }
                         })
+
+                        // 監聽下個月切換
+                        setOnForwardPageChangeListener(object : OnCalendarPageChangeListener {
+                            override fun onChange() {
+                                displayedMonth = currentPageDate.clone() as Calendar
+                                viewModel.getMarkedDays(
+                                    displayedMonth.get(Calendar.YEAR).toString(),
+                                    (displayedMonth.get(Calendar.MONTH) + 1).toString()
+                                )
+                            }
+                        })
+
+                        // 監聽上個月切換
+                        setOnPreviousPageChangeListener(object : OnCalendarPageChangeListener {
+                            override fun onChange() {
+                                displayedMonth = currentPageDate.clone() as Calendar
+                                viewModel.getMarkedDays(
+                                    displayedMonth.get(Calendar.YEAR).toString(),
+                                    (displayedMonth.get(Calendar.MONTH) + 1).toString()
+                                )
+                            }
+                        })
                     }
                 },
                 update = { view ->
+                    // 根據 markedDays 建立事件，使用 displayedMonth 確保日期設在正確的月份頁面
                     val events = markedDays.map { day ->
-                        val cal = selectedDate.clone() as Calendar
+                        val cal = displayedMonth.clone() as Calendar
                         cal.set(Calendar.DAY_OF_MONTH, day)
                         EventDay(cal, R.drawable.sample_three_icons)
                     }
@@ -105,14 +132,16 @@ fun ItemListScreen(
     }
 
     LaunchedEffect(Unit) {
+        // 初始載入當天資料
         viewModel.getItemsByDate(
             selectedDate.get(Calendar.YEAR).toString(),
             (selectedDate.get(Calendar.MONTH) + 1).toString(),
             selectedDate.get(Calendar.DAY_OF_MONTH).toString()
         )
+        // 初始載入當月標記
         viewModel.getMarkedDays(
-            selectedDate.get(Calendar.YEAR).toString(),
-            (selectedDate.get(Calendar.MONTH) + 1).toString()
+            displayedMonth.get(Calendar.YEAR).toString(),
+            (displayedMonth.get(Calendar.MONTH) + 1).toString()
         )
     }
 }
@@ -129,7 +158,7 @@ fun ItemRow(item: ShowItem, onDelete: () -> Unit) {
                 .padding(16.dp)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically // 讓內容垂直居中
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Column {
                 Text(
@@ -139,7 +168,6 @@ fun ItemRow(item: ShowItem, onDelete: () -> Unit) {
                 Text(
                     text = "$ ${item.cost}",
                     style = MaterialTheme.typography.bodyMedium,
-                    // 修正顏色報錯：顯式轉換並處理可能的解析錯誤
                     color = try {
                         Color(item.color.toColorInt())
                     } catch (e: Exception) {
@@ -148,12 +176,11 @@ fun ItemRow(item: ShowItem, onDelete: () -> Unit) {
                 )
             }
 
-            // 修正：使用 IconButton 加上 Icon 來顯示刪除按鈕
             IconButton(onClick = onDelete) {
                 Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = "Delete",
-                    tint = MaterialTheme.colorScheme.error // 刪除按鈕通常用紅色
+                    tint = MaterialTheme.colorScheme.error
                 )
             }
         }
