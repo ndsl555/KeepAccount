@@ -9,7 +9,9 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -52,7 +54,10 @@ fun MainApp(tutorialPref: TutorialPref) {
             title = { Text(stringResource(android.R.string.dialog_alert_title)) },
             text = { Text(stringResource(R.string.network_type_no_network)) },
             confirmButton = {
-                TextButton(onClick = { }) { Text(stringResource(R.string.i_know)) }
+                TextButton(onClick = {
+                    val intent = android.content.Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS)
+                    navController.context.startActivity(intent)
+                }) { Text(stringResource(R.string.i_know)) }
             }
         )
     }
@@ -149,5 +154,13 @@ fun MainApp(tutorialPref: TutorialPref) {
                 EventDetailScreen(navController, eventId)
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun MainAppPreview() {
+    KeepAccountTheme {
+        MainApp(tutorialPref = TutorialPref(LocalContext.current))
     }
 }
