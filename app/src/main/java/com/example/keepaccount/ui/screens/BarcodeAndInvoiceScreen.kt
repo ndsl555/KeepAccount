@@ -22,12 +22,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.keepaccount.R
 import com.example.keepaccount.ViewModels.BarcodeViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
+import kotlin.text.uppercase
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -186,20 +189,38 @@ fun BarcodeInputDialog(
     onDismiss: () -> Unit,
     onConfirm: (String) -> Unit
 ) {
-    var text by remember { mutableStateOf("") }
+    var textFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.enter_barcode_hint)) },
         text = {
             OutlinedTextField(
-                value = text,
-                onValueChange = { text = it },
+                value = textFieldValue,
+                onValueChange = { newValue ->
+                    var newText = newValue.text.uppercase()
+                    var newSelection = newValue.selection
+
+                    // 如果輸入不為空，且第一個字元不是 '/'，則自動補上 '/'
+                    if (newText.isNotEmpty() && !newText.startsWith("/")) {
+                        newText = "/$newText"
+                        // 將游標向後位移一格，補償增加的 '/'
+                        newSelection = TextRange(newSelection.start + 1)
+                    }
+
+                    textFieldValue = newValue.copy(
+                        text = newText,
+                        selection = newSelection
+                    )
+                },
                 label = { Text(stringResource(R.string.barcode_fragment_title)) },
                 singleLine = true
             )
         },
         confirmButton = {
-            TextButton(onClick = { if (text.isNotBlank()) onConfirm(text) }) {
+            TextButton(onClick = {
+                val finalBarcode = textFieldValue.text.trim()
+                if (isBarcodeValid(finalBarcode)) onConfirm(finalBarcode)
+            }) {
                 Text(stringResource(R.string.confirm))
             }
         },
@@ -209,6 +230,12 @@ fun BarcodeInputDialog(
             }
         }
     )
+}
+
+fun isBarcodeValid(barcode: String): Boolean {
+    // 正則表達式：第一位是斜線，後面接 7 位英數字或特定符號(.-+)
+    val regex = Regex("^/[0-9A-Z.+-]{7}$")
+    return regex.matches(barcode)
 }
 
 @Composable
