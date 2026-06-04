@@ -1,5 +1,6 @@
 package com.example.keepaccount.ui.screens
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,12 +24,14 @@ import com.example.keepaccount.ViewModels.MonthPieViewModel
 import com.example.keepaccount.ViewModels.ShowItem
 import com.example.keepaccount.ViewModels.SortType
 import com.example.keepaccount.ViewModels.VisualSharedViewModel
+import com.example.keepaccount.ViewModels.VisualUiEvent
 import com.example.keepaccount.ui.components.ItemRow
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.formatter.PercentFormatter
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import java.util.*
@@ -44,9 +47,48 @@ fun VisualScreen(
     )
     val pagerState = rememberPagerState(pageCount = { titles.size })
     val scope = rememberCoroutineScope()
-
+    val context = LocalContext.current
     // 控制排序選單顯示
     var showMenu by remember { mutableStateOf(false) }
+    // 用於顯示訊息的 Dialog 狀態
+    var infoMessage by remember { mutableStateOf<String?>(null) }
+
+    // 正確監聽來自 ViewModel 的 UI 事件 (SharedFlow)
+    LaunchedEffect(Unit) {
+        sharedViewModel.uiEvent.collect { event ->
+            when (event) {
+                is VisualUiEvent.OpenExcel -> {
+                    // 根據 UseCase 定義的 MIME Type 開啟 Excel
+                    val intent = Intent(Intent.ACTION_VIEW).apply {
+                        setDataAndType(event.uri, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    }
+                    try {
+                        context.startActivity(Intent.createChooser(intent, "開啟 Excel 報表"))
+                    } catch (e: Exception) {
+                        infoMessage = "找不到可開啟 Excel 的應用程式"
+                    }
+                }
+                is VisualUiEvent.ShowError -> {
+                    infoMessage = event.message
+                }
+            }
+        }
+    }
+
+    // 當有訊息時顯示對話框
+    if (infoMessage != null) {
+        AlertDialog(
+            onDismissRequest = { infoMessage = null },
+            title = { Text(stringResource(R.string.app_name)) },
+            text = { Text(infoMessage!!) },
+            confirmButton = {
+                TextButton(onClick = { infoMessage = null }) {
+                    Text(stringResource(R.string.yes))
+                }
+            }
+        )
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         // --- 頂部欄：包含標題與排序按鈕 ---
@@ -88,6 +130,17 @@ fun VisualScreen(
                             text = { Text("預設排序") },
                             onClick = {
                                 sharedViewModel.setSort(SortType.NO)
+                                showMenu = false
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("匯出本月消費Excel") },
+                            onClick = {
+                                val calendar = Calendar.getInstance()
+                                sharedViewModel.exportMonthlyConsumptionToExcel(
+                                    calendar.get(Calendar.YEAR).toString(),
+                                    (calendar.get(Calendar.MONTH) + 1).toString()
+                                )
                                 showMenu = false
                             }
                         )
