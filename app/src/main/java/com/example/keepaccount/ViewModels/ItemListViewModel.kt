@@ -5,13 +5,11 @@ import com.example.keepaccount.UseCase.DeleteItemByDateAndNameUseCase
 import com.example.keepaccount.UseCase.GetItemsByDateUseCase
 import com.example.keepaccount.UseCase.GetUsedDaysInMonthUseCase
 import com.example.keepaccount.Utils.Result
-import com.example.keepaccount.Utils.invoke
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlin.collections.groupBy
-import kotlin.map
 
 class ItemListViewModel(
     private val getItemsByDateUseCase: GetItemsByDateUseCase,
@@ -24,16 +22,16 @@ class ItemListViewModel(
     private val _markedDays = MutableStateFlow<List<Int>>(emptyList())
     val markedDays = _markedDays.asStateFlow()
 
-    fun sortItemsByCostDesc() {
-        viewModelScope.launch {
-            _uiState.value = _uiState.value.sortedByDescending { it.cost }
-        }
-    }
+    fun sortItems(sortType: SortType) {
+        val current = _uiState.value
+        val sortedItems =
+            when (sortType) {
+                SortType.COST_DESC -> current.sortedByDescending { it.cost }
+                SortType.COST_ASC -> current.sortedBy { it.cost }
+                else -> current
+            }
 
-    fun sortItemsByCostAsc() {
-        viewModelScope.launch {
-            _uiState.value = _uiState.value.sortedBy { it.cost }
-        }
+        _uiState.value = sortedItems
     }
 
     fun getMarkedDays(

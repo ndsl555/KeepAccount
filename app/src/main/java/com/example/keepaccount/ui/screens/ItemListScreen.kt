@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.getValue
@@ -26,6 +27,7 @@ import com.example.keepaccount.R
 import com.example.keepaccount.Screen
 import com.example.keepaccount.ViewModels.ItemListViewModel
 import com.example.keepaccount.ViewModels.ShowItem
+import com.example.keepaccount.ViewModels.SortType
 import org.koin.androidx.compose.koinViewModel
 import java.util.*
 
@@ -37,7 +39,8 @@ fun ItemListScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val markedDays by viewModel.markedDays.collectAsState()
-
+// 控制排序選單顯示
+    var showMenu by remember { mutableStateOf(false) }
     var selectedDate by remember { mutableStateOf(Calendar.getInstance()) }
     // 新增：用來追蹤月曆目前顯示的月份（用於更新標記）
     var displayedMonth by remember { mutableStateOf(Calendar.getInstance()) }
@@ -49,7 +52,40 @@ fun ItemListScreen(
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary
-                )
+                ),
+                actions = {
+                    Box {
+                        IconButton(onClick = { showMenu = true }) {
+                            Icon(Icons.Default.Sort, contentDescription = "Sort")
+                        }
+                        DropdownMenu(
+                            expanded = showMenu,
+                            onDismissRequest = { showMenu = false }
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.dscend)) }, // 建議放入 strings.xml
+                                onClick = {
+                                    viewModel.sortItems(SortType.COST_DESC)
+                                    showMenu = false
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.ascend)) },
+                                onClick = {
+                                    viewModel.sortItems(SortType.COST_ASC)
+                                    showMenu = false
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.inital)) },
+                                onClick = {
+                                    viewModel.sortItems(SortType.NO)
+                                    showMenu = false
+                                }
+                            )
+                        }
+                    }
+                }
             )
         },
         floatingActionButton = {

@@ -71,6 +71,7 @@
     <string name="today_total_cost">本日花費: %1$s</string>
     <string name="dscend">金額由高到低</string>
     <string name="ascend">金額由低到高</string>
+    <string name="inital">預設排序</string>
     <string name="barcode_and_invoice_fragment_title">載具/對獎</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="lottery_check">發票對獎</string>

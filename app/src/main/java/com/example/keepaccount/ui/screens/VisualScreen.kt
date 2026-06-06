@@ -113,28 +113,28 @@ fun VisualScreen(
                         onDismissRequest = { showMenu = false }
                     ) {
                         DropdownMenuItem(
-                            text = { Text("金額由高到低") }, // 建議放入 strings.xml
+                            text = { Text(stringResource(R.string.dscend)) }, // 建議放入 strings.xml
                             onClick = {
                                 sharedViewModel.setSort(SortType.COST_DESC)
                                 showMenu = false
                             }
                         )
                         DropdownMenuItem(
-                            text = { Text("金額由低到高") },
+                            text = { Text(stringResource(R.string.ascend)) },
                             onClick = {
                                 sharedViewModel.setSort(SortType.COST_ASC)
                                 showMenu = false
                             }
                         )
                         DropdownMenuItem(
-                            text = { Text("預設排序") },
+                            text = { Text(stringResource(R.string.inital)) },
                             onClick = {
                                 sharedViewModel.setSort(SortType.NO)
                                 showMenu = false
                             }
                         )
                         DropdownMenuItem(
-                            text = { Text("匯出本月消費Excel") },
+                            text = { Text(stringResource(R.string.export_to_excel)) },
                             onClick = {
                                 val calendar = Calendar.getInstance()
                                 sharedViewModel.exportMonthlyConsumptionToExcel(
